@@ -15,7 +15,7 @@ RUN apt update -y --fix-missing && \
       git \
       gcc-${CC_VERSION} \
       g++-${CXX_VERSION} \
-      libboost-dev \
+      libboost-all-dev \
       cmake \
       curl \
       wget
