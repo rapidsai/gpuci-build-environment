@@ -25,7 +25,9 @@ RUN tar xzf /cmake.tgz && \
     cp -r /cmake*/bin /usr/ && \
     cp -r /cmake*/doc /usr/share/ && \
     cp -r /cmake*/man /usr/share/ && \
-    cp -r /cmake*/share /usr/
+    cp -r /cmake*/share /usr/ && \
+    cd / && \
+    rm -rf /cmake*
 
 # Install conda
 ADD https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh /miniconda.sh
