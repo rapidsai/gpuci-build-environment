@@ -16,9 +16,16 @@ RUN apt update -y --fix-missing && \
       gcc-${CC_VERSION} \
       g++-${CXX_VERSION} \
       libboost-all-dev \
-      cmake \
       curl \
       wget
+
+# Install cmake v3.12
+ADD https://cmake.org/files/v3.12/cmake-3.12.0-Linux-x86_64.tar.gz /cmake.tgz
+RUN tar xzf /cmake.tgz && \
+    cp -r /cmake*/bin /usr/ && \
+    cp -r /cmake*/doc /usr/share/ && \
+    cp -r /cmake*/man /usr/share/ && \
+    cp -r /cmake*/share /usr/
 
 # Install conda
 ADD https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh /miniconda.sh
