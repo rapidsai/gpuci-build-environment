@@ -17,7 +17,8 @@ RUN apt update -y --fix-missing && \
       g++-${CXX_VERSION} \
       libboost-all-dev \
       curl \
-      wget
+      wget  && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install cmake v3.12
 ADD https://cmake.org/files/v3.12/cmake-3.12.0-Linux-x86_64.tar.gz /cmake.tgz
