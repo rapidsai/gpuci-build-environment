@@ -43,8 +43,9 @@ logger "Check GPU usage..."
 nvidia-smi
 
 logger "GoogleTest for libgdf..."
-make -j test
+GTEST_OUTPUT="xml:${WORKSPACE}/test-results/" make -j test
 
 logger "Python py.test for libgdf..."
 cd ${WORKSPACE}
 py.test --cache-clear --junitxml=junit.xml -v
+cp junit.xml $WORKSPACE/test-results
