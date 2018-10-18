@@ -56,7 +56,7 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
       scipy \
     && conda clean -a && \
     chmod 777 -R /conda
-    
+
 ## Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
 
