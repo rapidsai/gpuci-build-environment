@@ -11,7 +11,7 @@ logger "Check GPU usage..."
 nvidia-smi
 
 logger "Patch conda env..."
-cat conda_environments/dev_py35.yml | grep -v "cudatoolkit" > libgdf_dev.yml
+cat conda_environments/dev_py35.yml | grep -v "cudatoolkit" | grep -v "cmake" > libgdf_dev.yml
 
 logger "Create conda env..."
 rm -rf /home/jenkins/.conda/envs/libgdf_dev
