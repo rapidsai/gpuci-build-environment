@@ -1,10 +1,6 @@
 ARG CUDA_VERSION=9.2
 ARG LINUX_VERSION=ubuntu16.04
 FROM nvidia/cuda:${CUDA_VERSION}-devel-${LINUX_VERSION}
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
-# Needed for pygdf.concat(), avoids "OSError: library nvvm not found"
-ENV NUMBAPRO_NVVM=/usr/local/cuda/nvvm/lib64/libnvvm.so
-ENV NUMBAPRO_LIBDEVICE=/usr/local/cuda/nvvm/libdevice/
 
 # Define arguments
 ARG CC_VERSION=5
@@ -16,6 +12,15 @@ ARG PANDAS_VERSION=0.23.4
 ARG PYARROW_VERSION=0.10
 ARG HASH_JOIN=ON
 ARG MINICONDA_URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+
+# Set environment
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
+## Needed for pygdf.concat(), avoids "OSError: library nvvm not found"
+ENV NUMBAPRO_NVVM=/usr/local/cuda/nvvm/lib64/libnvvm.so
+ENV NUMBAPRO_LIBDEVICE=/usr/local/cuda/nvvm/libdevice/
+ENV CC=/usr/bin/gcc-${CC_VERSION}
+ENV CXX=/usr/bin/g++-${CXX_VERSION}
+ENV PATH=${PATH}:/conda/bin
 
 # Update and add pkgs
 RUN apt update -y --fix-missing && \
