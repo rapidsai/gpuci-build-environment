@@ -44,7 +44,6 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     conda create -n gdf python=${PYTHON_VERSION} && \
     conda install -n gdf -y -c numba \
       -c conda-forge \
-      -c anaconda \
       cmake \
       make \
       numba=${NUMBA_VERSION} \
