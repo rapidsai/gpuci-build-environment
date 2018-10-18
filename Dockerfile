@@ -51,6 +51,7 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
       numpy-base=${NUMPY_VERSION} \
       pandas=${PANDAS_VERSION} \
       pyarrow=${PYARROW_VERSION} \
+      pytest \
       scikit-learn \
       scipy \
     && conda clean -a && \
