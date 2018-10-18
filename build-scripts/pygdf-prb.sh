@@ -20,25 +20,27 @@ env
 logger "Check GPU usage..."
 nvidia-smi
 
-logger "Checking for sister branch '${ghprbSourceBranch}' in libgdf repo of '${ghprbPullAuthorLogin}'..."
-LIBGDF_BRANCH=`git ls-remote --heads "https://github.com/${ghprbPullAuthorLogin}/libgdf.git" | grep "${ghprbSourceBranch}" | awk '{ print $1 }'`
-
 logger "Clone libgdf..."
+LIBGDF_BRANCH=""
+if [ "${ghprbSourceBranch}" == "master" ]; then
+  logger "Master branch used, pulling from libgdf master..."
+else
+  logger "Checking for sister branch '${ghprbSourceBranch}' in libgdf repo of '${ghprbPullAuthorLogin}'..."
+  LIBGDF_BRANCH=`git ls-remote --heads "https://github.com/${ghprbPullAuthorLogin}/libgdf.git" | grep "${ghprbSourceBranch}" | awk '{ print $1 }'`
+fi
 rm -rf $WORKSPACE/libgdf
 if [ "$LIBGDF_BRANCH" == "" ]; then
-  logger "Sister branch not found, using 'master' instead..."
-  LIBGDF_BRANCH="master"
   git clone "$LIBGDF_REPO" $WORKSPACE/libgdf
   cd $WORKSPACE/libgdf
-  git submodule update --init --recursive --remote
 else
   logger "Sister branch found, using commit '${LIBGDF_BRANCH}'..."
   git clone "https://github.com/${ghprbPullAuthorLogin}/libgdf.git" $WORKSPACE/libgdf
   cd $WORKSPACE/libgdf
   git reset --hard ${LIBGDF_BRANCH}
-  git submodule update --init --recursive --remote
 fi
-
+git rev-parse HEAD
+git submodule update --init --recursive --remote
+  
 logger "Create conda env..."
 rm -rf /home/jenkins/.conda/envs/pygdf
 conda create -n pygdf python=${PYTHON_VERSION}
