@@ -6,19 +6,28 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV NUMBAPRO_NVVM=/usr/local/cuda/nvvm/lib64/libnvvm.so
 ENV NUMBAPRO_LIBDEVICE=/usr/local/cuda/nvvm/libdevice/
 
+# Define arguments
 ARG CC_VERSION=5
 ARG CXX_VERSION=5
+ARG PYTHON_VERSION=3.5
+ARG NUMBA_VERSION=0.40.0
+ARG NUMPY_VERSION=1.14.5
+ARG PANDAS_VERSION=0.23.4
+ARG PYARROW_VERSION=0.10
+ARG HASH_JOIN=ON
+ARG MINICONDA_URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
 
+# Update and add pkgs
 RUN apt update -y --fix-missing && \
     apt upgrade -y && \
     apt install -y \
+      curl \
       git \
       gcc-${CC_VERSION} \
       g++-${CXX_VERSION} \
       libboost-all-dev \
-      curl \
-      wget  && \
-    rm -rf /var/lib/apt/lists/*
+      wget \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install conda
 ADD https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh /miniconda.sh
@@ -28,7 +37,6 @@ ENV PATH=${PATH}:/conda/bin
 SHELL ["/bin/bash", "-c"]
 
 # Build combined libgdf/pygdf conda env
-ARG PYTHON_VERSION=3.6
 RUN conda create -n gdf python=${PYTHON_VERSION}
 RUN conda install -n gdf -y -c numba -c conda-forge -c defaults \
       numba \
