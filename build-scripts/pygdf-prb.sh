@@ -30,16 +30,14 @@ else
 fi
 rm -rf $WORKSPACE/libgdf
 if [ "$LIBGDF_BRANCH" == "" ]; then
-  git clone "$LIBGDF_REPO" $WORKSPACE/libgdf
-  cd $WORKSPACE/libgdf
+  git clone --recurse-submodules "$LIBGDF_REPO" $WORKSPACE/libgdf
 else
-  logger "Sister branch found, using commit '${LIBGDF_BRANCH}'..."
-  git clone "https://github.com/${ghprbPullAuthorLogin}/libgdf.git" $WORKSPACE/libgdf
-  cd $WORKSPACE/libgdf
-  git reset --hard ${LIBGDF_BRANCH}
+  logger "Sister branch found, using branch '${ghprbSourceBranch}'..."
+  git clone --recurse-submodules "https://github.com/${ghprbPullAuthorLogin}/libgdf.git" -b ${ghprbSourceBranch} $WORKSPACE/libgdf
 fi
-git rev-parse HEAD
-git submodule update --init --recursive --remote
+cd $WORKSPACE/libgdf
+CURRENT_COMMIT=`git rev-parse HEAD`
+logger "Current commit hash for libgdf: $CURRENT_COMMIT"
   
 logger "Create conda env..."
 rm -rf /home/jenkins/.conda/envs/pygdf
