@@ -35,23 +35,30 @@ RUN apt update -y --fix-missing && \
     && rm -rf /var/lib/apt/lists/*
 
 # Install conda
-ADD https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh /miniconda.sh
-RUN sh /miniconda.sh -b -p /conda && /conda/bin/conda update -n base conda
-ENV PATH=${PATH}:/conda/bin
-# Enables "source activate conda"
+## Build combined libgdf/pygdf conda env
+RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
+    sh /miniconda.sh -b -p /conda && \
+    conda update -n base conda && \
+    conda install python=${PYTHON_VERSION} && \
+    rm -f /miniconda.sh && \
+    conda create -n gdf python=${PYTHON_VERSION} && \
+    conda install -n gdf -y -c numba \
+      -c conda-forge \
+      -c anaconda \
+      cmake \
+      make \
+      numba=${NUMBA_VERSION} \
+      numpy=${NUMPY_VERSION} \
+      numpy-base=${NUMPY_VERSION} \
+      pandas=${PANDAS_VERSION} \
+      pyarrow=${PYARROW_VERSION} \
+      scikit-learn \
+      scipy \
+    && conda clean -a && \
+    chmod 777 -R /conda
+    
+## Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
-
-# Build combined libgdf/pygdf conda env
-RUN conda create -n gdf python=${PYTHON_VERSION}
-RUN conda install -n gdf -y -c numba -c conda-forge -c defaults \
-      numba \
-      pandas
-
-ENV CC=/usr/bin/gcc-${CC_VERSION}
-ENV CXX=/usr/bin/g++-${CXX_VERSION}
-
-# Enable all users to write to system library, to allow for installs
-RUN chmod 777 /usr/local/lib /usr/local/include
 
 ENV TINI_VERSION=v0.16.1
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
