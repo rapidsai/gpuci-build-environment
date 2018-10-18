@@ -3,7 +3,7 @@ set -e
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 CC=/usr/bin/gcc
 CXX=/usr/bin/g++
-LIBGDF_REPO=https://github.com/gpuopenanalytics/libgdf
+LIBGDF_REPO=https://github.com/rapidsai/libgdf
 NUMBA_VERSION=0.40.0
 NUMPY_VERSION=1.14.5
 PANDAS_VERSION=0.20.3
@@ -20,6 +20,27 @@ env
 logger "Check GPU usage..."
 nvidia-smi
 
+logger "Clone libgdf..."
+LIBGDF_BRANCH=""
+if [ "${ghprbSourceBranch}" == "master" ]; then
+  logger "Master branch used, pulling from libgdf master..."
+else
+  logger "Checking for sister branch '${ghprbSourceBranch}' in libgdf repo of '${ghprbPullAuthorLogin}'..."
+  LIBGDF_BRANCH=`git ls-remote --heads "https://github.com/${ghprbPullAuthorLogin}/libgdf.git" | grep "${ghprbSourceBranch}" | awk '{ print $1 }'`
+fi
+rm -rf $WORKSPACE/libgdf
+if [ "$LIBGDF_BRANCH" == "" ]; then
+  git clone "$LIBGDF_REPO" $WORKSPACE/libgdf
+  cd $WORKSPACE/libgdf
+else
+  logger "Sister branch found, using commit '${LIBGDF_BRANCH}'..."
+  git clone "https://github.com/${ghprbPullAuthorLogin}/libgdf.git" $WORKSPACE/libgdf
+  cd $WORKSPACE/libgdf
+  git reset --hard ${LIBGDF_BRANCH}
+fi
+git rev-parse HEAD
+git submodule update --init --recursive --remote
+  
 logger "Create conda env..."
 rm -rf /home/jenkins/.conda/envs/pygdf
 conda create -n pygdf python=${PYTHON_VERSION}
@@ -38,10 +59,6 @@ python --version
 gcc --version
 g++ --version
 conda list
-
-logger "Clone libgdf..."
-rm -rf $WORKSPACE/libgdf
-git clone --recurse-submodules ${LIBGDF_REPO} $WORKSPACE/libgdf
 
 logger "Build libgdf..."
 mkdir -p $WORKSPACE/libgdf/build
