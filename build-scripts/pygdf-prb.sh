@@ -50,10 +50,10 @@ logger "Clean up make..."
 make clean
 
 logger "Install libgdf..."
-make -j install
+make -j4 install
 
 logger "Install libgdf for Python..."
-make -j copy_python
+make -j4 copy_python
 python setup.py install
 
 logger "Build pygdf..."
