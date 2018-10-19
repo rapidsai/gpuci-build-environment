@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-LIBGDF_REPO=https://github.com/gpuopenanalytics/libgdf
+LIBGDF_REPO=https://github.com/rapidsai/libgdf
 
 function logger() {
   echo -e "\n>>>> $@\n"
