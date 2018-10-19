@@ -26,10 +26,10 @@ cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX -DHASH_JOIN=ON
 
 logger "Run make libgdf..."
-make -j install
+make -j4 install
 
 logger "Install libgdf for Python..."
-make -j copy_python
+make -j4 copy_python
 python setup.py install
 
 logger "Check GPU usage..."
