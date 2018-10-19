@@ -44,7 +44,7 @@ logger "Build libgdf..."
 mkdir -p $WORKSPACE/libgdf/build
 cd $WORKSPACE/libgdf/build
 logger "Run cmake libgdf..."
-cmake ..
+cmake -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX ..
 
 logger "Clean up make..."
 make clean
