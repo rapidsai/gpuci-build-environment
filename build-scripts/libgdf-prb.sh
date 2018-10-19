@@ -23,7 +23,7 @@ logger "Run cmake libgdf..."
 rm -rf build
 mkdir build
 cd build
-cmake .. -DHASH_JOIN=ON
+cmake .. -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX -DHASH_JOIN=ON
 
 logger "Run make libgdf..."
 make -j install
