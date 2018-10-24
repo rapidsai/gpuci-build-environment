@@ -19,6 +19,11 @@ gcc --version
 g++ --version
 conda list
 
+if [ -d "$WORKSPACE/libgdf" ] ; then
+  logger "Subfolder detected, entering for build..."
+  cd libgdf
+fi
+
 logger "Run cmake libgdf..."
 rm -rf build
 mkdir build
