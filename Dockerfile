@@ -45,6 +45,7 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     conda install -n gdf -y -c numba \
       -c conda-forge \
       cmake \
+      flake8 \
       make \
       numba=${NUMBA_VERSION} \
       numpy=${NUMPY_VERSION} \
