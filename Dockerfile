@@ -6,10 +6,13 @@ FROM nvidia/cuda:${CUDA_VERSION}-devel-${LINUX_VERSION}
 ARG CC_VERSION=5
 ARG CXX_VERSION=5
 ARG PYTHON_VERSION=3.5
+ARG CYTHON_VERSION="0.28.*"
 ARG NUMBA_VERSION=0.40.0
 ARG NUMPY_VERSION=1.14.5
 ARG PANDAS_VERSION=0.20.3
 ARG PYARROW_VERSION=0.10
+ARG GTEST_VERSION=1.8.0
+ARG CMAKE_VERSION=3.12
 ARG HASH_JOIN=ON
 ARG MINICONDA_URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
 
@@ -44,8 +47,13 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     conda create -n gdf python=${PYTHON_VERSION} && \
     conda install -n gdf -y -c numba \
       -c conda-forge \
-      cmake \
+      anaconda-client \
+      cmake=${CMAKE_VERSION} \
+      conda-build \
+      conda-verify \
+      cython=${CYTHON_VERSION} \
       flake8 \
+      gtest=${GTEST_VERSION} \
       make \
       numba=${NUMBA_VERSION} \
       numpy=${NUMPY_VERSION} \
