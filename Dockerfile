@@ -41,8 +41,6 @@ RUN apt update -y --fix-missing && \
 ## Build combined libgdf/pygdf conda env
 RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     sh /miniconda.sh -b -p /conda && \
-    conda update -n base conda && \
-    conda install python=${PYTHON_VERSION} && \
     rm -f /miniconda.sh && \
     conda create -n gdf python=${PYTHON_VERSION} && \
     conda install -n gdf -y -c numba \
