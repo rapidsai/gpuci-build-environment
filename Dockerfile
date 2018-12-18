@@ -53,7 +53,6 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
       conda-verify \
       cython=${CYTHON_VERSION} \
       flake8 \
-      gtest=${GTEST_VERSION} \
       make \
       numba=${NUMBA_VERSION} \
       numpy=${NUMPY_VERSION} \
