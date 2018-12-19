@@ -24,6 +24,7 @@ ENV NUMBAPRO_NVVM=/usr/local/cuda/nvvm/lib64/libnvvm.so
 ENV NUMBAPRO_LIBDEVICE=/usr/local/cuda/nvvm/libdevice/
 ENV CC=/usr/bin/gcc-${CC_VERSION}
 ENV CXX=/usr/bin/g++-${CXX_VERSION}
+ENV CUDAHOSTCXX=/usr/bin/g++-${CXX_VERSION}
 ENV PATH=${PATH}:/conda/bin
 
 # Update and add pkgs
