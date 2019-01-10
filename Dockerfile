@@ -36,7 +36,7 @@ RUN apt update -y --fix-missing && \
       libboost-all-dev \
       software-properties-common \
       wget \
-    && add-apt-repository -y ppa:jonathonf/gcc-7.1 && \
+    && add-apt-repository -y ppa:jonathonf/gcc-7.2 && \
     apt-get update && \
     apt install -y \
       gcc-${CC_VERSION} \
