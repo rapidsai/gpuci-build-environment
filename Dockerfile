@@ -33,10 +33,14 @@ RUN apt update -y --fix-missing && \
     apt install -y \
       curl \
       git \
+      libboost-all-dev \
+      software-properties-common \
+      wget \
+    && add-apt-repository -y ppa:jonathonf/gcc-7.1 && \
+    apt-get update && \
+    apt install -y \
       gcc-${CC_VERSION} \
       g++-${CXX_VERSION} \
-      libboost-all-dev \
-      wget \
     && rm -rf /var/lib/apt/lists/*
 
 # Install conda
