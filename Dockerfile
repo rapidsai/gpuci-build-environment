@@ -30,20 +30,20 @@ ENV PATH=${PATH}:/conda/bin
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and add pkgs
-RUN apt update -y --fix-missing && \
-    apt upgrade -y && \
-    apt install -y \
+RUN apt-get update -y --fix-missing && \
+    apt-get upgrade -y && \
+    apt-get -qq install apt-utils -y --no-install-recommends && \
+    apt-get install -y \
       curl \
       git \
-      libboost-all-dev \
-      software-properties-common \
-      wget \
-      tzdata \
-    && add-apt-repository -y ppa:jonathonf/gcc-7.2 && \
-    apt-get update && \
-    apt install -y \
+      screen \
       gcc-${CC_VERSION} \
       g++-${CXX_VERSION} \
+      libboost-all-dev \
+      tzdata \
+      wget \
+      vim \
+      zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install conda
