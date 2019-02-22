@@ -27,6 +27,7 @@ ENV CC=/usr/bin/gcc-${CC_VERSION}
 ENV CXX=/usr/bin/g++-${CXX_VERSION}
 ENV CUDAHOSTCXX=/usr/bin/g++-${CXX_VERSION}
 ENV PATH=${PATH}:/conda/bin
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and add pkgs
 RUN apt update -y --fix-missing && \
@@ -37,6 +38,7 @@ RUN apt update -y --fix-missing && \
       libboost-all-dev \
       software-properties-common \
       wget \
+      tzdata \
     && add-apt-repository -y ppa:jonathonf/gcc-7.2 && \
     apt-get update && \
     apt install -y \
