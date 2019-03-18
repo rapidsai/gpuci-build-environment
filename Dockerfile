@@ -54,7 +54,7 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     conda create -n gdf python=${PYTHON_VERSION} && \
     conda install -n gdf -y -c numba \
       -c conda-forge \
-      -c nvidia \
+      -c rapidsai \
       anaconda-client \
       arrow-cpp=${ARROW_CPP_VERSION} \
       cmake=${CMAKE_VERSION} \
