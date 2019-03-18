@@ -51,10 +51,9 @@ RUN apt-get update -y --fix-missing && \
 RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     sh /miniconda.sh -b -p /conda && \
     rm -f /miniconda.sh && \
-    conda create -n gdf python=${PYTHON_VERSION} && \
-    conda install -n gdf -y -c numba \
+    conda create --no-default-packages -n gdf -c conda-forge python=${PYTHON_VERSION} && \
+    conda install -n gdf -y -c rapidsai \
       -c conda-forge \
-      -c rapidsai \
       anaconda-client \
       arrow-cpp=${ARROW_CPP_VERSION} \
       cmake=${CMAKE_VERSION} \
