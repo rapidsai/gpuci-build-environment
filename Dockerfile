@@ -12,8 +12,8 @@ ARG CMAKE_VERSION=3.12
 ARG NUMBA_VERSION=0.40
 ARG NUMPY_VERSION=1.14.5
 ARG PANDAS_VERSION=0.23.4
-ARG PYARROW_VERSION=0.12.0
-ARG ARROW_CPP_VERSION=0.12.0
+ARG PYARROW_VERSION=0.12.1
+ARG ARROW_CPP_VERSION=0.12.1
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
 ARG MINICONDA_URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
@@ -67,7 +67,6 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
       make \
       numba=${NUMBA_VERSION} \
       numpy=${NUMPY_VERSION} \
-      numpy-base=${NUMPY_VERSION} \
       nvstrings \
       pandas=${PANDAS_VERSION} \
       pyarrow=${PYARROW_VERSION} \
