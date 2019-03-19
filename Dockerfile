@@ -1,8 +1,10 @@
 ARG CUDA_VERSION=9.2
+ARG CUDA_SHORT_VERSION=${CUDA_VERSION}
 ARG LINUX_VERSION=ubuntu16.04
 FROM nvidia/cuda:${CUDA_VERSION}-devel-${LINUX_VERSION}
 
 # Define arguments
+ARG CUDA_SHORT_VERSION
 ARG CC_VERSION=5
 ARG CXX_VERSION=5
 ARG PYTHON_VERSION=3.6
@@ -10,10 +12,12 @@ ARG CFFI_VERSION=1.11.5
 ARG CYTHON_VERSION=0.29
 ARG CMAKE_VERSION=3.12
 ARG NUMBA_VERSION=0.40
-ARG NUMPY_VERSION=1.14.5
+ARG NUMPY_VERSION=1.16.2
 ARG PANDAS_VERSION=0.23.4
 ARG PYARROW_VERSION=0.12.1
 ARG ARROW_CPP_VERSION=0.12.1
+ARG SKLEARN_VERSION=0.20.3
+ARG SCIPY_VERSION=1.2.1
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
 ARG MINICONDA_URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
@@ -51,7 +55,12 @@ RUN apt-get update -y --fix-missing && \
 RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     sh /miniconda.sh -b -p /conda && \
     rm -f /miniconda.sh && \
-    conda create --no-default-packages -n gdf -c conda-forge python=${PYTHON_VERSION} && \
+    conda update -y -n base -c conda-forge conda
+
+# Add a condarc to remove blacklist
+ADD .condarc-cuda${CUDA_SHORT_VERSION} /root/.condarc
+
+RUN conda create --no-default-packages -n gdf -c conda-forge python=${PYTHON_VERSION} && \
     conda install -n gdf -y -c rapidsai \
       -c conda-forge \
       anaconda-client \
@@ -70,8 +79,9 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
       pandas=${PANDAS_VERSION} \
       pyarrow=${PYARROW_VERSION} \
       pytest \
-      scikit-learn \
-      scipy \
+      scikit-learn=${SKLEARN_VERSION} \
+      scipy=${SCIPY_VERSION} \
+      conda-forge::blas=1.1=openblas \
     && conda clean -a && \
     chmod 777 -R /conda
 
