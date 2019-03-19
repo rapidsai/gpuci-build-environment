@@ -16,6 +16,8 @@ ARG NUMPY_VERSION=1.16.2
 ARG PANDAS_VERSION=0.23.4
 ARG PYARROW_VERSION=0.12.1
 ARG ARROW_CPP_VERSION=0.12.1
+ARG SKLEARN_VERSION=0.20.3
+ARG SCIPY_VERSION=1.2.1
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
 ARG MINICONDA_URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
@@ -77,8 +79,8 @@ RUN conda create --no-default-packages -n gdf -c conda-forge python=${PYTHON_VER
       pandas=${PANDAS_VERSION} \
       pyarrow=${PYARROW_VERSION} \
       pytest \
-      scikit-learn \
-      scipy \
+      scikit-learn=${SKLEARN_VERSION} \
+      scipy=${SCIPY_VERSION} \
       conda-forge::blas=1.1=openblas \
     && conda clean -a && \
     chmod 777 -R /conda
