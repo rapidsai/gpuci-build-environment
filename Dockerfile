@@ -10,7 +10,7 @@ ARG CFFI_VERSION=1.11.5
 ARG CYTHON_VERSION=0.29
 ARG CMAKE_VERSION=3.12
 ARG NUMBA_VERSION=0.40
-ARG NUMPY_VERSION=1.14.5
+ARG NUMPY_VERSION=1.16.2
 ARG PANDAS_VERSION=0.23.4
 ARG PYARROW_VERSION=0.12.1
 ARG ARROW_CPP_VERSION=0.12.1
@@ -28,6 +28,10 @@ ENV CXX=/usr/bin/g++-${CXX_VERSION}
 ENV CUDAHOSTCXX=/usr/bin/g++-${CXX_VERSION}
 ENV PATH=${PATH}:/conda/bin
 ENV DEBIAN_FRONTEND=noninteractive
+
+# Add a condarc to remove blacklist
+ADD .condarc /root/.condarc
+# Need some bashfu here to update it to the proper cuda label
 
 # Update and add pkgs
 RUN apt-get update -y --fix-missing && \
@@ -72,6 +76,7 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
       pytest \
       scikit-learn \
       scipy \
+      conda-forge::blas=1.1=openblas \
     && conda clean -a && \
     chmod 777 -R /conda
 

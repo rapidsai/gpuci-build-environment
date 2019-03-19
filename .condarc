@@ -1,0 +1,6 @@
+channel_priority: strict
+channels:
+  - rapidsai
+  - rapidsai-nightly
+  - nvidia
+  - conda-forge
