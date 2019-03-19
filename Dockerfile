@@ -1,8 +1,10 @@
 ARG CUDA_VERSION=9.2
+ARG CUDA_SHORT_VERSION=${CUDA_VERSION}
 ARG LINUX_VERSION=ubuntu16.04
 FROM nvidia/cuda:${CUDA_VERSION}-devel-${LINUX_VERSION}
 
 # Define arguments
+ARG CUDA_SHORT_VERSION
 ARG CC_VERSION=5
 ARG CXX_VERSION=5
 ARG PYTHON_VERSION=3.6
@@ -29,10 +31,6 @@ ENV CUDAHOSTCXX=/usr/bin/g++-${CXX_VERSION}
 ENV PATH=${PATH}:/conda/bin
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Add a condarc to remove blacklist
-ADD .condarc /root/.condarc
-# Need some bashfu here to update it to the proper cuda label
-
 # Update and add pkgs
 RUN apt-get update -y --fix-missing && \
     apt-get upgrade -y && \
@@ -55,7 +53,12 @@ RUN apt-get update -y --fix-missing && \
 RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     sh /miniconda.sh -b -p /conda && \
     rm -f /miniconda.sh && \
-    conda create --no-default-packages -n gdf -c conda-forge python=${PYTHON_VERSION} && \
+    conda update -y -n base -c conda-forge conda
+
+# Add a condarc to remove blacklist
+ADD .condarc-cuda${CUDA_SHORT_VERSION} /root/.condarc
+
+RUN conda create --no-default-packages -n gdf -c conda-forge python=${PYTHON_VERSION} && \
     conda install -n gdf -y -c rapidsai \
       -c conda-forge \
       anaconda-client \
