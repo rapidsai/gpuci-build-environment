@@ -75,7 +75,6 @@ RUN conda create --no-default-packages -n gdf -c conda-forge python=${PYTHON_VER
       make \
       numba=${NUMBA_VERSION} \
       numpy=${NUMPY_VERSION} \
-      nvstrings \
       pandas=${PANDAS_VERSION} \
       pyarrow=${PYARROW_VERSION} \
       pytest \
