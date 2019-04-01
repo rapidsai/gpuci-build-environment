@@ -18,6 +18,9 @@ ARG PYARROW_VERSION=0.12.1
 ARG ARROW_CPP_VERSION=0.12.1
 ARG SKLEARN_VERSION=0.20.3
 ARG SCIPY_VERSION=1.2.1
+ARG LIBGCC_NG_VERSION=7.3.0
+ARG LIBGFORTRAIN_NG_VERSION=7.3.0
+ARG LIBSTDCXX_NG_VERSION=7.3.0
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
 ARG MINICONDA_URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
@@ -60,9 +63,8 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
 # Add a condarc to remove blacklist
 ADD .condarc-cuda${CUDA_SHORT_VERSION} /root/.condarc
 
-RUN conda create --no-default-packages -n gdf -c conda-forge python=${PYTHON_VERSION} && \
-    conda install -n gdf -y -c rapidsai \
-      -c conda-forge \
+RUN conda create --no-default-packages -n gdf python=${PYTHON_VERSION} && \
+    conda install -n gdf -y \
       anaconda-client \
       arrow-cpp=${ARROW_CPP_VERSION} \
       cmake=${CMAKE_VERSION} \
@@ -81,6 +83,9 @@ RUN conda create --no-default-packages -n gdf -c conda-forge python=${PYTHON_VER
       scikit-learn=${SKLEARN_VERSION} \
       scipy=${SCIPY_VERSION} \
       conda-forge::blas=1.1=openblas \
+      libgcc-ng=${LIBGCC_NG_VERSION} \
+      libgfortran-ng=${LIBGFORTRAIN_NG_VERSION} \
+      libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
     && conda clean -a && \
     chmod 777 -R /conda
 

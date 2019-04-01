@@ -4,3 +4,5 @@ channels:
   - rapidsai-nightly/label/cuda10.0
   - nvidia/label/cuda10.0
   - conda-forge
+  - defaults
+
