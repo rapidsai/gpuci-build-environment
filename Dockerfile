@@ -60,9 +60,8 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
 # Add a condarc to remove blacklist
 ADD .condarc-cuda${CUDA_SHORT_VERSION} /root/.condarc
 
-RUN conda create --no-default-packages -n gdf -c conda-forge python=${PYTHON_VERSION} && \
-    conda install -n gdf -y -c rapidsai \
-      -c conda-forge \
+RUN conda create --no-default-packages -n gdf python=${PYTHON_VERSION} && \
+    conda install -n gdf -y \
       anaconda-client \
       arrow-cpp=${ARROW_CPP_VERSION} \
       cmake=${CMAKE_VERSION} \
