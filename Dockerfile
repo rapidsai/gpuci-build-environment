@@ -68,6 +68,7 @@ RUN conda create --no-default-packages -n gdf \
       anaconda-client \
       arrow-cpp=${ARROW_CPP_VERSION} \
       cmake=${CMAKE_VERSION} \
+      cmake_setuptools \
       conda-build \
       conda-verify \
       cffi=${CFFI_VERSION} \
