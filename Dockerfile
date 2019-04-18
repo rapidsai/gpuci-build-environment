@@ -81,6 +81,7 @@ RUN conda create --no-default-packages -n gdf \
       pandas=${PANDAS_VERSION} \
       pyarrow=${PYARROW_VERSION} \
       pytest \
+      pytest-cov \
       scikit-learn=${SKLEARN_VERSION} \
       scipy=${SCIPY_VERSION} \
       conda-forge::blas=1.1=openblas \
