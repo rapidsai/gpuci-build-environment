@@ -175,7 +175,6 @@ SHELL ["/bin/bash", "-c"]
 # those libs
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH_POSTBUILD:$CONDA_PREFIX
 
-# Copy notebooks, leave git meta-data, EXPOSE ports, WORKDIR=/rapids/notebooks
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
