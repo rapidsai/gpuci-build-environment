@@ -11,7 +11,7 @@ ARG PYTHON_VERSION=3.6
 ARG CFFI_VERSION=1.11.5
 ARG CYTHON_VERSION=0.29
 ARG CMAKE_VERSION=3.12
-ARG NUMBA_VERSION=0.40
+ARG NUMBA_VERSION=0.41
 ARG NUMPY_VERSION=1.16.2
 ARG PANDAS_VERSION=0.23.4
 ARG PYARROW_VERSION=0.12.1
@@ -76,7 +76,7 @@ RUN conda create --no-default-packages -n gdf \
       cython=${CYTHON_VERSION} \
       flake8 \
       make \
-      numba=${NUMBA_VERSION} \
+      numba>=${NUMBA_VERSION} \
       numpy=${NUMPY_VERSION} \
       pandas=${PANDAS_VERSION} \
       pyarrow=${PYARROW_VERSION} \
