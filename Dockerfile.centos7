@@ -57,6 +57,12 @@ ENV CUDA_VERSION=${CUDA_MAJORMINOR_VERSION}
 # ENV CXX=/opt/rh/devtoolset-7/root/usr/bin/g++
 # ENV CUDAHOSTCXX=/opt/rh/devtoolset-7/root/usr/bin/g++
 RUN mkdir -p ${RAPIDS_SRC_DIR}/tmp
+#
+# The support dir contains RPMs that enable additional repos needed
+# for CentOS (among other things). Copy them to a temp dir and remove
+# after installed.
+#
+COPY ${SUPPORT_FILES_DIR}/*.rpm ${RAPIDS_SRC_DIR}/tmp
 
 RUN yum install -y ${RAPIDS_SRC_DIR}/tmp/*.rpm && \
     yum upgrade -y && \
