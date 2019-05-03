@@ -35,6 +35,7 @@ ARG PYTHON_VERSION=3.6
 ARG SCIPY_VERSION=1.2.1
 ARG SKLEARN_VERSION=0.20.3
 ARG TINI_URL=https://github.com/krallin/tini/releases/download/v0.18.0/tini
+ARG NUM_BUILD_CPUS=""
 ARG UTILS_DIR=utils
 ARG SUPPORT_FILES_DIR=supportfiles
 ARG RAPIDS_SRC_DIR=/rapids
@@ -109,7 +110,7 @@ RUN cd ${GCC7_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/gcc-7.2.0/gcc-7.2.0.tar
 RUN cd ${GCC7_DIR} && tar zxf gcc-7.2.0.tar.gz
 RUN cd ${GCC7_DIR}/gcc-7.2.0 && \
     ./configure --prefix=${GCC7_DIR} --disable-multilib && \
-    make -j && make install
+    make -j${NUM_BUILD_CPUS} && make install
 
 # Remove gcc source dir and tarfile
 RUN rm -r ${GCC7_DIR}/gcc-7.2.0 ${GCC7_DIR}/gcc-7.2.0.tar.gz
