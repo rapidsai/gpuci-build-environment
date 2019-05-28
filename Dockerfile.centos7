@@ -137,7 +137,7 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     rm -f /miniconda.sh && \
     conda update -y -n base -c conda-forge conda
 
-ADD .condarc-cuda${CUDA_SHORT_VERSION} /conda/.condarc
+ADD .condarc /conda/.condarc
 
 RUN conda create --no-default-packages -n gdf \
       python=${PYTHON_VERSION} \

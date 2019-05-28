@@ -61,7 +61,7 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     conda update -y -n base -c conda-forge conda
 
 # Add a condarc to remove blacklist
-ADD .condarc-cuda${CUDA_SHORT_VERSION} /conda/.condarc
+ADD .condarc /conda/.condarc
 
 RUN conda create --no-default-packages -n gdf \
       python=${PYTHON_VERSION} \
