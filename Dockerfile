@@ -23,7 +23,7 @@ ARG LIBGFORTRAIN_NG_VERSION=7.3.0
 ARG LIBSTDCXX_NG_VERSION=7.3.0
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
-ARG MINICONDA_URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+ARG MINICONDA_URL="https://repo.anaconda.com/miniconda/Miniconda2-4.6.14-Linux-x86_64.sh"
 
 # Set environment
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
