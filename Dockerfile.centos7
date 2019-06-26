@@ -23,7 +23,8 @@ ARG IPYTHON_VERSION=7.3*
 ARG LIBGCC_NG_VERSION=7.3.0
 ARG LIBGFORTRAIN_NG_VERSION=7.3.0
 ARG LIBSTDCXX_NG_VERSION=7.3.0
-ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda2-4.6.14-Linux-x86_64.sh
+ARG CONDA_VERSION=4.6.14
+ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
 ARG NUMBA_VERSION=0.41
 ARG NUMPY_VERSION=1.16.2
 ARG NVIDIA_CONDA_LABEL=nvidia/label/cuda${CUDA_MAJORMINOR_VERSION}
@@ -80,7 +81,7 @@ RUN yum install -y ${RAPIDS_SRC_DIR}/tmp/*.rpm && \
       libnccl-2.4.2-1+cuda${CUDA_MAJORMINOR_VERSION} \
       libnccl-devel-2.4.2-1+cuda${CUDA_MAJORMINOR_VERSION} \
       libnccl-static-2.4.2-1+cuda${CUDA_MAJORMINOR_VERSION} \
-      gmp-devel mpfr-devel libmpc-devel file 
+      gmp-devel mpfr-devel libmpc-devel file
 
 RUN curl -L ${TINI_URL} -o /usr/bin/tini && \
     chmod +x /usr/bin/tini
@@ -106,7 +107,7 @@ RUN rm -rf ${RAPIDS_SRC_DIR}/tmp
 ARG GCC7_DIR=${RAPIDS_SRC_DIR}/gcc7
 
 RUN mkdir -p ${GCC7_DIR}
-RUN cd ${GCC7_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/gcc-7.2.0/gcc-7.2.0.tar.gz 
+RUN cd ${GCC7_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/gcc-7.2.0/gcc-7.2.0.tar.gz
 RUN cd ${GCC7_DIR} && tar zxf gcc-7.2.0.tar.gz
 RUN cd ${GCC7_DIR}/gcc-7.2.0 && \
     ./configure --prefix=${GCC7_DIR} --disable-multilib && \
@@ -135,7 +136,7 @@ ENV LD_LIBRARY_PATH_POSTBUILD=${GCC7_DIR}/lib64:$LD_LIBRARY_PATH_POSTBUILD
 RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     sh /miniconda.sh -b -p /conda && \
     rm -f /miniconda.sh && \
-    conda update -y -n base -c conda-forge conda
+    echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
 
 ADD .condarc-cuda${CUDA_SHORT_VERSION} /conda/.condarc
 

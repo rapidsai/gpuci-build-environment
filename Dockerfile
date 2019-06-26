@@ -23,7 +23,8 @@ ARG LIBGFORTRAIN_NG_VERSION=7.3.0
 ARG LIBSTDCXX_NG_VERSION=7.3.0
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
-ARG MINICONDA_URL="https://repo.anaconda.com/miniconda/Miniconda2-4.6.14-Linux-x86_64.sh"
+ARG CONDA_VERSION=4.6.14
+ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
 
 # Set environment
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
@@ -58,7 +59,7 @@ RUN apt-get update -y --fix-missing && \
 RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     sh /miniconda.sh -b -p /conda && \
     rm -f /miniconda.sh && \
-    conda update -y -n base -c conda-forge conda
+    echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
 
 # Add a condarc to remove blacklist
 ADD .condarc-cuda${CUDA_SHORT_VERSION} /conda/.condarc
