@@ -24,6 +24,8 @@ ARG LIBSTDCXX_NG_VERSION=7.3.0
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
 ARG CONDA_VERSION=4.6.14
+ARG CONDA_BUILD_VERSION=3.18.3
+ARG CONDA_VERIFY_VERSION=3.1.1
 ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
 
 # Set environment
@@ -71,8 +73,8 @@ RUN conda create --no-default-packages -n gdf \
       cmake=${CMAKE_VERSION} \
       cmake_setuptools \
       conda=${CONDA_VERSION} \
-      conda-build \
-      conda-verify \
+      conda-build=${CONDA_BUILD_VERSION} \
+      conda-verify=${CONDA_VERIFY_VERSION} \
       cffi=${CFFI_VERSION} \
       cmake=${CMAKE_VERSION} \
       cython=${CYTHON_VERSION} \
