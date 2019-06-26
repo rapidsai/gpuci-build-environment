@@ -70,6 +70,7 @@ RUN conda create --no-default-packages -n gdf \
       arrow-cpp=${ARROW_CPP_VERSION} \
       cmake=${CMAKE_VERSION} \
       cmake_setuptools \
+      conda=${CONDA_VERSION} \
       conda-build \
       conda-verify \
       cffi=${CFFI_VERSION} \
