@@ -79,6 +79,8 @@ RUN conda create --no-default-packages -n gdf \
       cmake=${CMAKE_VERSION} \
       cython=${CYTHON_VERSION} \
       flake8 \
+      black \
+      isort \
       make \
       numba>=${NUMBA_VERSION} \
       numpy=${NUMPY_VERSION} \
