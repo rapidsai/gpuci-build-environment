@@ -41,61 +41,61 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and add pkgs
 RUN apt-get update -y --fix-missing && \
-  apt-get upgrade -y && \
-  apt-get -qq install apt-utils -y --no-install-recommends && \
-  apt-get install -y \
-  curl \
-  git \
-  screen \
-  gcc-${CC_VERSION} \
-  g++-${CXX_VERSION} \
-  libboost-all-dev \
-  tzdata \
-  wget \
-  vim \
-  zlib1g-dev \
-  && rm -rf /var/lib/apt/lists/*
+    apt-get upgrade -y && \
+    apt-get -qq install apt-utils -y --no-install-recommends && \
+    apt-get install -y \
+      curl \
+      git \
+      screen \
+      gcc-${CC_VERSION} \
+      g++-${CXX_VERSION} \
+      libboost-all-dev \
+      tzdata \
+      wget \
+      vim \
+      zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install conda
 ## Build combined libgdf/pygdf conda env
 RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
-  sh /miniconda.sh -b -p /conda && \
-  rm -f /miniconda.sh && \
-  echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
+    sh /miniconda.sh -b -p /conda && \
+    rm -f /miniconda.sh && \
+    echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
 
 # Add a condarc to remove blacklist
 ADD .condarc-cuda${CUDA_SHORT_VERSION} /conda/.condarc
 
 RUN conda create --no-default-packages -n gdf \
-  python=${PYTHON_VERSION} \
-  anaconda-client \
-  arrow-cpp=${ARROW_CPP_VERSION} \
-  cmake=${CMAKE_VERSION} \
-  cmake_setuptools \
-  conda=${CONDA_VERSION} \
-  conda-build=${CONDA_BUILD_VERSION} \
-  conda-verify=${CONDA_VERIFY_VERSION} \
-  cffi=${CFFI_VERSION} \
-  cmake=${CMAKE_VERSION} \
-  cython=${CYTHON_VERSION} \
-  flake8 \
-  black \
-  isort \
-  make \
-  numba>=${NUMBA_VERSION} \
-  numpy=${NUMPY_VERSION} \
-  pandas=${PANDAS_VERSION} \
-  pyarrow=${PYARROW_VERSION} \
-  pytest \
-  pytest-cov \
-  scikit-learn=${SKLEARN_VERSION} \
-  scipy=${SCIPY_VERSION} \
-  conda-forge::blas=1.1=openblas \
-  libgcc-ng=${LIBGCC_NG_VERSION} \
-  libgfortran-ng=${LIBGFORTRAIN_NG_VERSION} \
-  libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
-  && conda clean -a && \
-  chmod 777 -R /conda
+      python=${PYTHON_VERSION} \
+      anaconda-client \
+      arrow-cpp=${ARROW_CPP_VERSION} \
+      cmake=${CMAKE_VERSION} \
+      cmake_setuptools \
+      conda=${CONDA_VERSION} \
+      conda-build=${CONDA_BUILD_VERSION} \
+      conda-verify=${CONDA_VERIFY_VERSION} \
+      cffi=${CFFI_VERSION} \
+      cmake=${CMAKE_VERSION} \
+      cython=${CYTHON_VERSION} \
+      flake8 \
+      black \
+      isort \
+      make \
+      numba>=${NUMBA_VERSION} \
+      numpy=${NUMPY_VERSION} \
+      pandas=${PANDAS_VERSION} \
+      pyarrow=${PYARROW_VERSION} \
+      pytest \
+      pytest-cov \
+      scikit-learn=${SKLEARN_VERSION} \
+      scipy=${SCIPY_VERSION} \
+      conda-forge::blas=1.1=openblas \
+      libgcc-ng=${LIBGCC_NG_VERSION} \
+      libgfortran-ng=${LIBGFORTRAIN_NG_VERSION} \
+      libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
+    && conda clean -a && \
+    chmod 777 -R /conda
 
 ## Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
