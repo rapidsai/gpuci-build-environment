@@ -24,9 +24,11 @@ ARG LIBSTDCXX_NG_VERSION=7.3.0
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
 ARG CONDA_VERSION=4.6.14
-ARG CONDA_BUILD_VERSION=3.18.3
+ARG CONDA_BUILD_VERSION=3.18.5
 ARG CONDA_VERIFY_VERSION=3.1.1
 ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
+ARG JDK_VERSION=8.0.152
+ARG MAVEN_VERSION=3.6.0
 
 # Set environment
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
@@ -78,6 +80,8 @@ RUN conda create --no-default-packages -n gdf \
       cffi=${CFFI_VERSION} \
       cmake=${CMAKE_VERSION} \
       cython=${CYTHON_VERSION} \
+      openjdk=${JDK_VERSION} \
+      maven=${MAVEN_VERSION} \
       flake8 \
       black \
       isort \
