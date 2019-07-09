@@ -146,13 +146,12 @@ RUN conda create --no-default-packages -n gdf \
       python=${PYTHON_VERSION} \
       anaconda-client \
       arrow-cpp=${ARROW_CPP_VERSION} \
+      cffi=${CFFI_VERSION} \
       cmake=${CMAKE_VERSION} \
       cmake_setuptools \
       conda=${CONDA_VERSION} \
       conda-build=${CONDA_BUILD_VERSION} \
       conda-verify=${CONDA_VERIFY_VERSION} \
-      cffi=${CFFI_VERSION} \
-      cmake=${CMAKE_VERSION} \
       cython=${CYTHON_VERSION} \
       flake8 \
       black \
