@@ -23,8 +23,16 @@ ARG IPYTHON_VERSION=7.3*
 ARG LIBGCC_NG_VERSION=7.3.0
 ARG LIBGFORTRAIN_NG_VERSION=7.3.0
 ARG LIBSTDCXX_NG_VERSION=7.3.0
+<<<<<<< HEAD
 ARG MINICONDA_URL=https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 ARG NUMBA_VERSION=0.44
+=======
+ARG CONDA_VERSION=4.6.14
+ARG CONDA_BUILD_VERSION=3.17.8
+ARG CONDA_VERIFY_VERSION=3.1.1
+ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
+ARG NUMBA_VERSION=0.41
+>>>>>>> upstream/master
 ARG NUMPY_VERSION=1.16.2
 ARG NVIDIA_CONDA_LABEL=nvidia/label/cuda${CUDA_MAJORMINOR_VERSION}
 ARG RAPIDSAI_CONDA_LABEL=rapidsai/label/cuda${CUDA_MAJORMINOR_VERSION}
@@ -80,7 +88,7 @@ RUN yum install -y ${RAPIDS_SRC_DIR}/tmp/*.rpm && \
       libnccl-2.4.2-1+cuda${CUDA_MAJORMINOR_VERSION} \
       libnccl-devel-2.4.2-1+cuda${CUDA_MAJORMINOR_VERSION} \
       libnccl-static-2.4.2-1+cuda${CUDA_MAJORMINOR_VERSION} \
-      gmp-devel mpfr-devel libmpc-devel file 
+      gmp-devel mpfr-devel libmpc-devel file
 
 RUN curl -L ${TINI_URL} -o /usr/bin/tini && \
     chmod +x /usr/bin/tini
@@ -106,9 +114,15 @@ RUN rm -rf ${RAPIDS_SRC_DIR}/tmp
 ARG GCC7_DIR=${RAPIDS_SRC_DIR}/gcc7
 
 RUN mkdir -p ${GCC7_DIR}
+<<<<<<< HEAD
 RUN cd ${GCC7_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/gcc-7.2.0/gcc-7.3.0.tar.gz 
 RUN cd ${GCC7_DIR} && tar zxf gcc-7.3.0.tar.gz
 RUN cd ${GCC7_DIR}/gcc-7.3.0 && \
+=======
+RUN cd ${GCC7_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/gcc-7.2.0/gcc-7.2.0.tar.gz
+RUN cd ${GCC7_DIR} && tar zxf gcc-7.2.0.tar.gz
+RUN cd ${GCC7_DIR}/gcc-7.2.0 && \
+>>>>>>> upstream/master
     ./configure --prefix=${GCC7_DIR} --disable-multilib && \
     make -j${NUM_BUILD_CPUS} && make install
 
@@ -135,7 +149,7 @@ ENV LD_LIBRARY_PATH_POSTBUILD=${GCC7_DIR}/lib64:$LD_LIBRARY_PATH_POSTBUILD
 RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     sh /miniconda.sh -b -p /conda && \
     rm -f /miniconda.sh && \
-    conda update -y -n base -c conda-forge conda
+    echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
 
 ADD .condarc-cuda${CUDA_SHORT_VERSION} /conda/.condarc
 
@@ -143,14 +157,16 @@ RUN conda create --no-default-packages -n gdf \
       python=${PYTHON_VERSION} \
       anaconda-client \
       arrow-cpp=${ARROW_CPP_VERSION} \
-      cmake=${CMAKE_VERSION} \
-      cmake_setuptools \
-      conda-build \
-      conda-verify \
       cffi=${CFFI_VERSION} \
       cmake=${CMAKE_VERSION} \
+      cmake_setuptools \
+      conda=${CONDA_VERSION} \
+      conda-build=${CONDA_BUILD_VERSION} \
+      conda-verify=${CONDA_VERIFY_VERSION} \
       cython=${CYTHON_VERSION} \
       flake8 \
+      black \
+      isort \
       make \
       numba>=${NUMBA_VERSION} \
       numpy=${NUMPY_VERSION} \
@@ -158,7 +174,6 @@ RUN conda create --no-default-packages -n gdf \
       pyarrow=${PYARROW_VERSION} \
       pytest \
       pytest-cov \
-      codecov \
       scikit-learn=${SKLEARN_VERSION} \
       scipy=${SCIPY_VERSION} \
       conda-forge::blas=1.1=openblas \

@@ -23,7 +23,10 @@ ARG LIBGFORTRAIN_NG_VERSION=7.3.0
 ARG LIBSTDCXX_NG_VERSION=7.3.0
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
-ARG MINICONDA_URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+ARG CONDA_VERSION=4.6.14
+ARG CONDA_BUILD_VERSION=3.17.8
+ARG CONDA_VERIFY_VERSION=3.1.1
+ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
 
 # Set environment
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
@@ -58,7 +61,7 @@ RUN apt-get update -y --fix-missing && \
 RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     sh /miniconda.sh -b -p /conda && \
     rm -f /miniconda.sh && \
-    conda update -y -n base -c conda-forge conda
+    echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
 
 # Add a condarc to remove blacklist
 ADD .condarc-cuda${CUDA_SHORT_VERSION} /conda/.condarc
@@ -67,14 +70,16 @@ RUN conda create --no-default-packages -n gdf \
       python=${PYTHON_VERSION} \
       anaconda-client \
       arrow-cpp=${ARROW_CPP_VERSION} \
-      cmake=${CMAKE_VERSION} \
-      cmake_setuptools \
-      conda-build \
-      conda-verify \
       cffi=${CFFI_VERSION} \
       cmake=${CMAKE_VERSION} \
+      cmake_setuptools \
+      conda=${CONDA_VERSION} \
+      conda-build=${CONDA_BUILD_VERSION} \
+      conda-verify=${CONDA_VERIFY_VERSION} \
       cython=${CYTHON_VERSION} \
       flake8 \
+      black \
+      isort \
       make \
       numba>=${NUMBA_VERSION} \
       numpy=${NUMPY_VERSION} \
@@ -82,7 +87,6 @@ RUN conda create --no-default-packages -n gdf \
       pyarrow=${PYARROW_VERSION} \
       pytest \
       pytest-cov \
-      codecov \
       scikit-learn=${SKLEARN_VERSION} \
       scipy=${SCIPY_VERSION} \
       conda-forge::blas=1.1=openblas \
