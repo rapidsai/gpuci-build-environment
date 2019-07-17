@@ -66,6 +66,14 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
 # Add a condarc to remove blacklist
 ADD .condarc-cuda${CUDA_SHORT_VERSION} /conda/.condarc
 
+# Add utlities to base env
+RUN conda install -y \
+      codecov \
+      conda=${CONDA_VERSION} \
+      conda-build=${CONDA_BUILD_VERSION} \
+      conda-verify=${CONDA_VERIFY_VERSION}
+
+# Create gdf conda env
 RUN conda create --no-default-packages -n gdf \
       python=${PYTHON_VERSION} \
       anaconda-client \
@@ -75,7 +83,7 @@ RUN conda create --no-default-packages -n gdf \
       cmake_setuptools \
       conda=${CONDA_VERSION} \
       conda-build=${CONDA_BUILD_VERSION} \
-      conda-verify=${CONDA_VERIFY_VERSION} \
+      conda-verify=${CONDA_VERIFY_VERSION}
       cython=${CYTHON_VERSION} \
       flake8 \
       black \
