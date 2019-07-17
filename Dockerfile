@@ -14,19 +14,20 @@ ENV PATH=${PATH}:/conda/bin
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and add pkgs and install conda
-RUN apt-get update -y --fix-missing && \
-    apt-get upgrade -y && \
-    apt-get -qq install apt-utils -y --no-install-recommends && \
-    apt-get install -y \
-      curl \
-    && rm -rf /var/lib/apt/lists/* && \
-    curl ${MINICONDA_URL} -o /miniconda.sh && \
-    sh /miniconda.sh -b -p /conda && \
+RUN apt-get update --fix-missing && \
+    apt-get install -y wget bzip2 ca-certificates curl git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    wget --quiet ${MINICONDA_URL} -O /miniconda.sh && \
+    /bin/bash /miniconda.sh -b -p /conda && \
     rm -f /miniconda.sh && \
     echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned && \
-    conda clean -a && \
+    /conda/bin/conda clean -tipsy && \
+    ln -s /conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc && \
     chmod 777 -R /conda && \
-    curl -L ${TINI_URL} -o /usr/bin/tini && \
+    wget --quiet ${TINI_URL} -O /usr/bin/tini && \
     chmod +x /usr/bin/tini 
 
 ## Enables "source activate conda"
