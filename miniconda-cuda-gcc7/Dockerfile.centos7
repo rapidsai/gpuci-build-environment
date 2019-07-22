@@ -8,6 +8,7 @@ ARG GCC7_DIR=/usr/local/gcc7
 ARG GCC7_VERSION=gcc-7.3.0
 ARG NUM_BUILD_CPUS=0
 ARG SUPPORT_FILES_DIR=supportfiles
+ARG CUDA_MAJORMINOR_VERSION=${CUDA_VERSION}
 
 # Add /usr/local/cuda/* temporarily to LD_LIBRARY_PATH to support various build steps
 # This will need to be removed later since it causes problems with certain runtime libs (numba.cuda)
@@ -35,6 +36,9 @@ RUN yum install -y /tmp/*.rpm && \
       which \
       clang \
       make \
+      libnccl-2.4.2-1+cuda${CUDA_MAJORMINOR_VERSION} \
+      libnccl-devel-2.4.2-1+cuda${CUDA_MAJORMINOR_VERSION} \
+      libnccl-static-2.4.2-1+cuda${CUDA_MAJORMINOR_VERSION} \
       gmp-devel mpfr-devel libmpc-devel file
 
 # Build gcc 7 and set the environment to use it
