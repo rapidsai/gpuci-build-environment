@@ -62,6 +62,8 @@ RUN mkdir -p ${GCC7_DIR} && \
     make -j${NUM_BUILD_CPUS} && make install && \
     rm -r ${GCC7_DIR}/${GCC7_VERSION} ${GCC7_DIR}/${GCC7_VERSION}.tar.gz
 
+COPY ${GCC7_DIR}} gcc7
+
 # Update environment to use new gcc7
 ENV CC=${GCC7_DIR}/bin/gcc
 ENV CXX=${GCC7_DIR}/bin/g++
