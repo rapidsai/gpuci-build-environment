@@ -1,10 +1,11 @@
 ARG CUDA_VERSION=9.2
+ARG CUDA_MAJORMINOR_VERSION=${CUDA_VERSION}
 ARG CUDA_TYPE=devel
 ARG LINUX_VERSION=ubuntu16.04
 FROM gpuci/miniconda-cuda:${CUDA_VERSION}-${CUDA_TYPE}-${LINUX_VERSION}
 
 # Define arguments
-ARG CUDA_MAJORMINOR_VERSION=${CUDA_VERSION}
+ARG CUDA_MAJORMINOR_VERSION
 ARG CC_VERSION=5
 ARG CXX_VERSION=5
 ARG PYTHON_VERSION=3.6
@@ -68,7 +69,7 @@ RUN conda install -y -c conda-forge -c defaults \
       conda=${CONDA_VERSION} \
       conda-build=${CONDA_BUILD_VERSION} \
       conda-verify=${CONDA_VERIFY_VERSION} \
-      cudatoolkit=${CUDA_VERSION} \
+      cudatoolkit=${CUDA_MAJORMINOR_VERSION} \
       cython=${CYTHON_VERSION} \
       flake8 \
       black \
