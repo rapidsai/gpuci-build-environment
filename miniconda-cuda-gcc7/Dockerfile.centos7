@@ -40,7 +40,7 @@ RUN yum install -y /tmp/*.rpm && \
       gmp-devel mpfr-devel libmpc-devel file
 
 # Install gcc7 from prebuilt image
-COPY --from=gpuci/builds-gcc7:${CUDA_VERSION}-devel-${LINUX_VERSION} ${GCC7_DIR} ${GCC7_DIR}
+COPY --from=gpuci/builds-gcc7:10.0-devel-centos7 /usr/local/gcc7 /usr/local/gcc7
 
 # Update environment to use new gcc7
 ENV CC=${GCC7_DIR}/bin/gcc
