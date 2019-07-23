@@ -5,8 +5,6 @@ FROM gpuci/miniconda-cuda:${CUDA_VERSION}-${CUDA_TYPE}-${LINUX_VERSION}
 
 # Define arguments
 ARG GCC7_DIR=/usr/local/gcc7
-ARG GCC7_VERSION=gcc-7.3.0
-ARG NUM_BUILD_CPUS=8
 ARG SUPPORT_FILES_DIR=supportfiles
 ARG CUDA_MAJORMINOR_VERSION=${CUDA_VERSION}
 
@@ -41,28 +39,8 @@ RUN yum install -y /tmp/*.rpm && \
       libnccl-static-2.4.2-1+cuda${CUDA_MAJORMINOR_VERSION} \
       gmp-devel mpfr-devel libmpc-devel file
 
-# Build gcc 7 and set the environment to use it
-# NOTE: this step requires packages gmp-devel, mpfr-devel,
-# libmpc-devel, and file (see above)
-
-# NOTE: Q: What about devtoolset-7? Will that work instead?
-#       A: Not quite:
-#          https://stackoverflow.com/questions/49393888/how-can-i-use-the-new-c-11-abi-with-devtoolset-7-on-centos-rhel
-#          (tl;dr: devtoolset-7 does not support the new cxx11 ABI since it
-#          conflicts with CentOS sys libs.)
-#          Rapids will use new new ABI for its binaries, including its own
-#          libstdc++, and the rest of CentOS will continue to use the
-#          system default libs.
-
-RUN mkdir -p ${GCC7_DIR} && \
-    cd ${GCC7_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/${GCC7_VERSION}/${GCC7_VERSION}.tar.gz && \
-    cd ${GCC7_DIR} && tar zxf ${GCC7_VERSION}.tar.gz && \
-    cd ${GCC7_DIR}/${GCC7_VERSION} && \
-    ./configure --prefix=${GCC7_DIR} --disable-multilib && \
-    make -j${NUM_BUILD_CPUS} && make install && \
-    rm -r ${GCC7_DIR}/${GCC7_VERSION} ${GCC7_DIR}/${GCC7_VERSION}.tar.gz
-
-COPY ${GCC7_DIR}} gcc7
+# Install gcc7 from prebuilt image
+COPY --from=gpuci/builds-gcc7:${CUDA_VERSION}-${CUDA_TYPE}-${LINUX_VERSION} ${GCC7_DIR} ${GCC7_DIR}
 
 # Update environment to use new gcc7
 ENV CC=${GCC7_DIR}/bin/gcc
