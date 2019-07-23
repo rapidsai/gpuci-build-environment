@@ -65,7 +65,6 @@ RUN conda install -y -c conda-forge -c defaults \
       arrow-cpp=${ARROW_CPP_VERSION} \
       cffi=${CFFI_VERSION} \
       cmake=${CMAKE_VERSION} \
-      cmake_setuptools \
       conda=${CONDA_VERSION} \
       conda-build=${CONDA_BUILD_VERSION} \
       conda-verify=${CONDA_VERIFY_VERSION} \
