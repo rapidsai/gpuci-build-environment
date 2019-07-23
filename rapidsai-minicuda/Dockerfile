@@ -54,7 +54,7 @@ RUN apt-get update -y --fix-missing && \
     && rm -rf /var/lib/apt/lists/*
 
 # Install conda
-RUN conda install -y -c pyviz \
+RUN conda install -y -c conda-forge -c defaults \
       codecov \
       conda=${CONDA_VERSION} \
       conda-build=${CONDA_BUILD_VERSION} \
