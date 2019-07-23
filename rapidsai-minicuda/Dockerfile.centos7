@@ -31,7 +31,6 @@ ARG PYARROW_VERSION=0.12.1
 ARG PYTHON_VERSION=3.6
 ARG SCIPY_VERSION=1.2.1
 ARG SKLEARN_VERSION=0.20.3
-ARG SUPPORT_FILES_DIR=supportfiles
 
 #
 # The support dir contains RPMs that enable additional repos needed
