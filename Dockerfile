@@ -35,9 +35,7 @@ ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION
 
 # Set environment
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
-## Needed for pygdf.concat(), avoids "OSError: library nvvm not found"
-ENV NUMBAPRO_NVVM=/usr/local/cuda/nvvm/lib64/libnvvm.so
-ENV NUMBAPRO_LIBDEVICE=/usr/local/cuda/nvvm/libdevice/
+ENV CUDA_HOME=/usr/local/cuda
 ENV CC=/usr/bin/gcc-${CC_VERSION}
 ENV CXX=/usr/bin/g++-${CXX_VERSION}
 ENV CUDAHOSTCXX=/usr/bin/g++-${CXX_VERSION}
