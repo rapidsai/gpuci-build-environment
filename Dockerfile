@@ -20,6 +20,7 @@ ARG DOUBLE_CONVERSION_VERSION=3.1.5
 ARG RAPIDJSON_VERSION=1.1.0
 ARG FLATBUFFERS_VERSION=1.10.0
 ARG BOOST_CPP_VERSION=1.70.0
+ARG FASTAVRO_VERSION=0.22.3
 ARG DLPACK_VERSION=0.2
 ARG SKLEARN_VERSION=0.20.3
 ARG SCIPY_VERSION=1.2.1
@@ -100,6 +101,7 @@ RUN conda create --no-default-packages -n gdf \
       rapidjson=${RAPIDJSON_VERSION} \
       flatbuffers=${FLATBUFFERS_VERSION} \
       boost-cpp=${BOOST_CPP_VERSION} \
+      fastavro=${FASTAVRO_VERSION} \
       dlpack=${DLPACK_VERSION} \
       pytest \
       pytest-cov \
