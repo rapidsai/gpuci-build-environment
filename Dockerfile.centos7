@@ -140,7 +140,7 @@ RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
     rm -f /miniconda.sh && \
     echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
 
-ADD .condarc-cuda${CUDA_SHORT_VERSION} /conda/.condarc
+ADD .condarc /conda/.condarc
 
 # Add utlities to base env
 RUN conda install -y \
