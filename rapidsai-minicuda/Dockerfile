@@ -54,6 +54,9 @@ RUN apt-get update -y --fix-missing && \
       zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# Add .condarc file
+ADD .condarc /conda/.condarc
+
 # Install conda
 RUN conda install -y -c conda-forge -c defaults \
       codecov \

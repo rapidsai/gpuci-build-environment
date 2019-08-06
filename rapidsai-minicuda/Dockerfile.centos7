@@ -67,6 +67,9 @@ ENV NUMBAPRO_LIBDEVICE=/usr/local/cuda/nvvm/libdevice
 ENV PATH=$PATH:/conda/bin
 ENV PATH=${GCC7_DIR}/bin:$PATH
 
+# Add .condarc file
+ADD .condarc /conda/.condarc
+
 # Install conda
 RUN conda install -y -c conda-forge -c defaults \
       codecov \
