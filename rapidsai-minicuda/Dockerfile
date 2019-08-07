@@ -60,7 +60,7 @@ RUN apt-get update -y --fix-missing && \
 ADD .condarc /conda/.condarc
 
 # Install conda
-RUN conda install -y \
+RUN conda install -y -n base \
       nomkl \
       anaconda-client \
       arrow-cpp=${ARROW_CPP_VERSION} \
