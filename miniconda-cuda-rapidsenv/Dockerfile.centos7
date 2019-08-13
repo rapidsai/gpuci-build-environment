@@ -11,7 +11,8 @@ ARG PYTHON_VERSION
 ARG CC_VERSION=7
 ARG CXX_VERSION=7
 ARG LIB_NG_VERSION=7.3.0
-ARG NCCL_URL
+ARG NCCL_DEB
+ARG NCCL_RPM
 ARG NCCL_VERSION=2.4.2
 
 # Install gcc7 from prebuilt image
@@ -28,7 +29,7 @@ ENV PATH=$PATH:/conda/bin
 ENV PATH=/usr/local/gcc7/bin:$PATH
 
 # Update and add pkgs
-RUN wget --quiet ${NCCL_URL} -O /tmp/nccl.rpm \
+RUN wget --quiet ${NCCL_RPM} -O /tmp/nccl.rpm \
     && yum install -y /tmp/nccl.rpm \
     && rm -f /tmp/nccl.rpm \
     && yum upgrade -y \

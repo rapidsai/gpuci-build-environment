@@ -11,7 +11,8 @@ ARG PYTHON_VERSION
 ARG CC_VERSION=5
 ARG CXX_VERSION=5
 ARG LIB_NG_VERSION=7.3.0
-ARG NCCL_URL
+ARG NCCL_DEB
+ARG NCCL_RPM
 ARG NCCL_VERSION=2.4.2
 
 # Set environment
@@ -26,7 +27,7 @@ ENV PATH=${PATH}:/conda/bin
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and add pkgs
-RUN wget --quiet ${NCCL_URL} -O /tmp/nccl.deb \
+RUN wget --quiet ${NCCL_DEB} -O /tmp/nccl.deb \
     && dpkg -i /tmp/nccl.deb \
     && rm -f /tmp/nccl.deb \
     && apt-get update -y --fix-missing \
