@@ -22,7 +22,7 @@ ARG ARROW_CPP_VERSION=0.12.1
 ARG SKLEARN_VERSION=0.20.3
 ARG SCIPY_VERSION=1.2.1
 ARG LIBGCC_NG_VERSION=7.3.0
-ARG LIBGFORTRAIN_NG_VERSION=7.3.0
+ARG LIBGFORTRAN_NG_VERSION=7.3.0
 ARG LIBSTDCXX_NG_VERSION=7.3.0
 ARG CONDA_VERSION=4.6.14
 ARG CONDA_BUILD_VERSION=3.17.8
@@ -87,7 +87,7 @@ RUN conda install -y -n base \
       scipy=${SCIPY_VERSION} \
       conda-forge::blas=1.1=openblas \
       libgcc-ng=${LIBGCC_NG_VERSION} \
-      libgfortran-ng=${LIBGFORTRAIN_NG_VERSION} \
+      libgfortran-ng=${LIBGFORTRAN_NG_VERSION} \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
     && conda clean -afy \
     && chmod -R ugo+w /opt/conda

@@ -21,3 +21,14 @@ SHELL ["/bin/bash", "-c"]
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
+
+
+export DRIVER_VERSION="396.44-1"
+export LIBCUDA_VERSION="396"
+if [ "$CUDA_VERSION" == "10.0" && "$LINUX_VERSION" == "ubuntu16.04" ]; then
+  export DRIVER_VERSION="410.72-1"
+  export LIBCUDA_VERSION="410"
+elif [ "$CUDA_VERSION" == "10.0" && "$LINUX_VERSION" == "ubuntu18.04" ]; then
+  export DRIVER_VERSION="410.72-1"
+  export LIBCUDA_VERSION="384=410.72-0ubuntu1"
+fi
