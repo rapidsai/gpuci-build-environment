@@ -41,10 +41,10 @@ ARG SKLEARN_VERSION=0.20.3
 #
 COPY ${SUPPORT_FILES_DIR}/*.rpm /tmp
 
-RUN yum install -y /tmp/*.rpm && \
-    rm -rf /tmp/*.rpm && \
-    yum upgrade -y && \
-    yum install -y \
+RUN yum install -y /tmp/*.rpm \
+    && rm -rf /tmp/*.rpm \
+    && yum upgrade -y \
+    && yum install -y \
       bzip2 \
       curl \
       git \
@@ -102,8 +102,8 @@ RUN conda install -y -n base \
       libgcc-ng=${LIBGCC_NG_VERSION} \
       libgfortran-ng=${LIBGFORTRAIN_NG_VERSION} \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
-    && conda clean -afy && \
-    chmod 777 -R /opt/conda
+    && conda clean -afy \
+    && chmod -R ugo+w /opt/conda
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]

@@ -16,22 +16,22 @@ ENV PATH=${PATH}:/conda/bin
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and add pkgs and install conda
-RUN apt-get update --fix-missing && \
-    apt-get install -y wget bzip2 ca-certificates curl git && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    wget --quiet ${MINICONDA_URL} -O /miniconda.sh && \
-    /bin/bash /miniconda.sh -b -p /opt/conda && \
-    rm -f /miniconda.sh && \
-    echo "conda ${CONDA_VERSION}" >> /opt/conda/conda-meta/pinned && \
-    /opt/conda/bin/conda clean -afy && \
-    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
-    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
-    echo "conda activate base" >> ~/.bashrc && \
-    chmod -R ugo+w /opt/conda && \
-    ln -s /opt/conda /conda && \
-    wget --quiet ${TINI_URL} -O /usr/bin/tini && \
-    chmod +x /usr/bin/tini 
+RUN apt-get update --fix-missing \
+    && apt-get install -y wget bzip2 ca-certificates curl git \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && wget --quiet ${MINICONDA_URL} -O /miniconda.sh \
+    && /bin/bash /miniconda.sh -b -p /opt/conda \
+    && rm -f /miniconda.sh \
+    && echo "conda ${CONDA_VERSION}" >> /opt/conda/conda-meta/pinned \
+    && /opt/conda/bin/conda clean -afy \
+    && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
+    && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
+    && echo "conda activate base" >> ~/.bashrc \
+    && chmod -R ugo+w /opt/conda \
+    && ln -s /opt/conda /conda \
+    && wget --quiet ${TINI_URL} -O /usr/bin/tini \
+    && chmod +x /usr/bin/tini
 
 ## Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]

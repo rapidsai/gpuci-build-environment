@@ -10,8 +10,8 @@ ARG DRIVER_VERSION="396.44-1"
 ARG LIBCUDA_VERSION="396"
 
 # Update and add pkgs
-RUN apt-get update -q && \
-    apt-get -qq install apt-utils -y --no-install-recommends \
+RUN apt-get update -q \
+    && apt-get -qq install apt-utils -y --no-install-recommends \
       cuda-drivers=${DRIVER_VERSION} \
       libcuda1-${LIBCUDA_VERSION} \
     && rm -rf /var/lib/apt/lists/*

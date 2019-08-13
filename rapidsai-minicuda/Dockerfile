@@ -40,10 +40,10 @@ ENV PATH=${PATH}:/conda/bin
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and add pkgs
-RUN apt-get update -y --fix-missing && \
-    apt-get upgrade -y && \
-    apt-get -qq install apt-utils -y --no-install-recommends && \
-    apt-get install -y \
+RUN apt-get update -y --fix-missing \
+    && apt-get upgrade -y \
+    && apt-get -qq install apt-utils -y --no-install-recommends \
+    && apt-get install -y \
       curl \
       git \
       screen \
@@ -89,8 +89,8 @@ RUN conda install -y -n base \
       libgcc-ng=${LIBGCC_NG_VERSION} \
       libgfortran-ng=${LIBGFORTRAIN_NG_VERSION} \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
-    && conda clean -afy && \
-    chmod 777 -R /opt/conda
+    && conda clean -afy \
+    && chmod -R ugo+w /opt/conda
 
 ## Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
