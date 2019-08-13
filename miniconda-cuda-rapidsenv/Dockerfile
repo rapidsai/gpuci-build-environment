@@ -24,7 +24,8 @@ ENV PATH=${PATH}:/conda/bin
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and add pkgs
-RUN apt-get install -y \
+RUN apt-get update \
+    && apt-get install -y \
       curl \
       git \
       screen \
