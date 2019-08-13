@@ -15,18 +15,27 @@ Listed in order of builds and deps
 2.  [`gpuci/miniconda-cuda`](https://hub.docker.com/r/gpuci/miniconda-cuda/tags)
     - From - `nvidia/cuda`
     - Purpose
-      - Serves as the base for all new gpuCI and RAPIDS distro images
-      - Contains CUDA + miniconda installed with the specified Python version
+      - Contains CUDA + miniconda installed
       - Activates the `base` environment on launch
-    - Tags - `{CUDA_VERSION}-{CUDA_TYPE}-{LINUX_VERSION}-py{PYTHON_VERSION}`
-3.  [`gpuci/rapidsai-minicuda`](https://hub.docker.com/r/gpuci/rapidsai-minicuda/tags)
+      - Serves as a base container for community and gpuCI users to build their own custom image
+    - Tags - `{CUDA_VERSION}-{CUDA_TYPE}-{LINUX_VERSION}`
+3.  [`gpuci/miniconda-cuda-rapidsenv`](https://hub.docker.com/r/gpuci/miniconda-cuda-rapidsenv/tags)
     - From - `gpuci/miniconda-cuda`
+    - Purpose
+      - Contains `rapids` conda env with critical base packages installed
+        - Not meant for all pkgs only `blas, cudatoolkit, python, libgcc-ng, libstdcxx-ng`
+        - This is to help ensure that when installing from `conda-forge` we get the correct ABI pkgs
+      - Activates the `rapids` environment on launch
+      - Serves as a base container for all RAPIDS images
+    - Tags - `{CUDA_VERSION}-{CUDA_TYPE}-{LINUX_VERSION}-py{PYTHON_VERSION}`
+4.  [`gpuci/rapidsai-build`](https://hub.docker.com/r/gpuci/rapidsai-build/tags)
+    - From - `gpuci/miniconda-cuda-rapidsenv`
     - Purpose
       - Base gpuCI image for RAPIDS testing
       - Installs common RAPIDS conda pkgs into the `base` environment
     - Tags - `{CUDA_VERSION}-{CUDA_TYPE}-{LINUX_VERSION}-py{PYTHON_VERSION}`
-4.  [`gpuci/rapidsai-minicuda-driver`](https://hub.docker.com/r/gpuci/rapidsai-minicuda-driver/tags)
-    - From - `gpuci/rapidsai-minicuda`
+5.  [`gpuci/rapidsai-build-driver`](https://hub.docker.com/r/gpuci/rapidsai-build-driver/tags)
+    - From - `gpuci/rapidsai-build`
     - Purpose
       - CPU-only conda builds that need the NVIDIA driver installed for linking
       - Each image has the driver/libcuda installed that matched the CUDA vesion
