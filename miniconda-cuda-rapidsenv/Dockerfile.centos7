@@ -8,11 +8,41 @@ FROM gpuci/miniconda-cuda:${CUDA_VERSION}-${CUDA_TYPE}-${LINUX_VERSION}
 # Define arguments
 ARG CUDA_VER
 ARG PYTHON_VERSION
+ARG CC_VERSION=7
+ARG CXX_VERSION=7
 ARG LIB_NG_VERSION=7.3.0
+ARG NCCL_URL
+ARG NCCL_VERSION=2.4.2
 
-# Set environment
-ENV PATH=${PATH}:/conda/bin
-ENV DEBIAN_FRONTEND=noninteractive
+# Install gcc7 from prebuilt image
+COPY --from=gpuci/builds-gcc7:10.0-devel-centos7 /usr/local/gcc7 /usr/local/gcc7
+
+# Update environment to use new gcc7
+ENV CC=/usr/local/gcc7/bin/gcc
+ENV CXX=/usr/local/gcc7/bin/g++
+ENV CUDAHOSTCXX=/usr/local/gcc7/bin/g++
+ENV LD_LIBRARY_PATH=/usr/local/gcc7/lib64:$CONDA_PREFIX:$LD_LIBRARY_PATH
+ENV NUMBAPRO_NVVM=/usr/local/cuda/nvvm/lib64/libnvvm.so
+ENV NUMBAPRO_LIBDEVICE=/usr/local/cuda/nvvm/libdevice
+ENV PATH=$PATH:/conda/bin
+ENV PATH=/usr/local/gcc7/bin:$PATH
+
+# Update and add pkgs
+RUN wget --quiet ${NCCL_URL} -O /tmp/nccl.rpm \
+    && yum install -y /tmp/nccl.rpm \
+    && rm -f /tmp/nccl.rpm \
+    && yum upgrade -y \
+    && yum install -y \
+      bzip2 \
+      curl \
+      git \
+      screen \
+      vim \
+      wget \
+      which \
+      libnccl-${NCCL_VERSION}-1+cuda${CUDA_VER} \
+      libnccl-devel-${NCCL_VERSION}-1+cuda${CUDA_VER} \
+      libnccl-static-${NCCL_VERSION}-1+cuda${CUDA_VER}
 
 # Create rapids conda env
 RUN source activate base \
