@@ -28,7 +28,7 @@ RUN apt-get update --fix-missing && \
     ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
     echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
     echo "conda activate base" >> ~/.bashrc && \
-    chmod 777 -R /opt/conda && \
+    chmod -R ugo+w /opt/conda && \
     ln -s /opt/conda /conda && \
     wget --quiet ${TINI_URL} -O /usr/bin/tini && \
     chmod +x /usr/bin/tini 
