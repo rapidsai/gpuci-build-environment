@@ -9,7 +9,6 @@ FROM nvidia/cuda:${CUDA_VERSION}-devel-${LINUX_VERSION}
 ARG CUDA_SHORT_VERSION
 ARG CUDA_MAJORMINOR_VERSION
 
-ARG ARROW_CPP_VERSION=0.12.1
 ARG CC_VERSION=7
 ARG CXX_VERSION=7
 ARG CFFI_VERSION=1.11.5
@@ -21,19 +20,26 @@ ARG FAISSGPU_VERSION=1.5.0
 ARG HASH_JOIN=ON
 ARG IPYTHON_VERSION=7.3*
 ARG LIBGCC_NG_VERSION=7.3.0
-ARG LIBGFORTRAIN_NG_VERSION=7.3.0
+ARG LIBGFORTRAN_NG_VERSION=7.3.0
 ARG LIBSTDCXX_NG_VERSION=7.3.0
 ARG CONDA_VERSION=4.6.14
 ARG CONDA_BUILD_VERSION=3.17.8
 ARG CONDA_VERIFY_VERSION=3.1.1
 ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
-ARG NUMBA_VERSION=0.44
+ARG NUMBA_VERSION=0.45.1
 ARG NUMPY_VERSION=1.16.2
 ARG NVIDIA_CONDA_LABEL=nvidia/label/cuda${CUDA_MAJORMINOR_VERSION}
 ARG RAPIDSAI_CONDA_LABEL=rapidsai/label/cuda${CUDA_MAJORMINOR_VERSION}
 ARG RMM_VERSION=0.7.*
-ARG PANDAS_VERSION=0.23.4
-ARG PYARROW_VERSION=0.12.1
+ARG PANDAS_VERSION=0.24.2
+ARG PYARROW_VERSION=0.14.1
+ARG ARROW_CPP_VERSION=0.14.1
+ARG DOUBLE_CONVERSION_VERSION=3.1.5
+ARG RAPIDJSON_VERSION=1.1.0
+ARG FLATBUFFERS_VERSION=1.10.0
+ARG BOOST_CPP_VERSION=1.70.0
+ARG FASTAVRO_VERSION=0.22.3
+ARG DLPACK_VERSION=0.2
 ARG PYTHON_VERSION=3.6
 ARG SCIPY_VERSION=1.2.1
 ARG SKLEARN_VERSION=0.20.3
@@ -47,8 +53,7 @@ ARG RAPIDS_SRC_DIR=/rapids
 # This will need to be removed later since it causes problems with certain runtime libs (numba.cuda)
 ENV LD_LIBRARY_PATH_POSTBUILD=$LD_LIBRARY_PATH
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH_POSTBUILD:/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs
-ENV NUMBAPRO_NVVM=/usr/local/cuda/nvvm/lib64/libnvvm.so
-ENV NUMBAPRO_LIBDEVICE=/usr/local/cuda/nvvm/libdevice
+ENV CUDA_HOME=/usr/local/cuda
 ENV PATH=$PATH:/conda/bin
 ENV CUDA_VERSION=${CUDA_MAJORMINOR_VERSION}
 
@@ -69,8 +74,8 @@ RUN mkdir -p ${RAPIDS_SRC_DIR}/tmp
 COPY ${SUPPORT_FILES_DIR}/*.rpm ${RAPIDS_SRC_DIR}/tmp
 
 RUN yum install -y ${RAPIDS_SRC_DIR}/tmp/*.rpm && \
-    yum upgrade -y && \
-    yum install -y \
+      yum upgrade -y && \
+      yum install -y \
       bzip2 \
       curl \
       git \
@@ -86,7 +91,7 @@ RUN yum install -y ${RAPIDS_SRC_DIR}/tmp/*.rpm && \
       gmp-devel mpfr-devel libmpc-devel file
 
 RUN curl -L ${TINI_URL} -o /usr/bin/tini && \
-    chmod +x /usr/bin/tini
+      chmod +x /usr/bin/tini
 
 RUN rm -rf ${RAPIDS_SRC_DIR}/tmp
 # NOTE: Copying a pre-built gcc7 could be an option to avoid the
@@ -112,8 +117,8 @@ RUN mkdir -p ${GCC7_DIR}
 RUN cd ${GCC7_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/gcc-7.3.0/gcc-7.3.0.tar.gz 
 RUN cd ${GCC7_DIR} && tar zxf gcc-7.3.0.tar.gz
 RUN cd ${GCC7_DIR}/gcc-7.3.0 && \
-    ./configure --prefix=${GCC7_DIR} --disable-multilib && \
-    make -j${NUM_BUILD_CPUS} && make install
+      ./configure --prefix=${GCC7_DIR} --disable-multilib && \
+      make -j${NUM_BUILD_CPUS} && make install
 
 # Remove gcc source dir and tarfile
 RUN rm -r ${GCC7_DIR}/gcc-7.3.0 ${GCC7_DIR}/gcc-7.3.0.tar.gz
@@ -136,9 +141,9 @@ ENV LD_LIBRARY_PATH_POSTBUILD=${GCC7_DIR}/lib64:$LD_LIBRARY_PATH_POSTBUILD
 # Install conda
 ## Build combined libgdf/pygdf conda env
 RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
-    sh /miniconda.sh -b -p /conda && \
-    rm -f /miniconda.sh && \
-    echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
+      sh /miniconda.sh -b -p /conda && \
+      rm -f /miniconda.sh && \
+      echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
 
 ADD .condarc /conda/.condarc
 
@@ -169,16 +174,22 @@ RUN conda create --no-default-packages -n gdf \
       numpy=${NUMPY_VERSION} \
       pandas=${PANDAS_VERSION} \
       pyarrow=${PYARROW_VERSION} \
+      double-conversion=${DOUBLE_CONVERSION_VERSION} \
+      rapidjson=${RAPIDJSON_VERSION} \
+      flatbuffers=${FLATBUFFERS_VERSION} \
+      boost-cpp=${BOOST_CPP_VERSION} \
+      fastavro=${FASTAVRO_VERSION} \
+      dlpack=${DLPACK_VERSION} \
       pytest \
       pytest-cov \
       scikit-learn=${SKLEARN_VERSION} \
       scipy=${SCIPY_VERSION} \
       conda-forge::blas=1.1=openblas \
       libgcc-ng=${LIBGCC_NG_VERSION} \
-      libgfortran-ng=${LIBGFORTRAIN_NG_VERSION} \
+      libgfortran-ng=${LIBGFORTRAN_NG_VERSION} \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
-    && conda clean -a && \
-    chmod 777 -R /conda
+      && conda clean -a && \
+      chmod 777 -R /conda
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
