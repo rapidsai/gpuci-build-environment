@@ -26,7 +26,7 @@ ARG CONDA_VERSION=4.6.14
 ARG CONDA_BUILD_VERSION=3.17.8
 ARG CONDA_VERIFY_VERSION=3.1.1
 ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
-ARG NUMBA_VERSION=0.44
+ARG NUMBA_VERSION=0.45.1
 ARG NUMPY_VERSION=1.16.2
 ARG NVIDIA_CONDA_LABEL=nvidia/label/cuda${CUDA_MAJORMINOR_VERSION}
 ARG RAPIDSAI_CONDA_LABEL=rapidsai/label/cuda${CUDA_MAJORMINOR_VERSION}
@@ -74,8 +74,8 @@ RUN mkdir -p ${RAPIDS_SRC_DIR}/tmp
 COPY ${SUPPORT_FILES_DIR}/*.rpm ${RAPIDS_SRC_DIR}/tmp
 
 RUN yum install -y ${RAPIDS_SRC_DIR}/tmp/*.rpm && \
-    yum upgrade -y && \
-    yum install -y \
+      yum upgrade -y && \
+      yum install -y \
       bzip2 \
       curl \
       git \
@@ -91,7 +91,7 @@ RUN yum install -y ${RAPIDS_SRC_DIR}/tmp/*.rpm && \
       gmp-devel mpfr-devel libmpc-devel file
 
 RUN curl -L ${TINI_URL} -o /usr/bin/tini && \
-    chmod +x /usr/bin/tini
+      chmod +x /usr/bin/tini
 
 RUN rm -rf ${RAPIDS_SRC_DIR}/tmp
 # NOTE: Copying a pre-built gcc7 could be an option to avoid the
@@ -117,8 +117,8 @@ RUN mkdir -p ${GCC7_DIR}
 RUN cd ${GCC7_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/gcc-7.2.0/gcc-7.2.0.tar.gz
 RUN cd ${GCC7_DIR} && tar zxf gcc-7.2.0.tar.gz
 RUN cd ${GCC7_DIR}/gcc-7.2.0 && \
-    ./configure --prefix=${GCC7_DIR} --disable-multilib && \
-    make -j${NUM_BUILD_CPUS} && make install
+      ./configure --prefix=${GCC7_DIR} --disable-multilib && \
+      make -j${NUM_BUILD_CPUS} && make install
 
 # Remove gcc source dir and tarfile
 RUN rm -r ${GCC7_DIR}/gcc-7.2.0 ${GCC7_DIR}/gcc-7.2.0.tar.gz
@@ -141,9 +141,9 @@ ENV LD_LIBRARY_PATH_POSTBUILD=${GCC7_DIR}/lib64:$LD_LIBRARY_PATH_POSTBUILD
 # Install conda
 ## Build combined libgdf/pygdf conda env
 RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
-    sh /miniconda.sh -b -p /conda && \
-    rm -f /miniconda.sh && \
-    echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
+      sh /miniconda.sh -b -p /conda && \
+      rm -f /miniconda.sh && \
+      echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
 
 ADD .condarc-cuda${CUDA_SHORT_VERSION} /conda/.condarc
 
@@ -188,8 +188,8 @@ RUN conda create --no-default-packages -n gdf \
       libgcc-ng=${LIBGCC_NG_VERSION} \
       libgfortran-ng=${LIBGFORTRAN_NG_VERSION} \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
-    && conda clean -a && \
-    chmod 777 -R /conda
+      && conda clean -a && \
+      chmod 777 -R /conda
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
