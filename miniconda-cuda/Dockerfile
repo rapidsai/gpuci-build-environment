@@ -17,7 +17,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and add pkgs and install conda
 RUN apt-get update --fix-missing \
-    && apt-get install -y wget bzip2 ca-certificates curl git \
+    && apt-get install -y wget bzip2 ca-certificates curl git tzdata \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && wget --quiet ${MINICONDA_URL} -O /miniconda.sh \
