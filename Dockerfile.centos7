@@ -2,13 +2,10 @@
 #
 ARG CUDA_VERSION=10.0
 ARG CUDA_SHORT_VERSION=${CUDA_VERSION}
-ARG CUDA_MAJORMINOR_VERSION=${CUDA_VERSION}
 ARG LINUX_VERSION=centos7
 FROM nvidia/cuda:${CUDA_VERSION}-devel-${LINUX_VERSION}
 
 ARG CUDA_SHORT_VERSION
-ARG CUDA_MAJORMINOR_VERSION
-
 ARG CC_VERSION=7
 ARG CXX_VERSION=7
 ARG CFFI_VERSION=1.11.5
@@ -28,8 +25,6 @@ ARG CONDA_VERIFY_VERSION=3.1.1
 ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
 ARG NUMBA_VERSION=0.45.1
 ARG NUMPY_VERSION=1.16.2
-ARG NVIDIA_CONDA_LABEL=nvidia/label/cuda${CUDA_MAJORMINOR_VERSION}
-ARG RAPIDSAI_CONDA_LABEL=rapidsai/label/cuda${CUDA_MAJORMINOR_VERSION}
 ARG RMM_VERSION=0.7.*
 ARG PANDAS_VERSION=0.24.2
 ARG PYARROW_VERSION=0.14.1
@@ -44,16 +39,11 @@ ARG PYTHON_VERSION=3.6
 ARG SCIPY_VERSION=1.2.1
 ARG SKLEARN_VERSION=0.20.3
 ARG TINI_URL=https://github.com/krallin/tini/releases/download/v0.18.0/tini
-ARG NUM_BUILD_CPUS=""
-ARG UTILS_DIR=utils
-ARG SUPPORT_FILES_DIR=supportfiles
-ARG RAPIDS_SRC_DIR=/rapids
 
 # Add /usr/local/cuda/* temporarily to LD_LIBRARY_PATH to support various build steps
 # This will need to be removed later since it causes problems with certain runtime libs (numba.cuda)
 ENV LD_LIBRARY_PATH_POSTBUILD=$LD_LIBRARY_PATH
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH_POSTBUILD:/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs
-ENV CUDA_HOME=/usr/local/cuda
+
 ENV PATH=$PATH:/conda/bin
 ENV CUDA_VERSION=${CUDA_MAJORMINOR_VERSION}
 
@@ -126,14 +116,12 @@ RUN rm -r ${GCC7_DIR}/gcc-7.3.0 ${GCC7_DIR}/gcc-7.3.0.tar.gz
 # Update environment to use new gcc7
 ENV CC=${GCC7_DIR}/bin/gcc
 ENV CXX=${GCC7_DIR}/bin/g++
-ENV PATH=${GCC7_DIR}/bin:$PATH
 ENV CUDAHOSTCXX=${GCC7_DIR}/bin/g++
-
-# Update the current LD_LIBRARY_PATH with the new lib64 dir for
-# remaining build steps and LD_LIBRARY_PATH_POSTBUILD for runtime use
-# after building the container.
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs
+ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=${GCC7_DIR}/lib64:$LD_LIBRARY_PATH
-ENV LD_LIBRARY_PATH_POSTBUILD=${GCC7_DIR}/lib64:$LD_LIBRARY_PATH_POSTBUILD
+ENV PATH=$PATH:/conda/bin
+ENV PATH=${GCC7_DIR}/bin:$PATH
 
 # NOTE: Many/all of the package versions used below are defined in the
 # "args" insertfile
@@ -194,13 +182,6 @@ RUN conda create --no-default-packages -n gdf \
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
-
-
-# Change LD_LIBRARY_PATH to the _POSTBUILD version (plus CONDA_PREFIX)
-# in order to exclude /usr/local/cuda/* since numba.cuda cannot load
-# those libs
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH_POSTBUILD:$CONDA_PREFIX
-
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
