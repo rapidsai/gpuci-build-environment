@@ -94,7 +94,7 @@ RUN conda create --no-default-packages -n gdf \
       black \
       isort \
       make \
-      numba>=${NUMBA_VERSION} \
+      numba">=${NUMBA_VERSION}" \
       numpy=${NUMPY_VERSION} \
       pandas=${PANDAS_VERSION} \
       pyarrow=${PYARROW_VERSION} \
