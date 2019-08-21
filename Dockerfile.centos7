@@ -70,10 +70,9 @@ ENV GCC7_DIR=/usr/local/gcc7
 ENV CC=${GCC7_DIR}/bin/gcc
 ENV CXX=${GCC7_DIR}/bin/g++
 ENV CUDAHOSTCXX=${GCC7_DIR}/bin/g++
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs
+ENV LD_LIBRARY_PATH=${GCC7_DIR}/lib64:/conda/envs/gdf
 ENV CUDA_HOME=/usr/local/cuda
-ENV LD_LIBRARY_PATH=${GCC7_DIR}/lib64:$LD_LIBRARY_PATH
-ENV PATH=$PATH:/conda/bin
+ENV PATH=/conda/bin:$PATH
 ENV PATH=${GCC7_DIR}/bin:$PATH
 
 # NOTE: Many/all of the package versions used below are defined in the
@@ -132,6 +131,9 @@ RUN conda create --no-default-packages -n gdf \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
     && conda clean -afy \
     && chmod -R ugo+w /conda
+
+# xgboost build will not find nccl in the conda env without this env var
+ENV NCCL_ROOT=/conda/envs/gdf
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
