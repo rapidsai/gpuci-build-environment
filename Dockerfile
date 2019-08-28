@@ -88,12 +88,13 @@ RUN conda create --no-default-packages -n gdf \
       conda=${CONDA_VERSION} \
       conda-build=${CONDA_BUILD_VERSION} \
       conda-verify=${CONDA_VERIFY_VERSION} \
+      anaconda::cudatoolkit=${CUDA_SHORT_VERSION} \
       cython=${CYTHON_VERSION} \
       flake8 \
       black \
       isort \
       make \
-      numba>=${NUMBA_VERSION} \
+      numba">=${NUMBA_VERSION}" \
       numpy=${NUMPY_VERSION} \
       pandas=${PANDAS_VERSION} \
       pyarrow=${PYARROW_VERSION} \
@@ -111,8 +112,8 @@ RUN conda create --no-default-packages -n gdf \
       libgcc-ng=${LIBGCC_NG_VERSION} \
       libgfortran-ng=${LIBGFORTRAN_NG_VERSION} \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
-      && conda clean -a && \
-      chmod 777 -R /conda
+    && conda clean -afy \
+    && chmod -R ugo+w /conda
 
 ## Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
