@@ -3,6 +3,5 @@ channels:
   - rapidsai
   - rapidsai-nightly
   - nvidia
-  - numba
   - conda-forge
   - anaconda
