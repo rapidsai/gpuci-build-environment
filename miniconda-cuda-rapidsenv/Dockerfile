@@ -14,6 +14,9 @@ ARG LIB_NG_VERSION=7.3.0
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV PATH=${PATH}:/conda/bin
 
+# Add a condarc for override settings
+ADD .condarc /conda/.condarc
+
 # Create rapids conda env
 RUN source activate base \
     && conda create --no-default-packages --override-channels -n rapids \
