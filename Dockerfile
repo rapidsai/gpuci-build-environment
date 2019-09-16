@@ -63,7 +63,7 @@ RUN apt-get update -y --fix-missing && \
 
 # Install conda
 ## Build combined libgdf/pygdf conda env
-RUN curl ${MINICONDA_URL} -o /miniconda.sh && \
+RUN curl ${MINICONDA_URL} -k -o /miniconda.sh && \
       sh /miniconda.sh -b -p /conda && \
       rm -f /miniconda.sh && \
       echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
