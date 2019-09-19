@@ -90,7 +90,7 @@ RUN conda create --no-default-packages -n gdf \
       conda=${CONDA_VERSION} \
       conda-build=${CONDA_BUILD_VERSION} \
       conda-verify=${CONDA_VERIFY_VERSION} \
-      anaconda::cudatoolkit=${CUDA_SHORT_VERSION} \
+      cudatoolkit=${CUDA_SHORT_VERSION} \
       cython=${CYTHON_VERSION} \
       flake8 \
       black \
