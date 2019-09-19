@@ -4,4 +4,4 @@ channels:
   - rapidsai-nightly
   - nvidia
   - conda-forge
-  - anaconda
+  - defaults
