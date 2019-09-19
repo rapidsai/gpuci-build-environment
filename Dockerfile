@@ -111,9 +111,9 @@ RUN conda create --no-default-packages -n gdf \
       scikit-learn=${SKLEARN_VERSION} \
       scipy=${SCIPY_VERSION} \
       conda-forge::blas=1.1=openblas \
-      libgcc-ng=${LIBGCC_NG_VERSION} \
-      libgfortran-ng=${LIBGFORTRAN_NG_VERSION} \
-      libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
+      libgcc-ng">=${LIBGCC_NG_VERSION"} \
+      libgfortran-ng">=${LIBGFORTRAN_NG_VERSION}" \
+      libstdcxx-ng">=${LIBSTDCXX_NG_VERSION}" \
     && conda clean -afy \
     && chmod -R ugo+w /conda
 
