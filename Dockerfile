@@ -76,7 +76,8 @@ RUN conda install -y \
       codecov \
       conda=${CONDA_VERSION} \
       conda-build=${CONDA_BUILD_VERSION} \
-      conda-verify=${CONDA_VERIFY_VERSION}
+      conda-verify=${CONDA_VERIFY_VERSION} \
+      ripgrep
 
 # Create gdf conda env
 RUN conda create --no-default-packages -n gdf \
