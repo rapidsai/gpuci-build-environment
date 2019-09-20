@@ -11,7 +11,7 @@ ARG CXX_VERSION=5
 ARG PYTHON_VERSION=3.6
 ARG CFFI_VERSION=1.11.5
 ARG CYTHON_VERSION=0.29
-ARG CMAKE_VERSION=3.12
+ARG CMAKE_VERSION=3.14.5
 ARG NUMBA_VERSION=0.45.1
 ARG NUMPY_VERSION=1.16.4
 ARG PANDAS_VERSION=0.24.2
@@ -111,9 +111,9 @@ RUN conda create --no-default-packages -n gdf \
       scikit-learn=${SKLEARN_VERSION} \
       scipy=${SCIPY_VERSION} \
       conda-forge::blas=1.1=openblas \
-      libgcc-ng">=${LIBGCC_NG_VERSION}" \
-      libgfortran-ng">=${LIBGFORTRAN_NG_VERSION}" \
-      libstdcxx-ng">=${LIBSTDCXX_NG_VERSION}" \
+      libgcc-ng=${LIBGCC_NG_VERSION} \
+      libgfortran-ng=${LIBGFORTRAN_NG_VERSION} \
+      libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
     && conda clean -afy \
     && chmod -R ugo+w /conda
 
