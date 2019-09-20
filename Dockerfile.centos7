@@ -23,7 +23,6 @@ ARG LIBSTDCXX_NG_VERSION=7.3.0
 ARG CONDA_VERSION=4.6.14
 ARG CONDA_BUILD_VERSION=3.17.8
 ARG CONDA_VERIFY_VERSION=3.1.1
-ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
 ARG NUMBA_VERSION=0.45.1
 ARG NUMPY_VERSION=1.16.2
 ARG RMM_VERSION=0.7.*
@@ -39,7 +38,8 @@ ARG DLPACK_VERSION=0.2
 ARG PYTHON_VERSION=3.6
 ARG SCIPY_VERSION=1.3.0
 ARG SKLEARN_VERSION=0.21.3
-ARG TINI_URL=https://github.com/krallin/tini/releases/download/v0.18.0/tini
+ARG TINI_VERSION=v0.18.0
+ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
 
 # Add /usr/local/cuda/* temporarily to LD_LIBRARY_PATH to support various build steps
 # This will need to be removed later since it causes problems with certain runtime libs (numba.cuda)
@@ -59,9 +59,6 @@ RUN yum upgrade -y \
            which \
            clang \
            make
-
-RUN curl -L ${TINI_URL} -o /usr/bin/tini && \
-      chmod +x /usr/bin/tini
 
 # Install gcc7 from prebuilt image
 COPY --from=gpuci/builds-gcc7:10.0-devel-centos7 /usr/local/gcc7 /usr/local/gcc7
@@ -140,6 +137,9 @@ ENV NCCL_ROOT=/conda/envs/gdf
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
+
+RUN curl -L https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini -o /usr/bin/tini && \
+      chmod +x /usr/bin/tini
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
