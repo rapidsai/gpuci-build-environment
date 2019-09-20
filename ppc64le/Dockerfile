@@ -33,7 +33,7 @@ ARG HASH_JOIN=ON
 ARG CONDA_VERSION=4.6.14
 ARG CONDA_BUILD_VERSION=3.17.8
 ARG CONDA_VERIFY_VERSION=3.1.1
-ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
+ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-ppc64le.sh
 
 # Set environment
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
