@@ -132,7 +132,7 @@ ENV NCCL_ROOT=/conda/envs/gdf
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
 
-RUN curl -L https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-ppc64le -o /usr/bin/tini && \
+RUN curl -L https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-ppc64el -o /usr/bin/tini && \
       chmod +x /usr/bin/tini
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
