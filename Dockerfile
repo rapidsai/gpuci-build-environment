@@ -54,7 +54,6 @@ RUN apt-get update -y --fix-missing && \
       screen \
       gcc-${CC_VERSION} \
       g++-${CXX_VERSION} \
-      libboost-all-dev \
       tzdata \
       wget \
       vim \
