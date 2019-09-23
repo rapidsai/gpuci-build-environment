@@ -72,6 +72,7 @@ ADD .condarc /conda/.condarc
 
 # Add utlities to base env
 RUN conda install -y \
+      anaconda-client \
       codecov \
       conda=${CONDA_VERSION} \
       conda-build=${CONDA_BUILD_VERSION} \
@@ -81,7 +82,6 @@ RUN conda install -y \
 # Create gdf conda env
 RUN conda create --no-default-packages -n gdf \
       python=${PYTHON_VERSION} \
-      anaconda-client \
       arrow-cpp=${ARROW_CPP_VERSION} \
       cffi=${CFFI_VERSION} \
       cmake=${CMAKE_VERSION} \
