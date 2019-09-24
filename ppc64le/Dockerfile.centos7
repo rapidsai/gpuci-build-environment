@@ -40,7 +40,6 @@ ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION
 ENV LD_LIBRARY_PATH_POSTBUILD=$LD_LIBRARY_PATH
 
 ENV PATH=$PATH:/conda/bin
-ENV CUDA_VERSION=${CUDA_MAJORMINOR_VERSION}
 
 RUN yum upgrade -y \
     && yum install -y \
