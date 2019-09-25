@@ -62,7 +62,6 @@ RUN apt-get update -y --fix-missing && \
 
 # Install conda
 RUN curl ${MINICONDA_URL} -k -o /miniconda.sh \
-      && sed -i 's/https\:\/\/repo/http\:\/\/repo/g' /miniconda.sh \
       && sh /miniconda.sh -b -p /conda \
       && rm -f /miniconda.sh \
       echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
