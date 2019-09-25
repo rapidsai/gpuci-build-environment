@@ -9,7 +9,7 @@ FROM ${FROM_IMAGE}:${CUDA_VERSION}-${CUDA_TYPE}-${LINUX_VERSION}
 ARG PYTHON_VERSION
 ARG CONDA_VERSION=4.6.14
 ARG TINI_VERSION=v0.18.0
-ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
+ARG MINICONDA_URL=http://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
 ARG TINI_URL=https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini
 
 # Set environment
