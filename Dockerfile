@@ -66,7 +66,7 @@ RUN apt-get update -y --fix-missing && \
 RUN curl ${MINICONDA_URL} -k -o /miniconda.sh \
       && sh /miniconda.sh -b -p /conda \
       && rm -f /miniconda.sh \
-      echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
+      && echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
 
 # Add a condarc
 ADD .condarc /conda/.condarc
