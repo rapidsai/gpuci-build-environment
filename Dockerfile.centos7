@@ -52,8 +52,8 @@ RUN yum upgrade -y \
            which \
            clang \
            make \
-           libnuma \
-           libnuma-dev
+           numactl-libs \
+           numactl-devel
 
 # Install gcc7 from prebuilt image
 COPY --from=gpuci/builds-gcc7:10.0-devel-centos7 /usr/local/gcc7 /usr/local/gcc7
