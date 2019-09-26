@@ -54,7 +54,7 @@ RUN apt-get update -y --fix-missing && \
       screen \
       gcc-${CC_VERSION} \
       g++-${CXX_VERSION} \
-      libnuma \
+      libnuma1 \
       libnuma-dev \
       tzdata \
       wget \
