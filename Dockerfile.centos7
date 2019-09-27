@@ -33,7 +33,7 @@ ARG HASH_JOIN=ON
 ARG CONDA_VERSION=4.6.14
 ARG CONDA_BUILD_VERSION=3.17.8
 ARG CONDA_VERIFY_VERSION=3.1.1
-ARG MINICONDA_URL=http://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
+ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
 
 # Add /usr/local/cuda/* temporarily to LD_LIBRARY_PATH to support various build steps
 # This will need to be removed later since it causes problems with certain runtime libs (numba.cuda)
@@ -51,7 +51,9 @@ RUN yum upgrade -y \
            wget \
            which \
            clang \
-           make
+           make \
+           numactl-libs \
+           numactl-devel
 
 # Install gcc7 from prebuilt image
 COPY --from=gpuci/builds-gcc7:10.0-devel-centos7 /usr/local/gcc7 /usr/local/gcc7
@@ -73,7 +75,7 @@ ENV PATH=${GCC7_DIR}/bin:$PATH
 RUN curl ${MINICONDA_URL} -k -o /miniconda.sh \
       && sh /miniconda.sh -b -p /conda \
       && rm -f /miniconda.sh \
-      echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
+      && echo "conda ${CONDA_VERSION}" >> /conda/conda-meta/pinned
 
 # Add a condarc
 ADD .condarc /conda/.condarc
