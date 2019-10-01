@@ -18,7 +18,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Update and add pkgs and install conda
 RUN yum -y update \
-    && yum -y install wget bzip2 ca-certificates curl git \
+    && yum -y install wget bzip2 ca-certificates curl git which \
     && yum clean all \
     && wget --quiet ${MINICONDA_URL} -O /miniconda.sh \
     && /bin/bash /miniconda.sh -b -p /opt/conda \
