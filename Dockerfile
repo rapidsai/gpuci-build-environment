@@ -49,17 +49,18 @@ RUN apt-get update -y --fix-missing && \
       apt-get upgrade -y && \
       apt-get -qq install apt-utils -y --no-install-recommends && \
       apt-get install -y \
-      curl \
-      git \
-      screen \
-      gcc-${CC_VERSION} \
-      g++-${CXX_VERSION} \
-      libnuma1 \
-      libnuma-dev \
-      tzdata \
-      wget \
-      vim \
-      zlib1g-dev \
+        awscli \
+        curl \
+        git \
+        screen \
+        gcc-${CC_VERSION} \
+        g++-${CXX_VERSION} \
+        libnuma1 \
+        libnuma-dev \
+        tzdata \
+        wget \
+        vim \
+        zlib1g-dev \
       && rm -rf /var/lib/apt/lists/*
 
 # Install conda

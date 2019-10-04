@@ -43,17 +43,18 @@ ENV PATH=$PATH:/conda/bin
 
 RUN yum upgrade -y \
     && yum install -y \
-           bzip2 \
-           curl \
-           git \
-           screen \
-           vim \
-           wget \
-           which \
-           clang \
-           make \
-           numactl-libs \
-           numactl-devel
+      awscli \
+      bzip2 \
+      curl \
+      git \
+      screen \
+      vim \
+      wget \
+      which \
+      clang \
+      make \
+      numactl-libs \
+      numactl-devel
 
 # Install gcc7 from prebuilt image
 COPY --from=gpuci/builds-gcc7:10.0-devel-centos7 /usr/local/gcc7 /usr/local/gcc7
