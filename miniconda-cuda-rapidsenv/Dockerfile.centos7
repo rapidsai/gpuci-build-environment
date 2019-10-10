@@ -21,11 +21,11 @@ ADD .condarc /conda/.condarc
 # Create rapids conda env
 RUN source activate base \
     && conda create --no-default-packages --override-channels -n rapids \
-      -c numba \
+      -c nvidia \
       -c conda-forge \
-      -c anaconda \
+      -c defaults \
       nomkl \
-      anaconda::cudatoolkit=${CUDA_VER} \
+      cudatoolkit=${CUDA_VER} \
       conda-forge::blas=1.1=openblas \
       libgcc-ng=${LIB_NG_VERSION} \
       libstdcxx-ng=${LIB_NG_VERSION} \
