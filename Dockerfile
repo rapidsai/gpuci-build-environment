@@ -52,6 +52,7 @@ RUN apt-get update -y --fix-missing && \
         awscli \
         curl \
         git \
+        jq \
         screen \
         gcc-${CC_VERSION} \
         g++-${CXX_VERSION} \
