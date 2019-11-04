@@ -56,6 +56,9 @@ RUN yum upgrade -y \
       numactl-libs \
       numactl-devel
 
+RUN curl 'https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64' -L -k -o /usr/local/bin/jq && \
+      chmod +x /usr/local/bin/jq
+
 # Install gcc7 from prebuilt image
 COPY --from=gpuci/builds-gcc7:10.0-devel-centos7 /usr/local/gcc7 /usr/local/gcc7
 
