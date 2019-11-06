@@ -7,7 +7,7 @@ FROM ${FROM_IMAGE}:${CUDA_VERSION}-${CUDA_TYPE}-${LINUX_VERSION}
 
 # Define arguments
 ARG PYTHON_VERSION
-ARG CONDA_VERSION=4.6.14
+ARG CONDA_VERSION=4.7.12
 ARG TINI_VERSION=v0.18.0
 ARG MINICONDA_URL=http://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
 ARG TINI_URL=https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini
