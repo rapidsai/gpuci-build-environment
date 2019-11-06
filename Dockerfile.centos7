@@ -54,7 +54,8 @@ RUN yum upgrade -y \
       clang \
       make \
       numactl-libs \
-      numactl-devel
+      numactl-devel \
+      patch
 
 RUN curl 'https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64' -L -k -o /usr/local/bin/jq && \
       chmod +x /usr/local/bin/jq
