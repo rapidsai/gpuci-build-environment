@@ -117,7 +117,7 @@ RUN conda create --no-default-packages -n gdf \
       libgcc-ng=${LIBGCC_NG_VERSION} \
       libgfortran-ng=${LIBGFORTRAN_NG_VERSION} \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
-      rapidsai::libclang=${LIBCLANG_VERSION}
+      rapidsai::libclang=${LIBCLANG_VERSION} \
     && conda clean -afy \
     && chmod -R ugo+w /conda
 
