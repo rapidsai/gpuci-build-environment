@@ -28,6 +28,7 @@ ARG SCIPY_VERSION=1.3.0
 ARG LIBGCC_NG_VERSION=7.3.0
 ARG LIBGFORTRAN_NG_VERSION=7.3.0
 ARG LIBSTDCXX_NG_VERSION=7.3.0
+ARG LIBCLANG_VERSION=8.0.0
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
 ARG CONDA_VERSION=4.7.12
@@ -116,6 +117,7 @@ RUN conda create --no-default-packages -n gdf \
       libgcc-ng=${LIBGCC_NG_VERSION} \
       libgfortran-ng=${LIBGFORTRAN_NG_VERSION} \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
+      rapidsai::libclang=${LIBCLANG_VERSION}
     && conda clean -afy \
     && chmod -R ugo+w /conda
 
