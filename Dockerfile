@@ -122,6 +122,7 @@ RUN conda create --no-default-packages -n gdf \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
       rapidsai::libclang=${LIBCLANG_VERSION} \
       librdkafka=${LIBRDKAFKA_VERSION} \
+      twine \
     && conda clean -afy \
     && chmod -R ugo+w /conda
 
