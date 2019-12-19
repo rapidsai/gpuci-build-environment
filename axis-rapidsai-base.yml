@@ -28,5 +28,5 @@ exclude:
     LINUX_VERSION:
       - ubuntu18.04
       - centos7
-  - CC_VERSION: 5
+  - CC_VERSION: 7
     LINUX_VERSION: ubuntu16.04
