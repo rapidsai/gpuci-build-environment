@@ -1,0 +1,32 @@
+DOCKER_REPO:
+  - gpuci/rapidsai-base
+
+FROM_IMAGE:
+  - nvidia/cuda
+
+CUDA_VERSION:
+  - 10.1
+  - 10.0
+  - 9.2
+
+LINUX_VERSION:
+  - ubuntu16.04
+  - ubuntu18.04
+  - centos7
+
+CC_VERSION:
+  - 5
+  - 7
+
+PYTHON_VERSION:
+  - 3.5
+  - 3.6
+  - 3.7
+
+exclude:
+  - CC_VERSION: 5
+    LINUX_VERSION:
+      - ubuntu18.04
+      - centos7
+  - CC_VERSION: 5
+    LINUX_VERSION: ubuntu16.04
