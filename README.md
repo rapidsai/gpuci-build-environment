@@ -62,3 +62,7 @@ Listed in order of builds and deps
       - Activates the `rapids` environment on launch
       - Serves as a base container for all RAPIDS images
     - Tags - `{CUDA_VERSION}-{CUDA_TYPE}-{LINUX_VERSION}-py{PYTHON_VERSION}`
+
+## Extending the images
+
+See [Extending](Extending.md)
