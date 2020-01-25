@@ -123,7 +123,6 @@ RUN conda create --no-default-packages -n gdf \
       rapidsai::libclang=${LIBCLANG_VERSION} \
       librdkafka=${LIBRDKAFKA_VERSION} \
       twine \
-    && conda clean -afy \
     && chmod -R ugo+w /conda
 
 ## Enables "source activate conda"
