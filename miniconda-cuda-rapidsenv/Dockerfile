@@ -26,7 +26,7 @@ RUN source activate base \
       -c defaults \
       nomkl \
       cudatoolkit=${CUDA_VER} \
-      conda-forge::blas=1.1=openblas \
+      conda-forge::blas=2.14=openblas \
       libgcc-ng=${LIB_NG_VERSION} \
       libstdcxx-ng=${LIB_NG_VERSION} \
       python=${PYTHON_VERSION} \
