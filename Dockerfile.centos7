@@ -31,6 +31,7 @@ ARG LIBGFORTRAN_NG_VERSION=7.3.0
 ARG LIBSTDCXX_NG_VERSION=7.3.0
 ARG LIBCLANG_VERSION=8.0.0
 ARG LIBRDKAFKA_VERSION=1.2.2
+ARG OPENBLAS_VERSION=2.14
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
 ARG CONDA_VERSION=4.7.12
@@ -128,7 +129,7 @@ RUN conda create --no-default-packages -n gdf \
       pytest-cov \
       scikit-learn=${SKLEARN_VERSION} \
       scipy=${SCIPY_VERSION} \
-      conda-forge::blas=1.1=openblas \
+      conda-forge::blas=${OPENBLAS_VERSION}=openblas \
       libgcc-ng=${LIBGCC_NG_VERSION} \
       libgfortran-ng=${LIBGFORTRAN_NG_VERSION} \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
