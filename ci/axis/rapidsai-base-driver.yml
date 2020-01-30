@@ -72,3 +72,7 @@ exclude:
     DRIVER_VERSION: 418.87.01-1
   - CUDA_VERSION: 10.2
     PYTHON_VERSION: 3.5
+  - CUDA_VERSION: 9.0
+    PYTHON_VERSION:
+      - 3.6
+      - 3.7
