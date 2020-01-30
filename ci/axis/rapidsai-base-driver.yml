@@ -18,6 +18,7 @@ CC_VERSION:
   - 5
 
 PYTHON_VERSION:
+  - 3.5
   - 3.6
   - 3.7
 
