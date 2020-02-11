@@ -30,6 +30,7 @@ RUN source activate base \
       libgcc-ng=${LIB_NG_VERSION} \
       libstdcxx-ng=${LIB_NG_VERSION} \
       python=${PYTHON_VERSION} \
+    && conda install -n base -c conda-forge -y git \
     && conda clean -afy \
     && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc \
     && chmod -R ugo+w /opt/conda
