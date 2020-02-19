@@ -1,4 +1,4 @@
-ARG FROM_IMAGE=nvidia/cuda
+ARG FROM_IMAGE=nvidia/cuda-ppc64le
 ARG CUDA_VERSION=9.2
 ARG CUDA_SHORT_VERSION=${CUDA_VERSION}
 ARG LINUX_VERSION=ubuntu16.04
@@ -10,14 +10,13 @@ ARG CC_VERSION=5
 ARG CXX_VERSION=5
 ARG PYTHON_VERSION=3.6
 ARG CFFI_VERSION=1.11.5
-ARG CUPY_VERSION=6.6.0
 ARG CYTHON_VERSION=0.29
 ARG CMAKE_VERSION=3.14.5
-ARG NUMBA_VERSION=0.46.0
-ARG NUMPY_VERSION=1.17.3
-ARG PANDAS_VERSION=0.25
-ARG PYARROW_VERSION=0.15.0
-ARG ARROW_CPP_VERSION=0.15.0
+ARG NUMBA_VERSION=0.45.1
+ARG NUMPY_VERSION=1.16.4
+ARG PANDAS_VERSION=0.24.2
+ARG PYARROW_VERSION=0.14.1
+ARG ARROW_CPP_VERSION=0.14.1
 ARG DOUBLE_CONVERSION_VERSION=3.1.5
 ARG RAPIDJSON_VERSION=1.1.0
 ARG FLATBUFFERS_VERSION=1.10.0
@@ -26,18 +25,15 @@ ARG FASTAVRO_VERSION=0.22.3
 ARG DLPACK_VERSION=0.2
 ARG SKLEARN_VERSION=0.21.3
 ARG SCIPY_VERSION=1.3.0
-ARG LIBGCC_NG_VERSION=7.3.0
-ARG LIBGFORTRAN_NG_VERSION=7.3.0
-ARG LIBSTDCXX_NG_VERSION=7.3.0
-ARG LIBCLANG_VERSION=8.0.0
-ARG LIBRDKAFKA_VERSION=1.2.2
-ARG OPENBLAS_VERSION=2.14
+ARG LIBGCC_NG_VERSION=8.2.0
+ARG LIBGFORTRAN_NG_VERSION=8.2.0
+ARG LIBSTDCXX_NG_VERSION=8.2.0
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
-ARG CONDA_VERSION=4.7.12
-ARG CONDA_BUILD_VERSION=3.18.11
+ARG CONDA_VERSION=4.6.14
+ARG CONDA_BUILD_VERSION=3.17.8
 ARG CONDA_VERIFY_VERSION=3.1.1
-ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
+ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-ppc64le.sh
 
 # Set environment
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
@@ -53,19 +49,15 @@ RUN apt-get update -y --fix-missing && \
       apt-get upgrade -y && \
       apt-get -qq install apt-utils -y --no-install-recommends && \
       apt-get install -y \
-        awscli \
-        curl \
-        git \
-        jq \
-        screen \
-        gcc-${CC_VERSION} \
-        g++-${CXX_VERSION} \
-        libnuma1 \
-        libnuma-dev \
-        tzdata \
-        wget \
-        vim \
-        zlib1g-dev \
+      curl \
+      git \
+      screen \
+      gcc-${CC_VERSION} \
+      g++-${CXX_VERSION} \
+      tzdata \
+      wget \
+      vim \
+      zlib1g-dev \
       && rm -rf /var/lib/apt/lists/*
 
 # Install conda
@@ -92,11 +84,11 @@ RUN conda create --no-default-packages -n gdf \
       arrow-cpp=${ARROW_CPP_VERSION} \
       cffi=${CFFI_VERSION} \
       cmake=${CMAKE_VERSION} \
+      cmake_setuptools \
       conda=${CONDA_VERSION} \
       conda-build=${CONDA_BUILD_VERSION} \
       conda-verify=${CONDA_VERIFY_VERSION} \
       cudatoolkit=${CUDA_SHORT_VERSION} \
-      cupy=${CUPY_VERSION} \
       cython=${CYTHON_VERSION} \
       flake8 \
       black \
@@ -116,21 +108,18 @@ RUN conda create --no-default-packages -n gdf \
       pytest-cov \
       scikit-learn=${SKLEARN_VERSION} \
       scipy=${SCIPY_VERSION} \
-      conda-forge::blas=${OPENBLAS_VERSION}=openblas \
+      conda-forge::blas=1.1=openblas \
       libgcc-ng=${LIBGCC_NG_VERSION} \
       libgfortran-ng=${LIBGFORTRAN_NG_VERSION} \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
-      rapidsai::libclang=${LIBCLANG_VERSION} \
-      librdkafka=${LIBRDKAFKA_VERSION} \
-      twine \
     && conda clean -afy \
     && chmod -R ugo+w /conda
 
 ## Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
 
-RUN curl -L https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini -o /usr/bin/tini && \
-      chmod +x /usr/bin/tini
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-ppc64el /usr/bin/tini
+RUN chmod +x /usr/bin/tini
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]

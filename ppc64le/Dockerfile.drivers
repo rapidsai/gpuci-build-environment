@@ -1,4 +1,4 @@
-ARG FROM_IMAGE=gpuci/rapidsai-base
+ARG FROM_IMAGE=gpuci/rapidsai-base-ppc64le
 ARG CUDA_VERSION=9.2
 ARG CUDA_MAJORMINOR_VERSION=${CUDA_VERSION}
 ARG LINUX_VERSION=ubuntu16.04
@@ -8,10 +8,10 @@ FROM ${FROM_IMAGE}:cuda${CUDA_VERSION}-${LINUX_VERSION}-gcc${CC_VERSION}-py${PYT
 
 # Define arguments
 ARG DRIVER_VERSION="396.44-1"
+ARG LIBCUDA_VERSION="396"
 
 # Update and add pkgs
-RUN LIBCUDA_VERSION=`echo "$DRIVER_VERSION" | cut -d'.' -f 1` \
-    && apt-get update -q \
+RUN apt-get update -q \
     && apt-get -qq install apt-utils -y --no-install-recommends \
       cuda-drivers=${DRIVER_VERSION} \
       libcuda1-${LIBCUDA_VERSION} \

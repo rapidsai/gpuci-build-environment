@@ -8,34 +8,30 @@ FROM ${FROM_IMAGE}:${CUDA_VERSION}-devel-${LINUX_VERSION}
 ARG CUDA_SHORT_VERSION
 ARG CC_VERSION=5
 ARG CXX_VERSION=5
-ARG PYTHON_VERSION=3.6
+ARG PYTHON_VERSION=3.5
 ARG CFFI_VERSION=1.11.5
-ARG CUPY_VERSION=6.6.0
-ARG CYTHON_VERSION=0.29
+ARG CYTHON_VERSION=0.28
 ARG CMAKE_VERSION=3.14.5
-ARG NUMBA_VERSION=0.46.0
-ARG NUMPY_VERSION=1.17.3
-ARG PANDAS_VERSION=0.25
-ARG PYARROW_VERSION=0.15.0
-ARG ARROW_CPP_VERSION=0.15.0
+ARG NUMBA_VERSION=0.38.1
+ARG NUMPY_VERSION=1.13.3
+ARG PANDAS_VERSION=0.23.4
+ARG PYARROW_VERSION=0.10.0
+ARG ARROW_CPP_VERSION=0.10.0
 ARG DOUBLE_CONVERSION_VERSION=3.1.5
 ARG RAPIDJSON_VERSION=1.1.0
 ARG FLATBUFFERS_VERSION=1.10.0
-ARG BOOST_CPP_VERSION=1.70.0
-ARG FASTAVRO_VERSION=0.22.3
+ARG BOOST_CPP_VERSION=1.67.0
+ARG FASTAVRO_VERSION=0.20.0
 ARG DLPACK_VERSION=0.2
-ARG SKLEARN_VERSION=0.21.3
-ARG SCIPY_VERSION=1.3.0
+ARG SKLEARN_VERSION=0.19.2
+ARG SCIPY_VERSION=1.1.0
 ARG LIBGCC_NG_VERSION=7.3.0
 ARG LIBGFORTRAN_NG_VERSION=7.3.0
 ARG LIBSTDCXX_NG_VERSION=7.3.0
-ARG LIBCLANG_VERSION=8.0.0
-ARG LIBRDKAFKA_VERSION=1.2.2
-ARG OPENBLAS_VERSION=2.14
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
-ARG CONDA_VERSION=4.7.12
-ARG CONDA_BUILD_VERSION=3.18.11
+ARG CONDA_VERSION=4.3.31
+ARG CONDA_BUILD_VERSION=3.14.4
 ARG CONDA_VERIFY_VERSION=3.1.1
 ARG MINICONDA_URL=https://repo.anaconda.com/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh
 
@@ -92,14 +88,14 @@ RUN conda create --no-default-packages -n gdf \
       arrow-cpp=${ARROW_CPP_VERSION} \
       cffi=${CFFI_VERSION} \
       cmake=${CMAKE_VERSION} \
-      conda=${CONDA_VERSION} \
-      conda-build=${CONDA_BUILD_VERSION} \
+      cmake_setuptools \
+      # conda=${CONDA_VERSION} \
+      # conda-build=${CONDA_BUILD_VERSION} \
       conda-verify=${CONDA_VERIFY_VERSION} \
       cudatoolkit=${CUDA_SHORT_VERSION} \
-      cupy=${CUPY_VERSION} \
       cython=${CYTHON_VERSION} \
       flake8 \
-      black \
+      # black \
       isort \
       make \
       numba">=${NUMBA_VERSION}" \
@@ -116,14 +112,11 @@ RUN conda create --no-default-packages -n gdf \
       pytest-cov \
       scikit-learn=${SKLEARN_VERSION} \
       scipy=${SCIPY_VERSION} \
-      conda-forge::blas=${OPENBLAS_VERSION}=openblas \
+      blas=1.1=openblas \
       libgcc-ng=${LIBGCC_NG_VERSION} \
       libgfortran-ng=${LIBGFORTRAN_NG_VERSION} \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
-      rapidsai::libclang=${LIBCLANG_VERSION} \
-      librdkafka=${LIBRDKAFKA_VERSION} \
-      twine \
-    && conda clean -afy \
+    && conda clean -ay \
     && chmod -R ugo+w /conda
 
 ## Enables "source activate conda"
