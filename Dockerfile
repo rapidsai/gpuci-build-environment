@@ -9,7 +9,6 @@ ARG CUDA_SHORT_VERSION
 ARG CC_VERSION=5
 ARG CXX_VERSION=5
 ARG PYTHON_VERSION=3.6
-ARG IPYTHON_VERSION=7.3
 ARG CFFI_VERSION=1.11.5
 ARG CUPY_VERSION=6.6.0
 ARG CYTHON_VERSION=0.29
@@ -114,8 +113,7 @@ RUN conda create --no-default-packages -n gdf \
       boost-cpp=${BOOST_CPP_VERSION} \
       fastavro=${FASTAVRO_VERSION} \
       dlpack=${DLPACK_VERSION} \
-      ipython=${IPYTHON_VERSION}.* \
-      jupyterlab \
+      rapids-notebook-env \
       pytest \
       pytest-cov \
       scikit-learn=${SKLEARN_VERSION} \
