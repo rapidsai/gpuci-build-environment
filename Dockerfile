@@ -128,9 +128,9 @@ RUN conda create --no-default-packages -n gdf \
     && chmod -R ugo+w /conda
 
 ## Patch nvidia-smi to return only 0 exit codes
-RUN mv /usr/bin/nvidia-smi /usr/bin/nvidia-smi-orig &&
-    echo 'nvidia-smi-orig $@ || true' > /usr/bin/nvidia-smi &&
-    chmod +x /usr/bin/nvidia-smi
+RUN mv /usr/bin/nvidia-smi /usr/bin/nvidia-smi-orig \
+    && echo 'nvidia-smi-orig $@ || true' > /usr/bin/nvidia-smi \
+    && chmod +x /usr/bin/nvidia-smi
 
 ## Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
