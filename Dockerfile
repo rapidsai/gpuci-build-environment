@@ -113,7 +113,6 @@ RUN conda create --no-default-packages -n gdf \
       boost-cpp=${BOOST_CPP_VERSION} \
       fastavro=${FASTAVRO_VERSION} \
       dlpack=${DLPACK_VERSION} \
-      rapids-notebook-env \
       pytest \
       pytest-cov \
       scikit-learn=${SKLEARN_VERSION} \
