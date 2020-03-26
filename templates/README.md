@@ -2,7 +2,7 @@
 
 ## Overview
 
-These templates provide a guide for developers to assist them in adding the needed integration scripts to workwith the gpuCI. Every script here is required for full integration into the gpuCI infrastructure.
+These templates provide a guide for developers to assist them in adding the needed integration scripts to work with the gpuCI. Every script here is required for full integration into the gpuCI infrastructure.
 
 ## Usage
 
@@ -13,6 +13,7 @@ Marker | Meaning
 `##*` | Represents the *start* or *end* of an area in a script that is expected to be edited
 `## EDIT:` | A short description of what should be edited in the codeblock encapsulated by `##*`
 `|<` or `>|` | Represents a specific area in the code that should be edited. Also encapsulates a short description of what should replace it
+
 
 ## Description
 
