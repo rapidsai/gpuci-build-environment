@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 ##*
-## EDIT: If your packages are CUDA or Python independent, use these 
+## EDIT: If your packages are CUDA or Python version independent, use these 
 ##       blocks to only upload them only once per CUDA/Python version
 
 #Upload |<package>| once per PYTHON
-if [[ "$CUDA" == "9.2" ]]; then
+if [[ "$CUDA" == "10.0" ]]; then
     export UPLOAD_|<package>|=1
 else
     export UPLOAD_|<package>|=0
