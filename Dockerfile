@@ -58,8 +58,6 @@ RUN apt-get update -y --fix-missing && \
         git \
         jq \
         screen \
-        gcc-${CC_VERSION} \
-        g++-${CXX_VERSION} \
         libnuma1 \
         libnuma-dev \
         tzdata \
