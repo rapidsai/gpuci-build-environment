@@ -29,7 +29,7 @@ ARG SCIPY_VERSION=1.3.0
 ARG LIBGCC_NG_VERSION=7.3.0
 ARG LIBGFORTRAN_NG_VERSION=7.3.0
 ARG LIBSTDCXX_NG_VERSION=7.3.0
-ARG LIBCLANG_VERSION=8.0.0
+ARG CLANG_VERSION=8
 ARG LIBRDKAFKA_VERSION=1.2.2
 ARG OPENBLAS_VERSION=2.14
 ARG TINI_VERSION=v0.18.0
@@ -119,7 +119,8 @@ RUN conda create --no-default-packages -n gdf \
       libgcc-ng=${LIBGCC_NG_VERSION} \
       libgfortran-ng=${LIBGFORTRAN_NG_VERSION} \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
-      rapidsai::libclang=${LIBCLANG_VERSION} \
+      conda-forge::clang=${CLANG_VERSION} \
+      conda-forge::clang-tools=${CLANG_VERSION} \
       librdkafka=${LIBRDKAFKA_VERSION} \
       twine \
     && conda clean -afy \
