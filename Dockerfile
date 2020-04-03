@@ -10,10 +10,10 @@ ARG CC_VERSION=5
 ARG CXX_VERSION=5
 ARG PYTHON_VERSION=3.6
 ARG CFFI_VERSION=1.11.5
-ARG CUPY_VERSION=6.6.0
+ARG CUPY_VERSION=7.0
 ARG CYTHON_VERSION=0.29
 ARG CMAKE_VERSION=3.14.5
-ARG NUMBA_VERSION=0.46.0
+ARG NUMBA_VERSION=0.48
 ARG NUMPY_VERSION=1.17.3
 ARG PANDAS_VERSION=0.25
 ARG PYARROW_VERSION=0.15.0
@@ -58,8 +58,6 @@ RUN apt-get update -y --fix-missing && \
         git \
         jq \
         screen \
-        gcc-${CC_VERSION} \
-        g++-${CXX_VERSION} \
         libnuma1 \
         libnuma-dev \
         tzdata \
