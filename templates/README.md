@@ -9,6 +9,7 @@ These templates provide a guide for developers to assist them in adding the need
 The templates have been marked to show developers where to make changes on the files. These markers are made to be easily found using your preferred file search function. All comments with *exactly* two hashtags should be removed before being finalized.
 
 Marker | Meaning
+--- | ---
 `##` | Generally represents useful information for guiding the user
 `##*` | Represents the *start* or *end* of an area in a script that is expected to be edited
 `## EDIT:` | A short description of what should be edited in the codeblock encapsulated by `##*`
