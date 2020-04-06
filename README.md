@@ -78,8 +78,8 @@ The `gpuci/rapidsai` images serve different purposed based on their `CUDA_TYPE`:
 - `devel` - image types are used in gpuCI on nodes with [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker)
 installed for running tests with GPUs. They are also used by the RAPIDS `devel`
 release images.
-- `runtime` - image types are used by RAPIDS `base` and `runtime` release
-images.
+- `base` & `runtime` - image types are used by their respective RAPIDS `base`
+and `runtime` release images.
 
 [`gpuci/rapidsai`](https://hub.docker.com/r/gpuci/rapidsai-base/tags)
     [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=docker%2Fdockerhub-gpuci%2Frapidsai-base)](https://gpuci.gpuopenanalytics.com/view/gpuCI%20docker-builds/job/docker/job/dockerhub-gpuci/job/rapidsai-base/)
@@ -93,7 +93,7 @@ images.
   - Tags - `${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}-py${PYTHON_VER}`
     - Supports these options
       - `${CUDA_VER}` - `10.0`, `10.1`, `10.2`
-      - `${CUDA_TYPE}` - `runtime`, `devel`
+      - `${CUDA_TYPE}` - `base`, `runtime`, `devel`
       - `${LINUX_VER}` - `ubuntu16.04`, `ubuntu18.04`, `centos7`
       - `${PYTHON_VER}` - `3.6`, `3.7`
 
@@ -127,7 +127,7 @@ Listed in order of builds and deps
     - Purpose
       - Builds gcc7 from source on CentOS 7
       - Used by CentOS 7 images during `gpuci/miniconda-cuda` build to install gcc7 without building
-    - Tags - `{CUDA_VERSION}-{CUDA_TYPE}-{LINUX_VERSION}`
+    - Tags - `{CUDA_VER}-{CUDA_TYPE}-{LINUX_VER}`
 2.  [`gpuci/miniconda-cuda`](https://hub.docker.com/r/gpuci/miniconda-cuda/tags)
     [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=docker%2Fdockerhub-gpuci%2Fgpuci-miniconda-cuda)](https://gpuci.gpuopenanalytics.com/view/gpuCI%20docker-builds/job/docker/job/dockerhub-gpuci/job/gpuci-miniconda-cuda/)
     - From - `nvidia/cuda`
@@ -135,7 +135,7 @@ Listed in order of builds and deps
       - Contains CUDA + miniconda installed
       - Activates the `base` environment on launch
       - Serves as a base container for community and gpuCI users to build their own custom image
-    - Tags - `{CUDA_VERSION}-{CUDA_TYPE}-{LINUX_VERSION}`
+    - Tags - `{CUDA_VER}-{CUDA_TYPE}-{LINUX_VER}`
 3.  [`gpuci/miniconda-cuda-rapidsenv`](https://hub.docker.com/r/gpuci/miniconda-cuda-rapidsenv/tags)
     [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=docker%2Fdockerhub-gpuci%2Fgpuci-miniconda-cuda-rapidsenv)](https://gpuci.gpuopenanalytics.com/view/gpuCI%20docker-builds/job/docker/job/dockerhub-gpuci/job/gpuci-miniconda-cuda-rapidsenv/)
     - From - `gpuci/miniconda-cuda`
@@ -145,4 +145,4 @@ Listed in order of builds and deps
         - This is to help ensure that when installing from `conda-forge` we get the correct ABI pkgs
       - Activates the `rapids` environment on launch
       - Serves as a base container for all RAPIDS images
-    - Tags - `{CUDA_VERSION}-{CUDA_TYPE}-{LINUX_VERSION}-py{PYTHON_VERSION}`
+    - Tags - `{CUDA_VER}-{CUDA_TYPE}-{LINUX_VER}-py{PYTHON_VERSION}`
