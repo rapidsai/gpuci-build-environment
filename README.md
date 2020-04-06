@@ -9,6 +9,8 @@ Below is a flow diagram of how the major gpuCI images relate to each other.
 Arrows between images imply that the source image is the `FROM` image for the
 destination image.
 
+### Image Flow Diagram
+
 ![gpuCI images and relations](gpuci-images.png)
 
 ## Base Image
