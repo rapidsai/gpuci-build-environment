@@ -19,6 +19,7 @@ The `gpuci/miniconda-cuda` image is the base layer that all gpuCI testing and
 RAPIDS release containers are built off of. Below is a description of the image
 and how it is built.
 
+<!-- TODO update build status icons -->
 [`gpuci/miniconda-cuda`](https://hub.docker.com/r/gpuci/miniconda-cuda/tags)
     [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=docker%2Fdockerhub-gpuci%2Fgpuci-miniconda-cuda)](https://gpuci.gpuopenanalytics.com/view/gpuCI%20docker-builds/job/docker/job/dockerhub-gpuci/job/gpuci-miniconda-cuda/)
   - Dockerfiles
