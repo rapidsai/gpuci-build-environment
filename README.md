@@ -38,36 +38,83 @@ and how it is built.
       - `${CUDA_TYPE}` - `base`, `runtime`, `devel`
       - `${LINUX_VER}` - `ubuntu16.04`, `ubuntu18.04`, `centos7`
 
-## gpuCI Containers
+## gpuCI Build & Test Images
 
-Listed in order of builds and deps
+The images below are used for `conda` builds and GPU tests in gpuCI. They are
+ordered by their dependencies. See the [diagram](#image-flow-diagram)
+above for more context.
 
-1.  [`gpuci/rapidsai-base`](https://hub.docker.com/r/gpuci/rapidsai-base/tags)
+### `gcc7` From-Source Build for CentOS 7
+
+A supplemental image that is sourced for CentOS 7 images is `gpuci/builds-gcc7`.
+This is due to `gcc4` being the standard `gcc` in CentOS 7. With this image we
+pre-build `gcc7.3` and then use the following to pull the pre-built files into
+an image:
+
+```
+# Install gcc7 from prebuilt image
+COPY --from=gpuci/builds-gcc7:10.0-devel-centos7 /usr/local/gcc7 /usr/local/gcc7
+```
+
+[`gpuci/builds-gcc7`](https://hub.docker.com/r/gpuci/builds-gcc7/tags)
+    [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=docker%2Fdockerhub-gpuci%2Fgpuci-builds-gcc7)](https://gpuci.gpuopenanalytics.com/view/gpuCI%20docker-builds/job/docker/job/dockerhub-gpuci/job/gpuci-builds-gcc7/)
+  - Dockerfile
+    - [`Dockerfile.centos7`](builds-gcc7/Dockerfile.centos7)
+  - Base Image
+    - `FROM nvidia/cuda:${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}`
+  - Purpose
+    - Builds gcc7 from source on CentOS 7
+    - Used by CentOS 7 images during `gpuci/miniconda-cuda` build to install gcc7 without building
+  - Tags - `${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}`
+    - Supports these options
+      - `${CUDA_VER}` - `10.0`, `10.1`, `10.2`
+      - `${CUDA_TYPE}` - `devel`
+      - `${LINUX_VER}` - `centos7`
+
+### GPU Test Images
+
+The `gpuci/rapidsai` images serve different purposed based on their `CUDA_TYPE`:
+- `devel` - image types are used in gpuCI on nodes with [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker)
+installed for running tests with GPUs. They are also used by the RAPIDS `devel`
+release images.
+- `runtime` - image types are used by RAPIDS `base` and `runtime` release
+images.
+
+[`gpuci/rapidsai`](https://hub.docker.com/r/gpuci/rapidsai-base/tags)
     [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=docker%2Fdockerhub-gpuci%2Frapidsai-base)](https://gpuci.gpuopenanalytics.com/view/gpuCI%20docker-builds/job/docker/job/dockerhub-gpuci/job/rapidsai-base/)
-    - Dockerfiles
-      - Ubuntu 16.04 & 18.04 - `Dockerfile`
-      - CentOS 7 - `Dockerfile.centos7`
-    - Base image
-      - `FROM nvidia/cuda:${CUDA_VERSION}-devel-${LINUX_VERSION}`
-    - Purpose
-      - Installs miniconda with select conda build packages into `base` conda env
-      - Creates a RAPIDS conda env named `gdf` that has several common packages needed for build across the libraries
-        - Also has large packages like `cudatoolkit` to save time on testing from waiting on downloads
-      - Run `source activate gdf` before building or testing RAPIDS
-    - Tags - `cuda{CUDA_VERSION}-{LINUX_VERSION}-gcc{CC_VERSION}-py{PYTHON_VERSION}`
-2.  [`gpuci/rapidsai-base-driver`](https://hub.docker.com/r/gpuci/rapidsai-base-driver/tags)
+  - Dockerfiles
+    - Ubuntu 16.04 & 18.04 - [`Dockerfile`](gpuci/rapidsai/Dockerfile)
+    - CentOS 7 - [`Dockerfile.centos7`](gpuci/rapidsai/Dockerfile.centos7)
+  - Base image
+    - `FROM gpuci/miniconda-cuda:${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}`
+  - Purpose
+    - ...
+  - Tags - `${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}-py${PYTHON_VER}`
+    - Supports these options
+      - `${CUDA_VER}` - `10.0`, `10.1`, `10.2`
+      - `${CUDA_TYPE}` - `runtime`, `devel`
+      - `${LINUX_VER}` - `ubuntu16.04`, `ubuntu18.04`, `centos7`
+      - `${PYTHON_VER}` - `3.6`, `3.7`
+
+### `conda` Build Images
+2.  [`gpuci/rapidsai-driver`](https://hub.docker.com/r/gpuci/rapidsai-base-driver/tags)
     [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=docker%2Fdockerhub-gpuci%2Frapidsai-base-driver)](https://gpuci.gpuopenanalytics.com/view/gpuCI%20docker-builds/job/docker/job/dockerhub-gpuci/job/rapidsai-base-driver/)
     - Dockerfiles
-      - Ubuntu 16.04 - `Dockerfile.drivers`
+      - Ubuntu 16.04 & Ubuntu 18.04 - [`Dockerfile.drivers`](rapidsai/Dockerfile.drivers)
     - Base image
-      - `FROM gpuci/rapidsai-base:cuda${CUDA_VERSION}-${LINUX_VERSION}-gcc${CC_VERSION}-py${PYTHON_VERSION}`
+      - `FROM gpuci/rapidsai:${CUDA_VER}-devel-${LINUX_VER}-py${PYTHON_VERSION}`
     - Purpose
       - Installs the NVIDIA driver/libcuda to enable conda builds on CPU-only machines
-      - Built for conda builds and only contain the driver install command; otherwise the conda env `gdf` is the same as `gpuci/rapidsai-base`
+      - Built for conda builds and only contains the driver install command
       - Maintained as a way to remove the `apt-get install` overhead that can slow the testing/build process
-    - Tags - `cuda{CUDA_VERSION}-{LINUX_VERSION}-gcc{CC_VERSION}-py{PYTHON_VERSION}`
+    - Tags - `${CUDA_VER}-devel-${LINUX_VER}-py${PYTHON_VER}`
+    - Supports these options
+      - `${CUDA_VER}` - `10.0`, `10.1`, `10.2`
+      - `${CUDA_TYPE}` - `devel`
+      - `${LINUX_VER}` - `ubuntu16.04`, `ubuntu18.04`, `centos7`
+      - `${PYTHON_VER}` - `3.6`, `3.7`
 
-## Release Containers
+## RAPIDS Release Containers
 
 **NOTE:** These are on branch [enh-miniconda-cuda-df](https://github.com/rapidsai/gpuci-build-environment/tree/enh-miniconda-cuda-df) for the time being until they can be merged into the gpuCI testing containers
 
