@@ -11,6 +11,30 @@ destination image.
 
 ![gpuCI images and relations](gpuci-images.png)
 
+## Base Image
+
+The `gpuci/miniconda-cuda` image is the base layer that all gpuCI testing and
+RAPIDS release containers are built off of. Below is a description of the image
+and how it is built.
+
+[`gpuci/miniconda-cuda`](https://hub.docker.com/r/gpuci/miniconda-cuda/tags)
+    [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=docker%2Fdockerhub-gpuci%2Fgpuci-miniconda-cuda)](https://gpuci.gpuopenanalytics.com/view/gpuCI%20docker-builds/job/docker/job/dockerhub-gpuci/job/gpuci-miniconda-cuda/)
+  - Dockerfiles
+    - Ubuntu 16.04 & 18.04 - [`Dockerfile`](gpuci/miniconda-cuda/Dockerfile)
+    - CentOS 7 - [`Dockerfile.centos7`](gpuci/miniconda-cuda/Dockerfile.centos7)
+  - Base image
+    - `FROM nvidia/cuda:${CUDA_VER}-{$CUDA_TYPE}-${LINUX_VER}`
+  - Purpose
+    - Contains CUDA + miniconda installed
+    - Replaces `nvidia/cuda` and enables conda environment
+    - Activates the `base` conda environment on launch
+    - Serves as a base image for community using `conda` and gpuCI users to
+    build their own custom image
+  - Tags - `${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}`
+    - Supports these options
+      - `${CUDA_VER}` - `9.0`, `9.2`, `10.0`, `10.1`, `10.2`
+      - `${CUDA_TYPE}` - `base`, `runtime`, `devel`
+      - `${LINUX_VER}` - `ubuntu16.04`, `ubuntu18.04`, `centos7`
 
 ## gpuCI Containers
 
