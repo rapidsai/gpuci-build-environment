@@ -22,8 +22,8 @@ and how it is built.
 [`gpuci/miniconda-cuda`](https://hub.docker.com/r/gpuci/miniconda-cuda/tags)
     [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=docker%2Fdockerhub-gpuci%2Fgpuci-miniconda-cuda)](https://gpuci.gpuopenanalytics.com/view/gpuCI%20docker-builds/job/docker/job/dockerhub-gpuci/job/gpuci-miniconda-cuda/)
   - Dockerfiles
-    - Ubuntu 16.04 & 18.04 - [`Dockerfile`](gpuci/miniconda-cuda/Dockerfile)
-    - CentOS 7 - [`Dockerfile.centos7`](gpuci/miniconda-cuda/Dockerfile.centos7)
+    - Ubuntu 16.04 & 18.04 - [`Dockerfile`](miniconda-cuda/Dockerfile)
+    - CentOS 7 - [`Dockerfile.centos7`](miniconda-cuda/Dockerfile.centos7)
   - Base image
     - `FROM nvidia/cuda:${CUDA_VER}-{$CUDA_TYPE}-${LINUX_VER}`
   - Purpose
