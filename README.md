@@ -1,6 +1,16 @@
 # gpuci-build-environment
 
-Common build environment used by gpuCI and release containers for RAPIDS
+## Overview
+
+This repo contains Docker images used by gpuCI and release containers for
+RAPIDS. Additional gpuCI users also have custom images in this repo. 
+
+Below is a flow diagram of how the major gpuCI images relate to each other.
+Arrows between images imply that the source image is the `FROM` image for the
+destination image.
+
+![gpuCI images and relations](gpuci-images.png)
+
 
 ## gpuCI Containers
 
