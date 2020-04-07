@@ -13,7 +13,7 @@ Marker | Meaning
 `##` | Generally represents useful information for guiding the user
 `##*` | Represents the *start* or *end* of an area in a script that is expected to be edited
 `## EDIT:` | A short description of what should be edited in the codeblock encapsulated by `##*`
-`|<` or `>|` | Represents a specific area in the code that should be edited. Also encapsulates a short description of what should replace it
+`\|<` or `>\|` | Represents a specific area in the code that should be edited. Also encapsulates a short description of what should replace it
 
 
 ## Description
