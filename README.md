@@ -145,6 +145,7 @@ As with `gpuci/rapidsai` there are regular and `nightly` repo locations:
   - `FROM_IMAGE` - Specifies the repo location
     - `gpuci/rapidsai` for stable (default); `gpuci/rapidsai-nightly` for nightly
   - `DRIVER_VER` - NVIDIA driver version to install (i.e. `396.44-1`)
+  - `CUDA_VER` and `PYTHON_VER` - Take the same arguments as defined in **Tags** below
 - Base image
   - `FROM gpuci/rapidsai:${CUDA_VER}-devel-ubuntu18.04-py${PYTHON_VERSION}`
   - `FROM gpuci/rapidsai-nightly:${CUDA_VER}-devel-ubuntu18.04-py${PYTHON_VERSION}`
