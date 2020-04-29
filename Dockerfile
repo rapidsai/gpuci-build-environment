@@ -98,6 +98,7 @@ RUN conda create --no-default-packages -n gdf \
       cupy=${CUPY_VERSION} \
       cython=${CYTHON_VERSION} \
       flake8 \
+      shellcheck \
       black \
       isort \
       make \
