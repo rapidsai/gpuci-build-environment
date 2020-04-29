@@ -142,9 +142,12 @@ As with `gpuci/rapidsai` there are regular and `nightly` repo locations:
 - Dockerfile
   - Ubuntu 18.04 - [`Dockerfile`](rapidsai-driver/Dockerfile)
 - Build arguments
-  - `DRIVER_VER` = NVIDIA driver version to install (i.e. `396.44-1`)
+  - `FROM_IMAGE` - Specifies the repo location
+    - `gpuci/rapidsai` for stable (default); `gpuci/rapidsai-nightly` for nightly
+  - `DRIVER_VER` - NVIDIA driver version to install (i.e. `396.44-1`)
 - Base image
   - `FROM gpuci/rapidsai:${CUDA_VER}-devel-ubuntu18.04-py${PYTHON_VERSION}`
+  - `FROM gpuci/rapidsai-nightly:${CUDA_VER}-devel-ubuntu18.04-py${PYTHON_VERSION}`
 - Purpose
   - Installs the NVIDIA driver/libcuda to enable conda builds on CPU-only machines
   - Built for conda builds and only contains the driver install command
