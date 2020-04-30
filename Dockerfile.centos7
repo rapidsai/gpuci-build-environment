@@ -128,6 +128,7 @@ RUN conda create --no-default-packages -n gdf \
       dlpack=${DLPACK_VERSION} \
       pytest \
       pytest-cov \
+      pytest-timeout \
       scikit-learn=${SKLEARN_VERSION} \
       scipy=${SCIPY_VERSION} \
       conda-forge::blas=${OPENBLAS_VERSION}=openblas \
