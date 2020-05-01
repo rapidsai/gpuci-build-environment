@@ -24,22 +24,27 @@ image for those who want a one-to-one compatible `nvidia/cuda` image with
 [`gpuci/miniconda-cuda`](https://hub.docker.com/r/gpuci/miniconda-cuda/tags)
     [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=docker%2Fdockerhub-gpuci%2Fgpuci-miniconda-cuda)](https://gpuci.gpuopenanalytics.com/view/gpuCI%20docker-builds/job/docker/job/dockerhub-gpuci/job/gpuci-miniconda-cuda/)
 
-- Dockerfiles
-  - Ubuntu 16.04 & 18.04 - [`Dockerfile`](miniconda-cuda/Dockerfile)
-  - CentOS 7 - [`Dockerfile.centos7`](miniconda-cuda/Dockerfile.centos7)
-- Base image
-  - `FROM nvidia/cuda:${CUDA_VER}-{$CUDA_TYPE}-${LINUX_VER}`
+- Details
+  - [`Dockerfile`](miniconda-cuda/Dockerfile)
+  - From image
+    - `FROM nvidia/cuda:${CUDA_VER}-{$CUDA_TYPE}-${LINUX_VER}`
+      - Default - `nvidia/cuda:10.2-devel-ubuntu18.04`
+  - Build arguments
+    - Depends on upstream `nvidia/cuda` combinations
+      - `CUDA_VER` - `9.0`, `9.2`, `10.0`, `10.1`, `10.2`
+      - `CUDA_TYPE` - `base`, `runtime`, `devel`
+      - `LINUX_VER` - `ubuntu16.04`, `ubuntu18.04`, `centos7`
+    - Other arguments
+      - `FROM_IMAGE` - `nvidia/cuda`
 - Purpose
   - Contains CUDA + miniconda installed
   - Replaces `nvidia/cuda` and enables conda environment
   - Activates the `base` conda environment on launch
   - Serves as a base image for community using `conda` and gpuCI users to
   build their own custom image
-- Tags - `${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}`
-  - Supports these options
-    - `${CUDA_VER}` - `9.0`, `9.2`, `10.0`, `10.1`, `10.2`
-    - `${CUDA_TYPE}` - `base`, `runtime`, `devel`
-    - `${LINUX_VER}` - `ubuntu16.04`, `ubuntu18.04`, `centos7`
+- Tag format - `${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}`
+  - Supports the same options as defined in **Build arguments**
+  - Current [tags](https://hub.docker.com/r/gpuci/miniconda-cuda/tags)
 
 ## gpuCI Images
 
