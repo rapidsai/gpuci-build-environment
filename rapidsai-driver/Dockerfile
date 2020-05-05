@@ -3,8 +3,9 @@ ARG CUDA_VER=10.2
 ARG LINUX_VER=ubuntu18.04
 ARG PYTHON_VER=3.6
 FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}-py${PYTHON_VER}
+# Installs cuda-drivers and cuda libraries for conda builds on CPU-only machines
 
-# Define arguments
+# Required arguments
 ARG DRIVER_VER="396.44-1"
 
 # Update and add pkgs
