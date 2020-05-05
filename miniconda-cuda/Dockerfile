@@ -24,7 +24,7 @@ RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/* ; \
     else \
-      echo -e "\n\n>>>> SKIPPING: LINUX_VER is not Ubuntu\n\n"; \
+      echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'ubuntu16.04' or 'ubuntu18.04'\n\n"; \
     fi
 
 # Update and add pkgs for centOS
@@ -32,7 +32,7 @@ RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
       yum -y install wget bzip2 ca-certificates curl git which \
       && yum clean all ; \
     else \
-      echo -e "\n\n>>>> SKIPPING: LINUX_VER is not centOS\n\n"; \
+      echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'centos7'\n\n"; \
     fi
 
 # Install miniconda and configure
