@@ -42,10 +42,12 @@ RUN source activate base \
     && conda create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
+      -c gpuci \
       -c defaults \
       nomkl \
       cudatoolkit=${CUDA_VER} \
       git \
+      gpuci-tools \
       libgcc-ng=${BUILD_STACK_VER} \
       libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
@@ -59,7 +61,7 @@ RUN ln -s /opt/conda/envs/rapids /opt/conda/envs/gdf
 # Once installed remove the meta-pkg so dependencies can be freely updated &
 # the meta-pkg can be installed again with updates
 RUN if [ "${IMAGE_TYPE}" == "runtime" ] ; then \
-      conda install -y -n rapids --freeze-installed \
+      gpuci_retry conda install -y -n rapids --freeze-installed \
         rapids-notebook-env=${RAPIDS_VER} \
       && conda remove -y -n rapids --force-remove \
         rapids-notebook-env=${RAPIDS_VER} ; \
