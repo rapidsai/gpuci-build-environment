@@ -20,19 +20,19 @@ RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
-  - http://18.221.164.126/rapidsai \n\
-  - http://18.221.164.126/conda-forge \n\
-  - http://18.221.164.126/nvidia \n\
+  - rapidsai \n\
+  - conda-forge \n\
+  - nvidia \n\
   - defaults \n" > /conda/.condarc \
       && cat /conda/.condarc ; \
     else \
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
-  - http://18.221.164.126/rapidsai \n\
-  - http://18.221.164.126/rapidsai-nightly \n\
-  - http://18.221.164.126/conda-forge \n\
-  - http://18.221.164.126/nvidia \n\
+  - rapidsai \n\
+  - rapidsai-nightly \n\
+  - conda-forge \n\
+  - nvidia \n\
   - defaults \n" > /conda/.condarc \
       && cat /conda/.condarc ; \
     fi
