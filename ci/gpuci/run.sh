@@ -9,6 +9,10 @@ curl -s https://raw.githubusercontent.com/rapidsai/gpuci-tools/master/install.sh
 source ~/.bashrc
 cd ~
 
+# Show env
+gpuci_logger "Exposing current environment..."
+env
+
 # Login to docker
 gpuci_logger "Logging into Docker..."
 echo $DH_TOKEN | docker login --username $DH_USER --password-stdin
