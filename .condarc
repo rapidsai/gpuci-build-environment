@@ -4,5 +4,4 @@ channels:
   - rapidsai-nightly
   - nvidia
   - conda-forge
-  - numba
   - defaults
