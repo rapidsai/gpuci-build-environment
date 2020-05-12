@@ -1,0 +1,55 @@
+BUILD_IMAGE:
+  - gpuci/rapidsai
+
+FROM_IMAGE:
+  - gpuci/miniconda-cuda
+
+IMAGE_NAME:
+  - rapidsai
+
+DOCKER_FILE:
+  - base-runtime.Dockerfile
+  - devel.Dockerfile
+  - devel-centos7.Dockerfile
+
+CUDA_VER:
+  - 10.2
+  - 10.1
+  - 10.0
+
+IMAGE_TYPE:
+  - base
+  - runtime
+  - devel
+
+LINUX_VER:
+  - ubuntu16.04
+  - ubuntu18.04
+  - centos7
+
+PYTHON_VER:
+  - 3.6
+  - 3.7
+
+exclude:
+  - IMAGE_TYPE: base
+    DOCKER_FILE:
+      - devel.Dockerfile
+      - devel-centos7.Dockerfile
+  - IMAGE_TYPE: runtime
+    DOCKER_FILE:
+      - devel.Dockerfile
+      - devel-centos7.Dockerfile
+  - IMAGE_TYPE: devel
+    DOCKER_FILE: 
+      - base-runtime.Dockerfile
+      - devel.Dockerfile
+    LINUX_VER:
+      - ubuntu16.04
+      - ubuntu18.04
+  - IMAGE_TYPE: devel
+    DOCKER_FILE:
+      - base-runtime.Dockerfile
+      - devel-centos7.Dockerfile
+    LINUX_VER:
+      - centos7
