@@ -4,6 +4,12 @@ BUILD_IMAGE:
 FROM_IMAGE:
   - nvidia/cuda
 
+IMAGE_NAME:
+  - miniconda-cuda
+
+DOCKER_FILE:
+  - Dockerfile
+
 CUDA_VER:
   - 10.2
   - 10.1
@@ -11,7 +17,7 @@ CUDA_VER:
   - 9.2
   - 9.0
 
-CUDA_TYPE:
+IMAGE_TYPE:
   - base
   - runtime
   - devel
