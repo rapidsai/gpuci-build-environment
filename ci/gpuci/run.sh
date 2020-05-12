@@ -25,6 +25,13 @@ else
   BUILD_ARGS="${BUILD_ARGS} --build-arg PYTHON_VER=${PYTHON_VER}"
   BUILD_TAG="${BUILD_TAG}-py${PYTHON_VER}"
 fi
+# Check if DRIVER_VER is set
+if [ -z "$DRIVER_VER" ] ; then
+  gpuci_logger "DRIVER_VER is not set, skipping..."
+else
+  gpuci_logger "DRIVER_VER is set to '$DRIVER_VER', adding to build args..."
+  BUILD_ARGS="${BUILD_ARGS} --build-arg DRIVER_VER=${DRIVER_VER}"
+fi
 gpuci_logger "Build image and tag: ${BUILD_IMAGE}:${BUILD_TAG}"
 gpuci_logger "Build args: ${BUILD_ARGS}"
 
