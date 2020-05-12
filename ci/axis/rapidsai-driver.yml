@@ -1,0 +1,45 @@
+BUILD_IMAGE:
+  - gpuci/rapidsai-driver
+
+FROM_IMAGE:
+  - gpuci/rapidsai-new
+
+IMAGE_NAME:
+  - rapidsai-driver
+
+DOCKER_FILE:
+  - Dockerfile
+
+CUDA_VER:
+  - 10.2
+  - 10.1
+  - 10.0
+
+IMAGE_TYPE:
+  - devel
+
+LINUX_VER:
+  - ubuntu18.04
+
+PYTHON_VER:
+  - 3.6
+  - 3.7
+
+DRIVER_VER:
+  - 410.72-1
+  - 418.87.01-1
+  - 440.33.01-1
+
+exclude:
+  - CUDA_VER: 10.0
+    DRIVER_VER: 418.87.01-1
+  - CUDA_VER: 10.0
+    DRIVER_VER: 440.33.01-1
+  - CUDA_VER: 10.1
+    DRIVER_VER: 410.72-1
+  - CUDA_VER: 10.1
+    DRIVER_VER: 440.33.01-1
+  - CUDA_VER: 10.2
+    DRIVER_VER: 410.72-1
+  - CUDA_VER: 10.2
+    DRIVER_VER: 418.87.01-1
