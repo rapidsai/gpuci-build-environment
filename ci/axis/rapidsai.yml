@@ -2,7 +2,7 @@ BUILD_IMAGE:
   - gpuci/rapidsai
 
 FROM_IMAGE:
-  - gpuci/miniconda-cuda
+  - gpuci/miniconda-cuda-new
 
 IMAGE_NAME:
   - rapidsai
