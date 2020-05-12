@@ -7,7 +7,7 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}-py${PYTHON_VER}
 # Installs cuda-drivers and cuda libraries for conda builds on CPU-only machines
 
 # Required arguments
-ARG DRIVER_VER="396.44-1"
+ARG DRIVER_VER="440.33.01-1"
 
 # Update and add pkgs
 RUN LIBCUDA_VER=`echo "$DRIVER_VER" | cut -d'.' -f 1` \
