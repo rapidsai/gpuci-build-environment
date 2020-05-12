@@ -10,10 +10,10 @@ ARG CC_VERSION=5
 ARG CXX_VERSION=5
 ARG PYTHON_VERSION=3.6
 ARG CFFI_VERSION=1.11.5
-ARG CUPY_VERSION=6.6.0
+ARG CUPY_VERSION=7.0
 ARG CYTHON_VERSION=0.29
 ARG CMAKE_VERSION=3.14.5
-ARG NUMBA_VERSION=0.46.0
+ARG NUMBA_VERSION=0.48
 ARG NUMPY_VERSION=1.17.3
 ARG PANDAS_VERSION=0.25
 ARG PYARROW_VERSION=0.15.0
@@ -29,7 +29,7 @@ ARG SCIPY_VERSION=1.3.0
 ARG LIBGCC_NG_VERSION=7.3.0
 ARG LIBGFORTRAN_NG_VERSION=7.3.0
 ARG LIBSTDCXX_NG_VERSION=7.3.0
-ARG LIBCLANG_VERSION=8.0.0
+ARG CLANG_VERSION=8.0.1
 ARG LIBRDKAFKA_VERSION=1.2.2
 ARG OPENBLAS_VERSION=2.14
 ARG TINI_VERSION=v0.18.0
@@ -58,8 +58,6 @@ RUN apt-get update -y --fix-missing && \
         git \
         jq \
         screen \
-        gcc-${CC_VERSION} \
-        g++-${CXX_VERSION} \
         libnuma1 \
         libnuma-dev \
         tzdata \
@@ -100,6 +98,7 @@ RUN conda create --no-default-packages -n gdf \
       cupy=${CUPY_VERSION} \
       cython=${CYTHON_VERSION} \
       flake8 \
+      shellcheck \
       black \
       isort \
       make \
@@ -115,13 +114,15 @@ RUN conda create --no-default-packages -n gdf \
       dlpack=${DLPACK_VERSION} \
       pytest \
       pytest-cov \
+      pytest-timeout \
       scikit-learn=${SKLEARN_VERSION} \
       scipy=${SCIPY_VERSION} \
       conda-forge::blas=${OPENBLAS_VERSION}=openblas \
       libgcc-ng=${LIBGCC_NG_VERSION} \
       libgfortran-ng=${LIBGFORTRAN_NG_VERSION} \
       libstdcxx-ng=${LIBSTDCXX_NG_VERSION} \
-      rapidsai::libclang=${LIBCLANG_VERSION} \
+      conda-forge::clang=${CLANG_VERSION} \
+      conda-forge::clang-tools=${CLANG_VERSION} \
       librdkafka=${LIBRDKAFKA_VERSION} \
       twine \
     && conda clean -afy \

@@ -95,6 +95,7 @@ RUN conda create --no-default-packages -n gdf \
       cudatoolkit=${CUDA_SHORT_VERSION} \
       cython=${CYTHON_VERSION} \
       flake8 \
+      shellcheck \
       # black \
       isort \
       make \
@@ -110,6 +111,7 @@ RUN conda create --no-default-packages -n gdf \
       dlpack=${DLPACK_VERSION} \
       pytest \
       pytest-cov \
+      pytest-timeout \
       scikit-learn=${SKLEARN_VERSION} \
       scipy=${SCIPY_VERSION} \
       blas=1.1=openblas \
