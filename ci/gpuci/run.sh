@@ -16,7 +16,7 @@ echo $DH_TOKEN | docker login --username $DH_USER --password-stdin
 # Get build info ready
 gpuci_logger "Preparing to build..."
 BUILD_TAG="${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}"
-BUILD_ARGS="--squash --build-arg CUDA_VER=$CUDA_VER --build-arg IMAGE_TYPE=$IMAGE_TYPE --build-arg LINUX_VER=$LINUX_VER"
+BUILD_ARGS="--squash --build-arg=$FROM_IMAGE --build-arg CUDA_VER=$CUDA_VER --build-arg IMAGE_TYPE=$IMAGE_TYPE --build-arg LINUX_VER=$LINUX_VER"
 # Check if PYTHON_VER is set
 if [ -z "$PYTHON_VER" ] ; then
   gpuci_logger "PYTHON_VER is not set, skipping..."
