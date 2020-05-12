@@ -33,23 +33,19 @@ PYTHON_VER:
 
 exclude:
   - IMAGE_TYPE: base
-    DOCKER_FILE:
-      - devel.Dockerfile
-      - devel-centos7.Dockerfile
+    DOCKER_FILE: devel.Dockerfile
+  - IMAGE_TYPE: base
+    DOCKER_FILE: devel-centos7.Dockerfile
   - IMAGE_TYPE: runtime
-    DOCKER_FILE:
-      - devel.Dockerfile
-      - devel-centos7.Dockerfile
+    DOCKER_FILE: devel.Dockerfile
+  - IMAGE_TYPE: runtime
+    DOCKER_FILE: devel-centos7.Dockerfile
   - IMAGE_TYPE: devel
-    DOCKER_FILE: 
-      - base-runtime.Dockerfile
-      - devel.Dockerfile
-    LINUX_VER:
-      - ubuntu16.04
-      - ubuntu18.04
+    DOCKER_FILE: base-runtime.Dockerfile
   - IMAGE_TYPE: devel
-    DOCKER_FILE:
-      - base-runtime.Dockerfile
-      - devel-centos7.Dockerfile
-    LINUX_VER:
-      - centos7
+    DOCKER_FILE: devel.Dockerfile
+    LINUX_VER: centos7
+  - DOCKER_FILE: devel-centos7.Dockerfile
+    LINUX_VER: ubuntu16.04
+  - DOCKER_FILE: devel-centos7.Dockerfile
+    LINUX_VER: ubuntu18.04
