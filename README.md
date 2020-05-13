@@ -20,9 +20,8 @@ RAPIDS release containers are built off of. This image also serves as a public
 image for those who want a one-to-one compatible `nvidia/cuda` image with
 `miniconda` installed. Below is a description of the image and how it is built.
 
-<!-- TODO update build status icons -->
 [`gpuci/miniconda-cuda`](https://hub.docker.com/r/gpuci/miniconda-cuda/tags)
-    [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=docker%2Fdockerhub-gpuci%2Fgpuci-miniconda-cuda)](https://gpuci.gpuopenanalytics.com/view/gpuCI%20docker-builds/job/docker/job/dockerhub-gpuci/job/gpuci-miniconda-cuda/)
+    [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Fminiconda-cuda)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/miniconda-cuda/)
 
 - Details
   - [`Dockerfile`](miniconda-cuda/Dockerfile)
@@ -63,9 +62,8 @@ an image:
 # Install gcc7 from prebuilt image
 COPY --from=gpuci/builds-gcc7:10.0-devel-centos7 /usr/local/gcc7 /usr/local/gcc7
 ```
-<!-- TODO update build status icons -->
+
 [`gpuci/builds-gcc7`](https://hub.docker.com/r/gpuci/builds-gcc7/tags)
-    [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=docker%2Fdockerhub-gpuci%2Fgpuci-builds-gcc7)](https://gpuci.gpuopenanalytics.com/view/gpuCI%20docker-builds/job/docker/job/dockerhub-gpuci/job/gpuci-builds-gcc7/)
 
 - Dockerfile
   - [`Dockerfile.centos7`](builds-gcc7/Dockerfile.centos7)
@@ -95,8 +93,8 @@ release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-d
 - Repo locations
   - `gpuci/rapidsai` - tracks the **stable** version of the [integration](https://github.com/rapidsai/integration/tree/branch-0.14/conda/recipes) `env` packages
   - `gpuci/rapidsai-nightly` - tracks the **nightly** version of the [integration](https://github.com/rapidsai/integration/tree/branch-0.14/conda/recipes) `env` packages
-<!-- TODO update build status icons -->
-[`gpuci/rapidsai`](https://hub.docker.com/r/gpuci/rapidsai/tags) or [`gpuci/rapidsai-nightly`](https://hub.docker.com/r/gpuci/rapidsai-nightly/tags) [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=docker%2Fdockerhub-gpuci%2Frapidsai-base)](https://gpuci.gpuopenanalytics.com/view/gpuCI%20docker-builds/job/docker/job/dockerhub-gpuci/job/rapidsai-base/)
+
+[`gpuci/rapidsai`](https://hub.docker.com/r/gpuci/rapidsai/tags) [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Frapidsai)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/rapidsai/) & [`gpuci/rapidsai-nightly`](https://hub.docker.com/r/gpuci/rapidsai-nightly/tags) [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Frapidsai-nightly)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/rapidsai-nightly/)
 
 - Dockerfiles
   - `base` & `runtime`:
