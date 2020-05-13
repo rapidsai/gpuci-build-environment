@@ -86,7 +86,8 @@ wget --quiet https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz -O /gcc7.t
 The `gpuci/rapidsai` and `gpuci/rapidsai-nightly` images serve different
 purposes based on their `IMAGE_TYPE` and their repo location:
 
-### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Frapidsai)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/rapidsai/) `gpuci/rapidsai` & [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Frapidsai-nightly)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/rapidsai-nightly/) `gpuci/rapidsai-nightly`
+### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Frapidsai)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/rapidsai/) `gpuci/rapidsai`
+### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Frapidsai-nightly)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/rapidsai-nightly/) `gpuci/rapidsai-nightly`
 
 - Image types - `IMAGE_TYPE`
   - `devel` - image types are used in gpuCI on nodes with [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker)
@@ -135,7 +136,8 @@ RAPIDS builds on CPU-only machines we leverage this container by force
 installing the NVIDIA drivers. This allows us to have the necessary files for
 linking during the build steps.
 
-### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Frapidsai-driver)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/rapidsai-driver/) `gpuci/rapidsai-driver` & [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Frapidsai-driver-nightly)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/rapidsai-driver-nightly/) `gpuci/rapidsai-driver-nightly`
+### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Frapidsai-driver)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/rapidsai-driver/) `gpuci/rapidsai-driver`
+### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Frapidsai-driver-nightly)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/rapidsai-driver-nightly/) `gpuci/rapidsai-driver-nightly`
 
 - Repo locations
   - [`gpuci/rapidsai-driver`](https://hub.docker.com/r/gpuci/rapidsai-driver/tags) - tracks the **stable** version of the [integration](https://github.com/rapidsai/integration/tree/branch-0.14/conda/recipes) `env` packages
