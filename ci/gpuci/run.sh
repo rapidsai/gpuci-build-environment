@@ -41,7 +41,7 @@ gpuci_logger "Build args: ${BUILD_ARGS}"
 
 # Build image
 gpuci_logger "Starting build..."
-docker build --no-cache --pull -t ${BUILD_IMAGE}-new:${BUILD_TAG} ${BUILD_ARGS} -f ${IMAGE_NAME}/${DOCKER_FILE} ${IMAGE_NAME}/
+docker build --no-cache --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${IMAGE_NAME}/${DOCKER_FILE} ${IMAGE_NAME}/
 
 # Upload image
 gpuci_logger "Starting upload..."
