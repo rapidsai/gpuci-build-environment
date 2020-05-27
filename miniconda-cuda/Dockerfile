@@ -20,7 +20,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Update and add pkgs for Ubuntu
 RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
       apt-get update \
-      && apt-get install -y wget bzip2 ca-certificates curl git tzdata which patch \
+      && apt-get install -y wget bzip2 ca-certificates curl git tzdata patch \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/* ; \
     else \
