@@ -19,6 +19,9 @@ ENV CC=/usr/bin/gcc
 ENV CXX=/usr/bin/g++
 ENV CUDAHOSTCXX=/usr/bin/g++
 
+# Enables "source activate conda"
+SHELL ["/bin/bash", "-c"]
+
 # Add a condarc for channels and override settings
 RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
@@ -75,9 +78,6 @@ RUN gpuci_retry conda install -y -n rapids --freeze-installed \
 # Clean up pkgs to reduce image size
 RUN conda clean -afy \
     && chmod -R ugo+w /opt/conda
-
-## Enables "source activate conda"
-SHELL ["/bin/bash", "-c"]
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]

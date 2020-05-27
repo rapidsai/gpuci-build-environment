@@ -15,6 +15,9 @@ ARG BUILD_STACK_VER=7.3.0
 # Capture argument used for FROM
 ARG CUDA_VER
 
+# Enables "source activate conda"
+SHELL ["/bin/bash", "-c"]
+
 # Add a condarc for channels and override settings
 RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
@@ -71,9 +74,6 @@ RUN if [ "${IMAGE_TYPE}" == "runtime" ] ; then \
 # Clean up pkgs to reduce image size
 RUN conda clean -afy \
     && chmod -R ugo+w /opt/conda
-
-## Enables "source activate conda"
-SHELL ["/bin/bash", "-c"]
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]

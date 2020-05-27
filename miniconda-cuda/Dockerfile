@@ -17,6 +17,9 @@ ARG TINI_URL=https://github.com/krallin/tini/releases/download/${TINI_VER}/tini
 ENV PATH=/opt/conda/bin:${PATH}
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Enables "source activate conda"
+SHELL ["/bin/bash", "-c"]
+
 # Update and add pkgs for Ubuntu
 RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
       apt-get update \
@@ -50,9 +53,6 @@ RUN wget --quiet ${MINICONDA_URL} -O /miniconda.sh \
 # Install tini for init
 RUN wget --quiet ${TINI_URL} -O /usr/bin/tini \
     && chmod +x /usr/bin/tini
-
-## Enables "source activate conda"
-SHELL ["/bin/bash", "-c"]
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]

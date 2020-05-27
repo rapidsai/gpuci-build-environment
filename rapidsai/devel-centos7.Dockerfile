@@ -22,6 +22,9 @@ ENV CUDAHOSTCXX=${GCC7_DIR}/bin/g++
 ENV LD_LIBRARY_PATH=${GCC7_DIR}/lib64:$CONDA_PREFIX:$LD_LIBRARY_PATH
 ENV PATH=${GCC7_DIR}/bin:$PATH
 
+# Enables "source activate conda"
+SHELL ["/bin/bash", "-c"]
+
 # Add a condarc for channels and override settings
 RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
@@ -83,9 +86,6 @@ RUN conda clean -afy \
 RUN gpuci_retry wget --quiet ${CENTOS7_GCC7_URL} -O /gcc7.tgz \
     && tar xzvf /gcc7.tgz \
     && rm -f /gcc7.tgz
-
-## Enables "source activate conda"
-SHELL ["/bin/bash", "-c"]
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
