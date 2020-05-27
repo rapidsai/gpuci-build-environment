@@ -47,4 +47,4 @@ docker build --no-cache --pull -t ${BUILD_IMAGE}-new:${BUILD_TAG} ${BUILD_ARGS} 
 gpuci_logger "Starting upload..."
 GPUCI_RETRY_MAX=5
 GPUCI_RETRY_SLEEP=120
-gpuci_retry docker push ${BUILD_IMAGE}-new:${BUILD_TAG}
+gpuci_retry docker push ${BUILD_IMAGE}:${BUILD_TAG}
