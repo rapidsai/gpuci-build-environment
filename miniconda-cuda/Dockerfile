@@ -20,7 +20,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Update and add pkgs for Ubuntu
 RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
       apt-get update \
-      && apt-get install -y wget bzip2 ca-certificates curl git tzdata \
+      && apt-get install -y wget bzip2 ca-certificates curl git tzdata which patch \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/* ; \
     else \
@@ -29,7 +29,7 @@ RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
 
 # Update and add pkgs for centOS
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
-      yum -y install wget bzip2 ca-certificates curl git which \
+      yum -y install wget bzip2 ca-certificates curl git which patch \
       && yum clean all ; \
     else \
       echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'centos7'\n\n"; \
