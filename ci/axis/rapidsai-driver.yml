@@ -2,7 +2,7 @@ BUILD_IMAGE:
   - gpuci/rapidsai-driver
 
 FROM_IMAGE:
-  - gpuci/rapidsai-new
+  - gpuci/rapidsai
 
 IMAGE_NAME:
   - rapidsai-driver
