@@ -101,10 +101,10 @@ release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-d
   - [`gpuci/rapidsai-nightly`](https://hub.docker.com/r/gpuci/rapidsai-nightly/tags) - tracks the **nightly** version of the [integration](https://github.com/rapidsai/integration/tree/branch-0.14/conda/recipes) `env` packages
 - Dockerfiles
   - `base` & `runtime`:
-    - [`base-runtime.Dockerfile`](gpuci/rapidsai/base-runtime.Dockerfile)
+    - [`base-runtime.Dockerfile`](rapidsai/base-runtime.Dockerfile)
   - `devel`:
-    - Ubuntu 16.04 & 18.04 - [`devel.Dockerfile`](gpuci/rapidsai/devel.Dockerfile)
-    - CentOS 7 - [`devel-centos7.Dockerfile`](gpuci/rapidsai/devel-centos7.Dockerfile)
+    - Ubuntu 16.04 & 18.04 - [`devel.Dockerfile`](rapidsai/devel.Dockerfile)
+    - CentOS 7 - [`devel-centos7.Dockerfile`](rapidsai/devel-centos7.Dockerfile)
 - Build arguments
   - `RAPIDS_CHANNEL` - `conda` channel to use for install of integration pkgs
     - `rapidsai` for stable; `rapidsai-nightly` for nightly
