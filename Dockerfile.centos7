@@ -32,6 +32,7 @@ ARG LIBSTDCXX_NG_VERSION=7.3.0
 ARG CLANG_VERSION=8.0.1
 ARG LIBRDKAFKA_VERSION=1.2.2
 ARG OPENBLAS_VERSION=2.14
+ARG SPDLOG_VERSION=1.4.2
 ARG TINI_VERSION=v0.18.0
 ARG HASH_JOIN=ON
 ARG CONDA_VERSION=4.7.12
@@ -139,6 +140,7 @@ RUN conda create --no-default-packages -n gdf \
       conda-forge::clang-tools=${CLANG_VERSION} \
       librdkafka=${LIBRDKAFKA_VERSION} \
       twine \
+      spdlog">=${SPDLOG_VERSION}" \
     && conda clean -afy \
     && chmod -R ugo+w /conda
 
