@@ -19,6 +19,21 @@ ENV CC=/usr/bin/gcc
 ENV CXX=/usr/bin/g++
 ENV CUDAHOSTCXX=/usr/bin/g++
 
+ARG CCACHE_VERSION=master
+ENV CCACHE_VERSION=${CCACHE_VERSION}
+
+RUN apt update -y \
+ && apt install -y \
+    curl wget unzip automake autoconf libb2-dev libzstd-dev
+
+# RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o ccache-${CCACHE_VERSION}.zip \
+#  && unzip -d ccache-${CCACHE_VERSION} ccache-${CCACHE_VERSION}.zip && cd ccache-${CCACHE_VERSION}/ccache-master \
+# && ./autogen.sh && ./configure --disable-man && make install -j${PARALLEL_LEVEL} && cd - && rm -rf ./ccache-${CCACHE_VERSION}*
+
+# COPY set-gcc.sh /set-gcc.sh
+# RUN  chmod +x /set-gcc.sh
+
+
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
 
