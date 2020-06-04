@@ -6,8 +6,8 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}
 
 # Define arguments
 ARG GCC7_DIR=/usr/local/gcc7
-ARG GCC7_VER=gcc-7.3.0
-ARG NUM_BUILD_CPUS=8
+ARG GCC7_VER=gcc-7.5.0
+ARG NUM_BUILD_CPUS=16
 
 # Add /usr/local/cuda/* temporarily to LD_LIBRARY_PATH to support various build steps
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH_POSTBUILD:/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs
