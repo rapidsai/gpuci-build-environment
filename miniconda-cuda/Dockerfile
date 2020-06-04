@@ -32,7 +32,9 @@ RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
 
 # Update and add pkgs for centOS
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
-      yum -y update \
+      yum update \
+      && yum -y upgrade \
+      && yum remove -y bind-license \
       && yum -y install wget bzip2 ca-certificates curl git which patch \
       && yum clean all ; \
     else \
