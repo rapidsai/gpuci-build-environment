@@ -10,7 +10,7 @@ ARG RAPIDS_VER=0.14
 ARG PYTHON_VER=3.6
 
 # Optional arguments
-ARG BUILD_STACK_VER=7.3.0
+ARG BUILD_STACK_VER=7.5.0
 
 # Capture argument used for FROM
 ARG CUDA_VER

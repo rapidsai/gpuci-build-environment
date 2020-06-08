@@ -8,7 +8,7 @@ ARG RAPIDS_VER=0.14
 ARG PYTHON_VER=3.6
 
 # Optional arguments
-ARG BUILD_STACK_VER=7.3.0
+ARG BUILD_STACK_VER=7.5.0
 ARG CENTOS7_GCC7_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz
 
 # Capture argument used for FROM
