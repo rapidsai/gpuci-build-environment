@@ -1,6 +1,5 @@
 BUILD_IMAGE:
   - gpuci/rapidsai-driver
-  - gpuci/rapidsai-driver-nightly
 
 FROM_IMAGE:
   - gpuci/rapidsai
@@ -11,6 +10,10 @@ IMAGE_NAME:
 
 DOCKER_FILE:
   - Dockerfile
+
+RAPIDS_VER:
+  - 0.14
+  - 0.15
 
 CUDA_VER:
   - 10.2
@@ -33,9 +36,9 @@ DRIVER_VER:
   - 440
 
 exclude:
-  - BUILD_IMAGE: gpuci/rapidsai-driver
+  - RAPIDS_VER: 0.14
     FROM_IMAGE: gpuci/rapidsai-nightly
-  - BUILD_IMAGE: gpuci/rapidsai-driver-nightly
+  - RAPIDS_VER: 0.15
     FROM_IMAGE: gpuci/rapidsai
   - CUDA_VER: 10.0
     DRIVER_VER: 418

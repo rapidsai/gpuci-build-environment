@@ -42,7 +42,7 @@ if [ -z "$RAPIDS_VER" ] ; then
 else
   echo "RAPIDS_VER is set to '$RAPIDS_VER', adding to build args..."
   BUILD_ARGS="${BUILD_ARGS} --build-arg RAPIDS_VER=${RAPIDS_VER}"
-  BUILD_TAG="${RAPIDS_VER}-${BUILD_TAG}" #pre-prend version number
+  BUILD_TAG="${RAPIDS_VER}-cuda${BUILD_TAG}" #pre-prend version number
 fi
 # Check if RAPIDS_CHANNEL is set
 if [ -z "$RAPIDS_CHANNEL" ] ; then
