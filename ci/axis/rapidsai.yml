@@ -1,5 +1,6 @@
 BUILD_IMAGE:
   - gpuci/rapidsai
+  - gpuci/rapidsai-nightly
 
 FROM_IMAGE:
   - gpuci/miniconda-cuda
@@ -11,6 +12,14 @@ DOCKER_FILE:
   - base-runtime.Dockerfile
   - devel.Dockerfile
   - devel-centos7.Dockerfile
+
+RAPIDS_VER:
+  - 0.14
+  - 0.15
+
+RAPIDS_CHANNEL:
+  - rapidsai
+  - rapidsai-nightly
 
 CUDA_VER:
   - 10.2
@@ -32,6 +41,14 @@ PYTHON_VER:
   - 3.7
 
 exclude:
+  - RAPIDS_VER: 0.14
+    RAPIDS_CHANNEL: rapidsai-nightly
+  - RAPIDS_VER: 0.15
+    RAPIDS_CHANNEL: rapidsai
+  - BUILD_IMAGE: gpuci/rapidsai
+    RAPIDS_CHANNEL: rapidsai-nightly
+  - BUILD_IMAGE: gpuci/rapidsai-nightly
+    RAPIDS_CHANNEL: rapidsai
   - IMAGE_TYPE: base
     DOCKER_FILE: devel.Dockerfile
   - IMAGE_TYPE: base

@@ -1,8 +1,10 @@
 BUILD_IMAGE:
   - gpuci/rapidsai-driver
+  - gpuci/rapidsai-driver-nightly
 
 FROM_IMAGE:
   - gpuci/rapidsai
+  - gpuci/rapidsai-nightly
 
 IMAGE_NAME:
   - rapidsai-driver
@@ -31,6 +33,10 @@ DRIVER_VER:
   - 440
 
 exclude:
+  - BUILD_IMAGE: gpuci/rapidsai-driver
+    FROM_IMAGE: gpuci/rapidsai-nightly
+  - BUILD_IMAGE: gpuci/rapidsai-driver-nightly
+    FROM_IMAGE: gpuci/rapidsai
   - CUDA_VER: 10.0
     DRIVER_VER: 418
   - CUDA_VER: 10.0
