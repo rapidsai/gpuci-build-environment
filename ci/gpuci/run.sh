@@ -36,12 +36,36 @@ else
   gpuci_logger "DRIVER_VER is set to '$DRIVER_VER', adding to build args..."
   BUILD_ARGS="${BUILD_ARGS} --build-arg DRIVER_VER=${DRIVER_VER}"
 fi
-gpuci_logger "Build image and tag: ${BUILD_IMAGE}:${BUILD_TAG}"
-gpuci_logger "Build args: ${BUILD_ARGS}"
+# Check if RAPIDS_VER is set
+if [ -z "$RAPIDS_VER" ] ; then
+  echo "RAPIDS_VER is not set, skipping..."
+else
+  echo "RAPIDS_VER is set to '$RAPIDS_VER', adding to build args..."
+  BUILD_ARGS="${BUILD_ARGS} --build-arg RAPIDS_VER=${RAPIDS_VER}"
+  BUILD_TAG="${RAPIDS_VER}-${BUILD_TAG}" #pre-prend version number
+fi
+# Check if RAPIDS_CHANNEL is set
+if [ -z "$RAPIDS_CHANNEL" ] ; then
+  echo "RAPIDS_CHANNEL is not set, skipping..."
+else
+  echo "RAPIDS_CHANNEL is set to '$RAPIDS_CHANNEL', adding to build args..."
+  BUILD_ARGS="${BUILD_ARGS} --build-arg RAPIDS_CHANNEL=${RAPIDS_CHANNEL}"
+fi
+
+# Ouput build config
+gpuci_logger "Build config info..."
+echo "Build image and tag: ${BUILD_IMAGE}:${BUILD_TAG}"
+echo "Build args: ${BUILD_ARGS}"
+gpuci_logger "Docker build command..."
+echo "docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${IMAGE_NAME}/${DOCKER_FILE} ${IMAGE_NAME}/"
 
 # Build image
 gpuci_logger "Starting build..."
-docker build --no-cache --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${IMAGE_NAME}/${DOCKER_FILE} ${IMAGE_NAME}/
+docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${IMAGE_NAME}/${DOCKER_FILE} ${IMAGE_NAME}/
+
+# List image info
+gpuci_logger "Displaying image info..."
+docker images ${BUILD_IMAGE}:${BUILD_TAG}
 
 # Upload image
 gpuci_logger "Starting upload..."
