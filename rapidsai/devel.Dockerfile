@@ -10,6 +10,7 @@ ARG PYTHON_VER=3.6
 
 # Optional arguments
 ARG BUILD_STACK_VER=7.5.0
+ARG CCACHE_VERSION=master
 
 # Capture argument used for FROM
 ARG CUDA_VER
@@ -76,9 +77,34 @@ RUN gpuci_retry conda install -y -n rapids --freeze-installed \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER}
 
-# Clean up pkgs to reduce image size
+# Build ccache from source and create symlinks
+RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o /tmp/ccache-${CCACHE_VERSION}.zip \
+    && unzip -d /tmp/ccache-${CCACHE_VERSION} /tmp/ccache-${CCACHE_VERSION}.zip \
+    && cd /tmp/ccache-${CCACHE_VERSION}/ccache-master \
+    && ./autogen.sh \
+    && ./configure --disable-man --with-libb2-from-internet --with-libzstd-from-internet\
+    && make install -j \
+    && cd / \
+    && rm -rf /tmp/ccache-${CCACHE_VERSION}* \
+    && ln -s "$(which ccache)" "/usr/local/bin/gcc" \
+    && ln -s "$(which ccache)" "/usr/local/bin/g++" \
+    && ln -s "$(which ccache)" "/usr/local/bin/nvcc" \
+    && mkdir -p /ccache
+
+# Setup ccache env vars
+ENV CCACHE_NOHASHDIR=
+ENV CCACHE_DIR="/ccache"
+ENV CCACHE_COMPILERCHECK="%compiler% --version"
+
+# Uncomment these env vars to force ccache to be enabled by default
+#ENV CC="/usr/local/bin/gcc"
+#ENV CXX="/usr/local/bin/g++"
+#ENV NVCC="/usr/local/bin/nvcc"
+#ENV CUDAHOSTCXX="/usr/local/bin/g++"
+
+# Clean up pkgs to reduce image size and chmod for all users
 RUN conda clean -afy \
-    && chmod -R ugo+w /opt/conda
+    && chmod -R ugo+w /opt/conda /ccache
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
