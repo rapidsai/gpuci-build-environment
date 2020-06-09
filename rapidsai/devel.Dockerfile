@@ -22,14 +22,12 @@ ENV CUDAHOSTCXX=/usr/bin/g++
 ARG CCACHE_VERSION=master
 ENV CCACHE_VERSION=${CCACHE_VERSION}
 
+# Necessary libraries for ccache
 RUN apt update -y \
  && apt install -y \
     curl wget unzip automake autoconf libb2-dev libzstd-dev
 
-RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o ccache-${CCACHE_VERSION}.zip \
- && unzip -d ccache-${CCACHE_VERSION} ccache-${CCACHE_VERSION}.zip && cd ccache-${CCACHE_VERSION}/ccache-master \
- && ./autogen.sh && ./configure --disable-man && make install -j${PARALLEL_LEVEL} && cd - && rm -rf ./ccache-${CCACHE_VERSION}*
-
+# Build ccache from source and create symlinks
 RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o ccache-${CCACHE_VERSION}.zip \
  && unzip -d ccache-${CCACHE_VERSION} ccache-${CCACHE_VERSION}.zip && cd ccache-${CCACHE_VERSION}/ccache-master \
  && ./autogen.sh && ./configure --disable-man && make install -j${PARALLEL_LEVEL} && cd - && rm -rf ./ccache-${CCACHE_VERSION}* \
@@ -37,6 +35,7 @@ RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o ccache-${C
  && ln -s "$(which ccache)" "/usr/local/bin/g++" \
  && ln -s "$(which ccache)" "/usr/local/bin/nvcc"
 
+# Switch CC/CXX variables only after symlinks are created for them
 ENV CC="/usr/local/bin/gcc"
 ENV CXX="/usr/local/bin/g++"
 ENV NVCC="/usr/local/bin/nvcc"
@@ -102,10 +101,8 @@ RUN gpuci_retry conda install -y -n rapids --freeze-installed \
       rapids-notebook-env=${RAPIDS_VER}
 
 # Clean up pkgs to reduce image size
-# RUN conda clean -afy \
-#    && chmod -R ugo+w /opt/conda
-
-ADD ccacheLocal/ccache /ccache
+RUN conda clean -afy \
+   && chmod -R ugo+w /opt/conda
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
