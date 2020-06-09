@@ -30,9 +30,20 @@ RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o ccache-${C
  && unzip -d ccache-${CCACHE_VERSION} ccache-${CCACHE_VERSION}.zip && cd ccache-${CCACHE_VERSION}/ccache-master \
  && ./autogen.sh && ./configure --disable-man && make install -j${PARALLEL_LEVEL} && cd - && rm -rf ./ccache-${CCACHE_VERSION}*
 
-COPY set-gcc.sh /set-gcc.sh
-RUN  chmod +x /set-gcc.sh
+RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o ccache-${CCACHE_VERSION}.zip \
+ && unzip -d ccache-${CCACHE_VERSION} ccache-${CCACHE_VERSION}.zip && cd ccache-${CCACHE_VERSION}/ccache-master \
+ && ./autogen.sh && ./configure --disable-man && make install -j${PARALLEL_LEVEL} && cd - && rm -rf ./ccache-${CCACHE_VERSION}* \
+ && ln -s "$(which ccache)" "/usr/local/bin/gcc" \
+ && ln -s "$(which ccache)" "/usr/local/bin/g++" \
+ && ln -s "$(which ccache)" "/usr/local/bin/nvcc"
 
+ENV CC="/usr/local/bin/gcc"
+ENV CXX="/usr/local/bin/g++"
+ENV NVCC="/usr/local/bin/nvcc"
+
+ENV CCACHE_NOHASHDIR=
+ENV CCACHE_DIR="/ccache"
+ENV CCACHE_COMPILERCHECK="%compiler% --version"
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
@@ -91,8 +102,10 @@ RUN gpuci_retry conda install -y -n rapids --freeze-installed \
       rapids-notebook-env=${RAPIDS_VER}
 
 # Clean up pkgs to reduce image size
-RUN conda clean -afy \
-    && chmod -R ugo+w /opt/conda
+# RUN conda clean -afy \
+#    && chmod -R ugo+w /opt/conda
+
+ADD ccacheLocal/ccache /ccache
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]

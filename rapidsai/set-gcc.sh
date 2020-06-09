@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-V=8
+V=7
 
 echo "Using gcc-$V and g++-$V"
 export GCC_VERSION="$V"
