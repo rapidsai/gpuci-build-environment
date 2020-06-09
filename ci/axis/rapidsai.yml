@@ -13,11 +13,9 @@ DOCKER_FILE:
   - devel-centos7.Dockerfile
 
 RAPIDS_VER:
-  - 0.14
   - 0.15
 
 RAPIDS_CHANNEL:
-  - rapidsai
   - rapidsai-nightly
 
 CUDA_VER:
