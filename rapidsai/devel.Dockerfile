@@ -86,9 +86,6 @@ RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o /tmp/ccach
     && make install -j \
     && cd / \
     && rm -rf /tmp/ccache-${CCACHE_VERSION}* \
-    && ln -s "$(which ccache)" "/usr/local/bin/gcc" \
-    && ln -s "$(which ccache)" "/usr/local/bin/g++" \
-    && ln -s "$(which ccache)" "/usr/local/bin/nvcc" \
     && mkdir -p /ccache
 
 # Setup ccache env vars
@@ -101,6 +98,9 @@ ENV CCACHE_COMPILERCHECK="%compiler% --version"
 #ENV CXX="/usr/local/bin/g++"
 #ENV NVCC="/usr/local/bin/nvcc"
 #ENV CUDAHOSTCXX="/usr/local/bin/g++"
+#RUN ln -s "$(which ccache)" "/usr/local/bin/gcc" \
+#    && ln -s "$(which ccache)" "/usr/local/bin/g++" \
+#    && ln -s "$(which ccache)" "/usr/local/bin/nvcc"
 
 # Clean up pkgs to reduce image size and chmod for all users
 RUN conda clean -afy \
