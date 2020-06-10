@@ -20,7 +20,7 @@ RAPIDS release containers are built off of. This image also serves as a public
 image for those who want a one-to-one compatible `nvidia/cuda` image with
 `miniconda` installed. Below is a description of the image and how it is built.
 
-### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Fminiconda-cuda)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/miniconda-cuda/) `gpuci/miniconda-cuda`
+### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fminiconda-cuda)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/miniconda-cuda/) `gpuci/miniconda-cuda`
 
 - Repo location
   - [`gpuci/miniconda-cuda`](https://hub.docker.com/r/gpuci/miniconda-cuda/tags) 
@@ -86,7 +86,7 @@ wget --quiet https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz -O /gcc7.t
 The `gpuci/rapidsai` images serve different purposes based on their `IMAGE_TYPE`
 and their `RAPIDS_VER` version:
 
-### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Frapidsai)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/rapidsai/) `gpuci/rapidsai`
+### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Frapidsai)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/rapidsai/) `gpuci/rapidsai`
 
 - Image types - `IMAGE_TYPE`
   - `devel` - image types are used in gpuCI on nodes with [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker)
@@ -138,7 +138,7 @@ enable some of the RAPIDS builds on CPU-only machines we leverage this container
 by force installing the NVIDIA drivers. This allows us to have the necessary
 files for linking during the build steps.
 
-### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fgpuci%2Frapidsai-driver)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/gpuci/job/rapidsai-driver/) `gpuci/rapidsai-driver`
+### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Frapidsai-driver)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/rapidsai-driver/) `gpuci/rapidsai-driver`
 
 - Versioning - `RAPIDS_VER`
   - Similar to `gpuci/rapidsai` these images use the RAPIDS versioning
