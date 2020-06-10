@@ -23,7 +23,7 @@ SHELL ["/bin/bash", "-c"]
 # Update and add pkgs for Ubuntu
 RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
       apt-get update \
-      && apt-get install -y wget bzip2 ca-certificates curl tzdata patch unzip automake autoconf \
+      && apt-get install -y wget bzip2 ca-certificates curl tzdata patch unzip automake autoconf git \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/* ; \
     else \
@@ -34,7 +34,7 @@ RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
       yum -y update \
       && yum remove -y bind-license \
-      && yum -y install wget bzip2 ca-certificates curl which patch unzip make automake autoconf \
+      && yum -y install wget bzip2 ca-certificates curl which patch unzip make automake autoconf git \
       && yum clean all ; \
     else \
       echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'centos7'\n\n"; \
