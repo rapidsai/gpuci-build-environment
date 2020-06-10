@@ -101,20 +101,20 @@ RUN gpuci_retry conda install -y -n rapids --freeze-installed \
       rapids-notebook-env=${RAPIDS_VER}
 
 # Build ccache from source and create symlinks
-RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o /tmp/ccache-${CCACHE_VERSION}.zip \
-    && unzip -d /tmp/ccache-${CCACHE_VERSION} /tmp/ccache-${CCACHE_VERSION}.zip \
-    && cd /tmp/ccache-${CCACHE_VERSION}/ccache-master \
-    && ./autogen.sh \
-    && ./configure --disable-man --with-libb2-from-internet --with-libzstd-from-internet\
-    && make install -j \
-    && cd / \
-    && rm -rf /tmp/ccache-${CCACHE_VERSION}* \
-    && mkdir -p /ccache
+#RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o /tmp/ccache-${CCACHE_VERSION}.zip \
+#    && unzip -d /tmp/ccache-${CCACHE_VERSION} /tmp/ccache-${CCACHE_VERSION}.zip \
+#    && cd /tmp/ccache-${CCACHE_VERSION}/ccache-master \
+#    && ./autogen.sh \
+#    && ./configure --disable-man --with-libb2-from-internet --with-libzstd-from-internet\
+#    && make install -j \
+#    && cd / \
+#    && rm -rf /tmp/ccache-${CCACHE_VERSION}* \
+#    && mkdir -p /ccache
 
 # Setup ccache env vars
-ENV CCACHE_NOHASHDIR=
-ENV CCACHE_DIR="/ccache"
-ENV CCACHE_COMPILERCHECK="%compiler% --version"
+#ENV CCACHE_NOHASHDIR=
+#ENV CCACHE_DIR="/ccache"
+#ENV CCACHE_COMPILERCHECK="%compiler% --version"
 
 # Uncomment these env vars to force ccache to be enabled by default
 #ENV CC="/usr/local/bin/gcc"
