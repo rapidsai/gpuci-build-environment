@@ -20,6 +20,7 @@ ARG CUDA_VER
 ENV CC=/usr/bin/gcc
 ENV CXX=/usr/bin/g++
 ENV CUDAHOSTCXX=/usr/bin/g++
+ENV CUDA_HOME=/usr/local/cuda
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
