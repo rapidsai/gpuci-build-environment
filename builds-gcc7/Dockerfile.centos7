@@ -1,0 +1,37 @@
+ARG FROM_IMAGE=nvidia/cuda
+ARG CUDA_VER=10.0
+ARG CUDA_TYPE=devel
+ARG LINUX_VER=centos7
+FROM ${FROM_IMAGE}:${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}
+
+# Define arguments
+ARG GCC7_DIR=/usr/local/gcc7
+ARG GCC7_VER=gcc-7.5.0
+ARG NUM_BUILD_CPUS=16
+
+# Add /usr/local/cuda/* temporarily to LD_LIBRARY_PATH to support various build steps
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH_POSTBUILD:/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs
+
+RUN yum upgrade -y \
+    && yum install -y \
+      bzip2 \
+      curl \
+      git \
+      screen \
+      vim \
+      wget \
+      which \
+      clang \
+      make \
+      gmp-devel mpfr-devel libmpc-devel file
+
+# Build gcc 7 and set the environment to use it
+# NOTE: this step requires packages gmp-devel, mpfr-devel,
+# libmpc-devel, and file (see above)
+RUN mkdir -p ${GCC7_DIR} \
+    && cd ${GCC7_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/${GCC7_VER}/${GCC7_VER}.tar.gz \
+    && cd ${GCC7_DIR} && tar zxf ${GCC7_VER}.tar.gz \
+    && cd ${GCC7_DIR}/${GCC7_VER} \
+    && ./configure --prefix=${GCC7_DIR} --disable-multilib \
+    && make -j${NUM_BUILD_CPUS} && make install \
+    && rm -r ${GCC7_DIR}/${GCC7_VER} ${GCC7_DIR}/${GCC7_VER}.tar.gz
