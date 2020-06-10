@@ -49,7 +49,9 @@ channels: \n\
     fi
 
 # Install gcc7 - 7.5.0 to bring build stack in line with conda-forge
-RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test \
+RUN apt-get update \
+    && apt-get install -y software-properties-common \
+    && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
     && apt-get update \
     && apt-get install gcc-7 \
     && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 7 \
