@@ -10,6 +10,7 @@ ARG PYTHON_VER=3.6
 
 # Optional arguments
 ARG BUILD_STACK_VER=7.5.0
+ARG CONDA_VERIFY_VER=3.1.1
 ARG CCACHE_VERSION=master
 
 # Capture argument used for FROM
@@ -45,11 +46,33 @@ channels: \n\
       && cat /conda/.condarc ; \
     fi
 
+# Update and add pkgs for gpuci builds
+RUN apt-get update -y --fix-missing \
+    && apt-get -qq install apt-utils -y --no-install-recommends \
+    && apt-get install -y \
+      awscli \
+      jq \
+      libnuma1 \
+      libnuma-dev \
+      screen \
+      tzdata \
+      vim \
+      zlib1g-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Add core tools to base env
+RUN source activate base \
+    && conda install -y --override-channels -c gpuci gpuci-tools \
+    && gpuci_retry conda install -y \
+      anaconda-client \
+      codecov \
+      conda-verify=${CONDA_VERIFY_VER} \
+      ripgrep
+
 # Create `rapids` conda env and make default
 RUN source activate base \
-    && conda install -y --override-channels -c gpuci gpuci-tools
-
-RUN gpuci_retry conda create --no-default-packages --override-channels -n rapids \
+    && gpuci_retry conda create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c defaults \
