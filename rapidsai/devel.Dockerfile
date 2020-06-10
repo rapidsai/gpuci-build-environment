@@ -46,6 +46,17 @@ channels: \n\
       && cat /conda/.condarc ; \
     fi
 
+# Install gcc7 - 7.5.0 to bring build stack in line with conda-forge
+RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test \
+    && apt-get update \
+    && apt-get install gcc-7 \
+    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 7 \
+    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 7 \
+    && update-alternatives --set gcc /usr/bin/gcc-7 \
+    && update-alternatives --set g++ /usr/bin/g++-7 \
+    && gcc --version \
+    && g++ --version
+
 # Update and add pkgs for gpuci builds
 RUN apt-get update -y --fix-missing \
     && apt-get -qq install apt-utils -y --no-install-recommends \
