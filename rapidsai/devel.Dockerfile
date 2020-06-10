@@ -53,7 +53,7 @@ RUN apt-get update \
     && apt-get install -y software-properties-common \
     && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
     && apt-get update \
-    && apt-get install -y gcc-7 \
+    && apt-get install -y gcc-7 g++-7 \
     && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 7 \
     && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 7 \
     && update-alternatives --set gcc /usr/bin/gcc-7 \
