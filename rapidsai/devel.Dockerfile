@@ -10,7 +10,6 @@ ARG PYTHON_VER=3.6
 
 # Optional arguments
 ARG BUILD_STACK_VER=7.5.0
-ARG CONDA_VERIFY_VER=3.1.1
 ARG CCACHE_VERSION=master
 
 # Capture argument used for FROM

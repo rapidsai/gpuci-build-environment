@@ -9,7 +9,6 @@ ARG PYTHON_VER=3.6
 
 # Optional arguments
 ARG BUILD_STACK_VER=7.5.0
-ARG CONDA_VERIFY_VER=3.1.1
 ARG CENTOS7_GCC7_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz
 ARG CCACHE_VERSION=master
 
