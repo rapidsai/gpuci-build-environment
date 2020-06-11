@@ -65,9 +65,7 @@ RUN source activate base \
     && conda install -y --override-channels -c gpuci gpuci-tools \
     && gpuci_retry conda install -y \
       anaconda-client \
-      codecov \
-      conda-verify=${CONDA_VERIFY_VER} \
-      ripgrep
+      codecov
 
 # Create `rapids` conda env and make default
 RUN source activate base \
