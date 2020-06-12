@@ -10,7 +10,6 @@ ARG PYTHON_VER=3.6
 
 # Optional arguments
 ARG BUILD_STACK_VER=7.5.0
-ARG CONDA_VERIFY_VER=3.1.1
 ARG CCACHE_VERSION=master
 
 # Capture argument used for FROM
@@ -20,6 +19,8 @@ ARG CUDA_VER
 ENV CC=/usr/bin/gcc
 ENV CXX=/usr/bin/g++
 ENV CUDAHOSTCXX=/usr/bin/g++
+ENV CUDA_HOME=/usr/local/cuda
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
@@ -46,6 +47,19 @@ channels: \n\
       && cat /conda/.condarc ; \
     fi
 
+# Install gcc7 - 7.5.0 to bring build stack in line with conda-forge
+RUN apt-get update \
+    && apt-get install -y software-properties-common \
+    && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
+    && apt-get update \
+    && apt-get install -y gcc-7 g++-7 \
+    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 7 \
+    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 7 \
+    && update-alternatives --set gcc /usr/bin/gcc-7 \
+    && update-alternatives --set g++ /usr/bin/g++-7 \
+    && gcc --version \
+    && g++ --version
+
 # Update and add pkgs for gpuci builds
 RUN apt-get update -y --fix-missing \
     && apt-get -qq install apt-utils -y --no-install-recommends \
@@ -66,9 +80,7 @@ RUN source activate base \
     && conda install -y --override-channels -c gpuci gpuci-tools \
     && gpuci_retry conda install -y \
       anaconda-client \
-      codecov \
-      conda-verify=${CONDA_VERIFY_VER} \
-      ripgrep
+      codecov
 
 # Create `rapids` conda env and make default
 RUN source activate base \

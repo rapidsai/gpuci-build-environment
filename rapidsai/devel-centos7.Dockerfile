@@ -9,7 +9,6 @@ ARG PYTHON_VER=3.6
 
 # Optional arguments
 ARG BUILD_STACK_VER=7.5.0
-ARG CONDA_VERIFY_VER=3.1.1
 ARG CENTOS7_GCC7_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz
 ARG CCACHE_VERSION=master
 
@@ -21,7 +20,8 @@ ENV GCC7_DIR=/usr/local/gcc7
 ENV CC=${GCC7_DIR}/bin/gcc
 ENV CXX=${GCC7_DIR}/bin/g++
 ENV CUDAHOSTCXX=${GCC7_DIR}/bin/g++
-ENV LD_LIBRARY_PATH=${GCC7_DIR}/lib64:$CONDA_PREFIX:$LD_LIBRARY_PATH
+ENV CUDA_HOME=/usr/local/cuda
+ENV LD_LIBRARY_PATH=${GCC7_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV PATH=${GCC7_DIR}/bin:$PATH
 
 # Enables "source activate conda"
@@ -64,9 +64,7 @@ RUN source activate base \
     && conda install -y --override-channels -c gpuci gpuci-tools \
     && gpuci_retry conda install -y \
       anaconda-client \
-      codecov \
-      conda-verify=${CONDA_VERIFY_VER} \
-      ripgrep
+      codecov
 
 # Create `rapids` conda env and make default
 RUN source activate base \
