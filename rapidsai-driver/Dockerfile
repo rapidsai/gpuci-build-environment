@@ -2,7 +2,7 @@ ARG FROM_IMAGE=gpuci/rapidsai
 ARG RAPIDS_VER=0.14
 ARG CUDA_VER=10.2
 ARG IMAGE_TYPE=devel
-ARG LINUX_VER=ubuntu18.04
+ARG LINUX_VER=ubuntu16.04
 ARG PYTHON_VER=3.6
 FROM ${FROM_IMAGE}:${RAPIDS_VER}-cuda${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}-py${PYTHON_VER}
 # Installs cuda-drivers and cuda libraries for conda builds on CPU-only machines
