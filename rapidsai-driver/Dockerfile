@@ -13,6 +13,7 @@ ARG DRIVER_VER="440"
 # Update and add pkgs
 RUN apt-get update -q \
     && apt-get -qq install apt-utils -y --no-install-recommends \
-      nvidia-headless-${DRIVER_VER} \
-      libnvidia-compute-${DRIVER_VER} \
+      nvidia-${DRIVER_VER}-dev \
+      libcuda1-${DRIVER_VER} \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
