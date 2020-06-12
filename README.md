@@ -146,19 +146,19 @@ files for linking during the build steps.
   - The current **stable** version of RAPIDS tracks the **release/stable** [integration](https://github.com/rapidsai/integration/tree/branch-0.14/conda/recipes) `env` packages
   - The current **nightly** version of RAPIDS tracks the **nightly** [integration](https://github.com/rapidsai/integration/tree/branch-0.14/conda/recipes) `env` packages
 - Dockerfile
-  - Ubuntu 18.04 - [`Dockerfile`](rapidsai-driver/Dockerfile)
+  - Ubuntu 16.04 - [`Dockerfile`](rapidsai-driver/Dockerfile)
 - Build arguments
   - `FROM_IMAGE` - Specifies the repo location; stable/nightly is determined by the value of `RAPIDS_VER`
   - `DRIVER_VER` - NVIDIA driver version to install (i.e. `440`)
   - `CUDA_VER` and `PYTHON_VER` - Take the same arguments as defined in **Tags** below
   - `RAPIDS_VER` - This is used to select the `FROM_IMAGE`
 - Base image
-  - `FROM gpuci/rapidsai:${RAPIDS_VER}-cuda${CUDA_VER}-devel-ubuntu18.04-py${PYTHON_VERSION}`
+  - `FROM gpuci/rapidsai:${RAPIDS_VER}-cuda${CUDA_VER}-devel-ubuntu16.04-py${PYTHON_VERSION}`
 - Purpose
   - Installs the NVIDIA driver/libcuda to enable conda builds on CPU-only machines
   - Built for conda builds and only contains the driver install command
   - Maintained as a way to remove the `apt-get install` overhead that can slow the testing/build process
-- Tags - `${RAPIDS_VER}-cuda${CUDA_VER}-devel-ubuntu18.04-py${PYTHON_VER}`
+- Tags - `${RAPIDS_VER}-cuda${CUDA_VER}-devel-ubuntu16.04-py${PYTHON_VER}`
   - Supports these options
     - `${RAPIDS_VER}` - Major and minor version of RAPIDS (e.g. `0.14`)
     - `${CUDA_VER}` - `10.0`, `10.1`, `10.2`
