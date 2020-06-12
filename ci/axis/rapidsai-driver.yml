@@ -22,7 +22,7 @@ IMAGE_TYPE:
   - devel
 
 LINUX_VER:
-  - ubuntu18.04
+  - ubuntu16.04
 
 PYTHON_VER:
   - 3.6
