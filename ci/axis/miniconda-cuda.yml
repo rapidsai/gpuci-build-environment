@@ -3,6 +3,7 @@ BUILD_IMAGE:
 
 FROM_IMAGE:
   - nvidia/cuda
+  - gpuci/cuda
 
 IMAGE_NAME:
   - miniconda-cuda
@@ -11,6 +12,7 @@ DOCKER_FILE:
   - Dockerfile
 
 CUDA_VER:
+  - 11.0
   - 10.2
   - 10.1
   - 10.0
@@ -30,3 +32,15 @@ LINUX_VER:
 exclude:
   - CUDA_VER: 9.0
     LINUX_VER: ubuntu18.04
+  - CUDA_VER: 9.0
+    FROM_IMAGE: gpuci/cuda
+  - CUDA_VER: 9.2
+    FROM_IMAGE: gpuci/cuda
+  - CUDA_VER: 10.0
+    FROM_IMAGE: gpuci/cuda
+  - CUDA_VER: 10.1
+    FROM_IMAGE: gpuci/cuda
+  - CUDA_VER: 10.2
+    FROM_IMAGE: gpuci/cuda
+  - CUDA_VER: 11.0
+    FROM_IMAGE: nvidia/cuda
