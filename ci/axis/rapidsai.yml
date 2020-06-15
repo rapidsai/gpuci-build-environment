@@ -20,9 +20,6 @@ RAPIDS_CHANNEL:
 
 CUDA_VER:
   - 11.0
-  - 10.2
-  - 10.1
-  - 10.0
 
 IMAGE_TYPE:
   - base
