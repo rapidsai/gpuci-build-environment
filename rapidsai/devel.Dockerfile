@@ -131,11 +131,12 @@ RUN apt-get update -y --fix-missing \
 RUN git clone https://github.com/ccache/ccache.git /tmp/ccache && cd /tmp/ccache \
     && git checkout -b rapids-compose-tmp e071bcfd37dfb02b4f1fa4b45fff8feb10d1cbd2
 RUN mkdir -p /tmp/ccache/build && cd /tmp/ccache/build \
-RUN cmake \
+ && cmake \
         -DENABLE_TESTING=OFF \
         -DUSE_LIBB2_FROM_INTERNET=ON \
         -DUSE_LIBZSTD_FROM_INTERNET=ON ..
-RUN make ccache -j${16} && make install && cd / && rm -rf ./ccache-${CCACHE_VERSION}*
+RUN make ccache -j${16} && make install && cd / 
+  && rm -rf ./ccache-${CCACHE_VERSION}*
 
 
 
