@@ -97,8 +97,8 @@ release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-d
   `nvidia/cuda` as they do not have all the required files to run RAPIDS.
 - Versioning - `RAPIDS_VER`
   - [`gpuci/rapidsai`](https://hub.docker.com/r/gpuci/rapidsai/tags) uses the same versioning as the RAPIDS project
-  - The current **stable** version of RAPIDS tracks the **release/stable** [integration](https://github.com/rapidsai/integration/tree/branch-0.14/conda/recipes) `env` packages
-  - The current **nightly** version of RAPIDS tracks the **nightly** [integration](https://github.com/rapidsai/integration/tree/branch-0.14/conda/recipes) `env` packages
+  - The current **stable** version of RAPIDS tracks the **release/stable** [integration](https://github.com/rapidsai/integration/tree/branch-0.15/conda/recipes) `env` packages
+  - The current **nightly** version of RAPIDS tracks the **nightly** [integration](https://github.com/rapidsai/integration/tree/branch-0.15/conda/recipes) `env` packages
 - Dockerfiles
   - `base` & `runtime`:
     - [`base-runtime.Dockerfile`](rapidsai/base-runtime.Dockerfile)
@@ -108,14 +108,14 @@ release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-d
 - Build arguments
   - `RAPIDS_CHANNEL` - `conda` channel to use for install of integration pkgs
     - `rapidsai` for stable; `rapidsai-nightly` for nightly
-  - `RAPIDS_VER` - Major and minor version to use for packages (e.g. `0.14`)
+  - `RAPIDS_VER` - Major and minor version to use for packages (e.g. `0.15`)
   - `BUILD_STACK_VER` - Specifies the `conda-forge` version of build stack to install
     - Default - `7.5.0` for packages `libgcc-ng` & `libstdcxx-ng`
 - Base image
   - `FROM gpuci/miniconda-cuda:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}`
 - Purpose
   - Provide a common testing base that can be reused by the RAPIDS release images
-  - Use the [integration](https://github.com/rapidsai/integration/tree/branch-0.14/conda/recipes) `env` packages to pull consistent versioning information for all of RAPIDS
+  - Use the [integration](https://github.com/rapidsai/integration/tree/branch-0.15/conda/recipes) `env` packages to pull consistent versioning information for all of RAPIDS
     - **NOTE**: These images install the `env` packages to get their
     dependencies, but are **removed** after install in this container. This
     allows the same packages to be installed again later updating the image. It
@@ -124,7 +124,7 @@ release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-d
     `conda` solve conflict.
 - Tags - `${RAPIDS_VER}-cuda${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}-py${PYTHON_VER}`
   - Supports these options
-    - `${RAPIDS_VER}` - Major and minor version of RAPIDS (e.g. `0.14`)
+    - `${RAPIDS_VER}` - Major and minor version of RAPIDS (e.g. `0.15`)
     - `${CUDA_VER}` - `10.0`, `10.1`, `10.2`
     - `${IMAGE_TYPE}` - `base`, `runtime`, `devel`
     - `${LINUX_VER}` - `ubuntu16.04`, `ubuntu18.04`, `centos7`
@@ -143,24 +143,24 @@ files for linking during the build steps.
 - Versioning - `RAPIDS_VER`
   - Similar to `gpuci/rapidsai` these images use the RAPIDS versioning
   - [`gpuci/rapidsai-driver`](https://hub.docker.com/r/gpuci/rapidsai-driver/tags) - similar to `gpuci/rapidsai` use the same versioning as the RAPIDS project
-  - The current **stable** version of RAPIDS tracks the **release/stable** [integration](https://github.com/rapidsai/integration/tree/branch-0.14/conda/recipes) `env` packages
-  - The current **nightly** version of RAPIDS tracks the **nightly** [integration](https://github.com/rapidsai/integration/tree/branch-0.14/conda/recipes) `env` packages
+  - The current **stable** version of RAPIDS tracks the **release/stable** [integration](https://github.com/rapidsai/integration/tree/branch-0.15/conda/recipes) `env` packages
+  - The current **nightly** version of RAPIDS tracks the **nightly** [integration](https://github.com/rapidsai/integration/tree/branch-0.15/conda/recipes) `env` packages
 - Dockerfile
-  - Ubuntu 18.04 - [`Dockerfile`](rapidsai-driver/Dockerfile)
+  - Ubuntu 16.04 - [`Dockerfile`](rapidsai-driver/Dockerfile)
 - Build arguments
   - `FROM_IMAGE` - Specifies the repo location; stable/nightly is determined by the value of `RAPIDS_VER`
   - `DRIVER_VER` - NVIDIA driver version to install (i.e. `440`)
   - `CUDA_VER` and `PYTHON_VER` - Take the same arguments as defined in **Tags** below
   - `RAPIDS_VER` - This is used to select the `FROM_IMAGE`
 - Base image
-  - `FROM gpuci/rapidsai:${RAPIDS_VER}-cuda${CUDA_VER}-devel-ubuntu18.04-py${PYTHON_VERSION}`
+  - `FROM gpuci/rapidsai:${RAPIDS_VER}-cuda${CUDA_VER}-devel-ubuntu16.04-py${PYTHON_VERSION}`
 - Purpose
   - Installs the NVIDIA driver/libcuda to enable conda builds on CPU-only machines
   - Built for conda builds and only contains the driver install command
   - Maintained as a way to remove the `apt-get install` overhead that can slow the testing/build process
-- Tags - `${RAPIDS_VER}-cuda${CUDA_VER}-devel-ubuntu18.04-py${PYTHON_VER}`
+- Tags - `${RAPIDS_VER}-cuda${CUDA_VER}-devel-ubuntu16.04-py${PYTHON_VER}`
   - Supports these options
-    - `${RAPIDS_VER}` - Major and minor version of RAPIDS (e.g. `0.14`)
+    - `${RAPIDS_VER}` - Major and minor version of RAPIDS (e.g. `0.15`)
     - `${CUDA_VER}` - `10.0`, `10.1`, `10.2`
     - `${PYTHON_VER}` - `3.6`, `3.7`
 

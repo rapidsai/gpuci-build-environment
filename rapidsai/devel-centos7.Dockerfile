@@ -4,7 +4,7 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-devel-centos7
 
 # Required arguments
 ARG RAPIDS_CHANNEL=rapidsai-nightly
-ARG RAPIDS_VER=0.14
+ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.6
 
 # Optional arguments
