@@ -123,9 +123,9 @@ RUN gpuci_retry conda install -y -n rapids --freeze-installed \
 #     && rm -rf /tmp/ccache-${CCACHE_VERSION}* \
 #     && mkdir -p /ccache
 
-RUN apt update -y \
- && apt install -y \
-  curl libssl-dev libcurl4-openssl-dev zlib1g-dev
+# RUN apt update -y \
+#  && apt install -y \
+#   curl libssl-dev libcurl4-openssl-dev zlib1g-dev
 
 # Install ccache
 RUN git clone https://github.com/ccache/ccache.git /tmp/ccache && cd /tmp/ccache \
