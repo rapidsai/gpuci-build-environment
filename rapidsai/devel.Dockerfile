@@ -72,8 +72,11 @@ RUN apt-get update -y --fix-missing \
       tzdata \
       vim \
       zlib1g-dev \
+      curl libssl-dev libcurl4-openssl-dev zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+    # ADDED THE CURL ABOVE
 
 # # Add core tools to base env
 # RUN source activate base \
@@ -128,6 +131,8 @@ RUN apt-get update -y --fix-missing \
 #   curl libssl-dev libcurl4-openssl-dev zlib1g-dev
 
 ARG PARALLEL_LEVEL=16
+ARG CMAKE_VERSION=3.17.2
+ENV CMAKE_VERSION=${CMAKE_VERSION}
 
 # Install ccache
 RUN curl -fsSLO --compressed "https://github.com/Kitware/CMake/releases/download/v$CMAKE_VERSION/cmake-$CMAKE_VERSION.tar.gz" \
