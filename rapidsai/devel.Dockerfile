@@ -128,9 +128,9 @@ RUN gpuci_retry conda install -y -n rapids --freeze-installed \
 #   curl libssl-dev libcurl4-openssl-dev zlib1g-dev
 
 # Install ccache
-RUN git clone https://github.com/ccache/ccache.git /tmp/ccache && cd /tmp/ccache
-RUN git checkout -b rapids-compose-tmp e071bcfd37dfb02b4f1fa4b45fff8feb10d1cbd2
-RUN mkdir -p /tmp/ccache/build && cd /tmp/ccache/build
+RUN git clone https://github.com/ccache/ccache.git /tmp/ccache && cd /tmp/ccache \
+    && git checkout -b rapids-compose-tmp e071bcfd37dfb02b4f1fa4b45fff8feb10d1cbd2
+RUN mkdir -p /tmp/ccache/build && cd /tmp/ccache/build \
 RUN cmake \
         -DENABLE_TESTING=OFF \
         -DUSE_LIBB2_FROM_INTERNET=ON \
