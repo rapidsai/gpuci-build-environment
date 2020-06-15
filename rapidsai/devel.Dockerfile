@@ -113,15 +113,27 @@ RUN gpuci_retry conda install -y -n rapids --freeze-installed \
       rapids-notebook-env=${RAPIDS_VER}
 
 # Build ccache from source and create symlinks
-RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o /tmp/ccache-${CCACHE_VERSION}.zip \
-    && unzip -d /tmp/ccache-${CCACHE_VERSION} /tmp/ccache-${CCACHE_VERSION}.zip \
-    && cd /tmp/ccache-${CCACHE_VERSION}/ccache-master \
-    && ./autogen.sh \
-    && ./configure --disable-man --with-libb2-from-internet --with-libzstd-from-internet \
-    && make install -j \
-    && cd / \
-    && rm -rf /tmp/ccache-${CCACHE_VERSION}* \
-    && mkdir -p /ccache
+# RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o /tmp/ccache-${CCACHE_VERSION}.zip \
+#     && unzip -d /tmp/ccache-${CCACHE_VERSION} /tmp/ccache-${CCACHE_VERSION}.zip \
+#     && cd /tmp/ccache-${CCACHE_VERSION}/ccache-master \
+#     && ./autogen.sh \
+#     && ./configure --disable-man --with-libb2-from-internet --with-libzstd-from-internet \
+#     && make install -j \
+#     && cd / \
+#     && rm -rf /tmp/ccache-${CCACHE_VERSION}* \
+#     && mkdir -p /ccache
+
+# Install ccache
+RUN git clone https://github.com/ccache/ccache.git /tmp/ccache && cd /tmp/ccache \
+    && git checkout -b rapids-compose-tmp e071bcfd37dfb02b4f1fa4b45fff8feb10d1cbd2 \
+    && mkdir -p /tmp/ccache/build && cd /tmp/ccache/build \
+    && cmake \
+        -DENABLE_TESTING=OFF \
+        -DUSE_LIBB2_FROM_INTERNET=ON \
+        -DUSE_LIBZSTD_FROM_INTERNET=ON .. \
+    && make ccache -j${PARALLEL_LEVEL} && make install && cd / && rm -rf ./ccache-${CCACHE_VERSION}*
+
+
 
 # Setup ccache env vars
 ENV CCACHE_NOHASHDIR=
