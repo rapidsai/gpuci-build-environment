@@ -78,42 +78,42 @@ RUN apt-get update -y --fix-missing \
 
     # ADDED THE CURL ABOVE
 
-# # Add core tools to base env
-# RUN source activate base \
-#     && conda install -y --override-channels -c gpuci gpuci-tools \
-#     && gpuci_retry conda install -y \
-#       anaconda-client \
-#       codecov
+# Add core tools to base env
+RUN source activate base \
+    && conda install -y --override-channels -c gpuci gpuci-tools \
+    && gpuci_retry conda install -y \
+      anaconda-client \
+      codecov
 
-# # Create `rapids` conda env and make default
-# RUN source activate base \
-#     && gpuci_retry conda create --no-default-packages --override-channels -n rapids \
-#       -c nvidia \
-#       -c conda-forge \
-#       -c defaults \
-#       nomkl \
-#       cudatoolkit=${CUDA_VER} \
-#       git \
-#       libgcc-ng=${BUILD_STACK_VER} \
-#       libstdcxx-ng=${BUILD_STACK_VER} \
-#       python=${PYTHON_VER} \
-#     && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
+# Create `rapids` conda env and make default
+RUN source activate base \
+    && gpuci_retry conda create --no-default-packages --override-channels -n rapids \
+      -c nvidia \
+      -c conda-forge \
+      -c defaults \
+      nomkl \
+      cudatoolkit=${CUDA_VER} \
+      git \
+      libgcc-ng=${BUILD_STACK_VER} \
+      libstdcxx-ng=${BUILD_STACK_VER} \
+      python=${PYTHON_VER} \
+    && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
 
-# # Create symlink for old scripts expecting `gdf` conda env
-# RUN ln -s /opt/conda/envs/rapids /opt/conda/envs/gdf
+# Create symlink for old scripts expecting `gdf` conda env
+RUN ln -s /opt/conda/envs/rapids /opt/conda/envs/gdf
 
-# # Install build/doc/notebook env meta-pkgs
-# #
-# # Once installed remove the meta-pkg so dependencies can be freely updated &
-# # the meta-pkg can be installed again with updates
-# RUN gpuci_retry conda install -y -n rapids --freeze-installed \
-#       rapids-build-env=${RAPIDS_VER} \
-#       rapids-doc-env=${RAPIDS_VER} \
-#       rapids-notebook-env=${RAPIDS_VER} \
-#     && conda remove -y -n rapids --force-remove \
-#       rapids-build-env=${RAPIDS_VER} \
-#       rapids-doc-env=${RAPIDS_VER} \
-#       rapids-notebook-env=${RAPIDS_VER}
+# Install build/doc/notebook env meta-pkgs
+#
+# Once installed remove the meta-pkg so dependencies can be freely updated &
+# the meta-pkg can be installed again with updates
+RUN gpuci_retry conda install -y -n rapids --freeze-installed \
+      rapids-build-env=${RAPIDS_VER} \
+      rapids-doc-env=${RAPIDS_VER} \
+      rapids-notebook-env=${RAPIDS_VER} \
+    && conda remove -y -n rapids --force-remove \
+      rapids-build-env=${RAPIDS_VER} \
+      rapids-doc-env=${RAPIDS_VER} \
+      rapids-notebook-env=${RAPIDS_VER}
 
 # Build ccache from source and create symlinks
 # RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o /tmp/ccache-${CCACHE_VERSION}.zip \
