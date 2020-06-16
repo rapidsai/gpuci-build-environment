@@ -167,7 +167,8 @@ RUN ln -s "$(which ccache)" "/usr/local/bin/gcc" \
 
 # Clean up pkgs to reduce image size and chmod for all users
 RUN conda clean -afy \
-    && chmod -R ugo+w /opt/conda /ccache
+    && chmod -R ugo+w /opt/conda
+    # /ccache
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
