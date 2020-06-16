@@ -18,7 +18,9 @@ destination image.
 The `gpuci/miniconda-cuda` image is the base layer that all gpuCI testing and
 RAPIDS release containers are built off of. This image also serves as a public
 image for those who want a one-to-one compatible `nvidia/cuda` image with
-`miniconda` installed. Below is a description of the image and how it is built.
+`miniconda` installed. In addition `gpuci/miniconda-cuda` is provided for
+`ubuntu16.04` *only* with a minimum set of conda build utilities and the NVIDIA
+driver installed to allow for CPU-only conda builds of most CUDA code.
 
 ### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fminiconda-cuda)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/miniconda-cuda/) `gpuci/miniconda-cuda`
 
@@ -45,6 +47,30 @@ image for those who want a one-to-one compatible `nvidia/cuda` image with
 - Tag format - `${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}`
   - Supports the same options as defined in **Build arguments**
   - Current [tags](https://hub.docker.com/r/gpuci/miniconda-cuda/tags)
+
+### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fminiconda-cuda-driver)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/miniconda-cuda-drvier/) `gpuci/miniconda-cuda-driver`
+
+- Repo location
+  - [`gpuci/miniconda-cuda-driver`](https://hub.docker.com/r/gpuci/miniconda-cuda-driver/tags) 
+- Dockerfile
+  - [`Dockerfile`](miniconda-cuda-driver/Dockerfile)
+- Build arguments
+  - Depends on upstream `nvidia/cuda` combinations
+    - `CUDA_VER` - `10.0`, `10.1`, `10.2`
+    - `IMAGE_TYPE` - `devel`
+    - `LINUX_VER` - `ubuntu16.04` - *only* version currently supported
+  - Other arguments
+    - `FROM_IMAGE` - `gpuci/miniconda-cuda`
+- Base image
+  - `FROM ${FROM_IMAGE}:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}`
+    - Default - `gpuci/miniconda-cuda:10.2-devel-ubuntu16.04`
+- Purpose
+  - Adds tools needed for conda builds and uploads
+  - Installs the NVIDIA driver for CPU-only builds of most CUDA code
+  - Activates the `base` conda environment on launch
+- Tag format - `${CUDA_VER}-devel-ubuntu16.04`
+  - Supports the same options as defined in **Build arguments**
+  - Current [tags](https://hub.docker.com/r/gpuci/miniconda-cuda-driver/tags)
 
 ## gpuCI Images
 
