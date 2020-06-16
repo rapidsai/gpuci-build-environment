@@ -10,9 +10,6 @@ IMAGE_NAME:
 DOCKER_FILE:
   - Dockerfile
 
-RAPIDS_VER:
-  - 0.15
-
 CUDA_VER:
   - 10.2
   - 10.1
