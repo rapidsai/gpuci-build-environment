@@ -116,26 +116,28 @@ Example: `gpuci/rapidsai:0.15-cuda10.1-devel-ubuntu18.04-py3.6`
 Simply include this snippet in a Dockerfile.centos7 file. You can use the same template above, replacing the 'Set environment section'
 
 ```
-# Install gcc7 from prebuilt image
-COPY --from=gpuci/builds-gcc7:${CUDA_VERSION}-devel-centos7 /usr/local/gcc7 /usr/local/gcc7
+ARG CENTOS7_GCC7_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz
 
-# Update environment to use new gcc7
+# Update environment for gcc/g++ builds
+ENV GCC7_DIR=/usr/local/gcc7
 ENV CC=${GCC7_DIR}/bin/gcc
 ENV CXX=${GCC7_DIR}/bin/g++
 ENV CUDAHOSTCXX=${GCC7_DIR}/bin/g++
 ENV LD_LIBRARY_PATH=${GCC7_DIR}/lib64:$CONDA_PREFIX:$LD_LIBRARY_PATH
-ENV NUMBAPRO_NVVM=/usr/local/cuda/nvvm/lib64/libnvvm.so
-ENV NUMBAPRO_LIBDEVICE=/usr/local/cuda/nvvm/libdevice
-ENV PATH=$PATH:/conda/bin
 ENV PATH=${GCC7_DIR}/bin:$PATH
+
+# Install gcc7 from prebuilt tarball
+RUN wget --quiet ${CENTOS7_GCC7_URL} -O /gcc7.tgz \
+    && tar xzvf /gcc7.tgz \
+    && rm -f /gcc7.tgz
 ```
 
 
 ### How do create the driver image?
 
-You don't need to do anything! By providing a `ubuntu18.04` image following the tag scheme above, gpuCI can automatically extend your image and add the drivers.
+You don't need to do anything! By providing a `ubuntu16.04` image following the tag scheme above, gpuCI can automatically extend your image and add the drivers.
 
-It will create images named `gpuci/<project>-drivers:cuda${CUDA_VERSION}-${LINUX_VERSION}-gcc${CC_VERSION}-py${PYTHON_VERSION}`
+It will create images named `gpuci/<project>-drivers:${PROJECT_VERSION}-cuda${CUDA_VERSION}-devel-${LINUX_VERSION}-py${PYTHON_VERSION}`
 
 Background: On gpuCI, CPU builds require the drivers to be force installed to the docker image. This is because there are no drivers or GPUs on the host to pass through using nvidia-docker. This is only used for Ubuntu 16.04 images.
 
