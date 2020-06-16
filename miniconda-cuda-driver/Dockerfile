@@ -11,8 +11,8 @@ ARG DRIVER_VER="440"
 
 # Add core tools to base env
 RUN source activate base \
-    && conda install -y --override-channels -c gpuci gpuci-tools \
-    && gpuci_retry conda install -y \
+    && conda install -k -y --override-channels -c gpuci gpuci-tools \
+    && gpuci_retry conda install -k -y \
       anaconda-client \
       codecov \
       conda-build \
