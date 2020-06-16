@@ -18,7 +18,7 @@ destination image.
 The `gpuci/miniconda-cuda` image is the base layer that all gpuCI testing and
 RAPIDS release containers are built off of. This image also serves as a public
 image for those who want a one-to-one compatible `nvidia/cuda` image with
-`miniconda` installed. In addition `gpuci/miniconda-cuda` is provided for
+`miniconda` installed. In addition `gpuci/miniconda-cuda-driver` is provided for
 `ubuntu16.04` *only* with a minimum set of conda build utilities and the NVIDIA
 driver installed to allow for CPU-only conda builds of most CUDA code.
 
