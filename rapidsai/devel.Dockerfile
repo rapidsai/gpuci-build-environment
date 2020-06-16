@@ -11,6 +11,8 @@ ARG PYTHON_VER=3.6
 # Optional arguments
 ARG BUILD_STACK_VER=7.5.0
 ARG CCACHE_VERSION=master
+ARG PARALLEL_LEVEL=16
+ARG CMAKE_VERSION=3.17.2
 
 # Capture argument used for FROM
 ARG CUDA_VER
@@ -72,11 +74,9 @@ RUN apt-get update -y --fix-missing \
       tzdata \
       vim \
       zlib1g-dev \
-      curl libssl-dev libcurl4-openssl-dev zlib1g-dev \
+      libssl-dev libcurl4-openssl-dev zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
-    # ADDED THE CURL ABOVE
 
 # Add core tools to base env
 RUN source activate base \
@@ -115,26 +115,7 @@ RUN gpuci_retry conda install -y -n rapids --freeze-installed \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER}
 
-# Build ccache from source and create symlinks
-# RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o /tmp/ccache-${CCACHE_VERSION}.zip \
-#     && unzip -d /tmp/ccache-${CCACHE_VERSION} /tmp/ccache-${CCACHE_VERSION}.zip \
-#     && cd /tmp/ccache-${CCACHE_VERSION}/ccache-master \
-#     && ./autogen.sh \
-#     && ./configure --disable-man --with-libb2-from-internet --with-libzstd-from-internet \
-#     && make install -j \
-#     && cd / \
-#     && rm -rf /tmp/ccache-${CCACHE_VERSION}* \
-#     && mkdir -p /ccache
-
-# RUN apt update -y \
-#  && apt install -y \
-#   curl libssl-dev libcurl4-openssl-dev zlib1g-dev
-
-ARG PARALLEL_LEVEL=16
-ARG CMAKE_VERSION=3.17.2
-ENV CMAKE_VERSION=${CMAKE_VERSION}
-
-# Install ccache
+ # Install CMake
 RUN curl -fsSLO --compressed "https://github.com/Kitware/CMake/releases/download/v$CMAKE_VERSION/cmake-$CMAKE_VERSION.tar.gz" \
  && tar -xvzf cmake-$CMAKE_VERSION.tar.gz && cd cmake-$CMAKE_VERSION \
  && ./bootstrap --system-curl --parallel=${PARALLEL_LEVEL} && make install -j${PARALLEL_LEVEL} \
@@ -148,8 +129,6 @@ RUN curl -fsSLO --compressed "https://github.com/Kitware/CMake/releases/download
     -DUSE_LIBB2_FROM_INTERNET=ON \
     -DUSE_LIBZSTD_FROM_INTERNET=ON .. \
  && make ccache -j${PARALLEL_LEVEL} && make install && cd / && rm -rf ./ccache-${CCACHE_VERSION}*
-
-
 
 # Setup ccache env vars
 ENV CCACHE_NOHASHDIR=
@@ -168,7 +147,6 @@ RUN ln -s "$(which ccache)" "/usr/local/bin/gcc" \
 # Clean up pkgs to reduce image size and chmod for all users
 RUN conda clean -afy \
     && chmod -R ugo+w /opt/conda
-    # /ccache
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
