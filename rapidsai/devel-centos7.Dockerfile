@@ -59,7 +59,7 @@ RUN yum install -y \
       numactl-libs \
       screen \
       vim \
-      libssl-dev libcurl4-openssl-dev zlib1g-dev \
+      openssl-devel libcurl-openssl-devel zlib-devel \
     && yum clean all
 
 # Add core tools to base env
