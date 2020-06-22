@@ -11,6 +11,8 @@ ARG PYTHON_VER=3.6
 ARG BUILD_STACK_VER=7.5.0
 ARG CENTOS7_GCC7_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz
 ARG CCACHE_VERSION=master
+ARG PARALLEL_LEVEL=16
+ARG CMAKE_VERSION=3.17.2
 
 # Capture argument used for FROM
 ARG CUDA_VER
@@ -57,6 +59,7 @@ RUN yum install -y \
       numactl-libs \
       screen \
       vim \
+      libssl-dev libcurl4-openssl-dev zlib1g-dev \
     && yum clean all
 
 # Add core tools to base env
@@ -101,16 +104,21 @@ RUN gpuci_retry wget --quiet ${CENTOS7_GCC7_URL} -O /gcc7.tgz \
     && tar xzvf /gcc7.tgz \
     && rm -f /gcc7.tgz
 
-# Build ccache from source and create symlinks
-RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o /tmp/ccache-${CCACHE_VERSION}.zip \
-    && unzip -d /tmp/ccache-${CCACHE_VERSION} /tmp/ccache-${CCACHE_VERSION}.zip \
-    && cd /tmp/ccache-${CCACHE_VERSION}/ccache-master \
-    && ./autogen.sh \
-    && ./configure --disable-man --with-libb2-from-internet --with-libzstd-from-internet \
-    && make install -j \
-    && cd / \
-    && rm -rf /tmp/ccache-${CCACHE_VERSION}* \
-    && mkdir -p /ccache
+ # Install CMake
+RUN curl -fsSLO --compressed "https://github.com/Kitware/CMake/releases/download/v$CMAKE_VERSION/cmake-$CMAKE_VERSION.tar.gz" \
+ && tar -xvzf cmake-$CMAKE_VERSION.tar.gz && cd cmake-$CMAKE_VERSION \
+ && ./bootstrap --system-curl --parallel=${PARALLEL_LEVEL} && make install -j${PARALLEL_LEVEL} \
+ && cd - && rm -rf ./cmake-$CMAKE_VERSION ./cmake-$CMAKE_VERSION.tar.gz \
+ # Install ccache
+ && git clone https://github.com/ccache/ccache.git /tmp/ccache && cd /tmp/ccache \
+ && git checkout -b rapids-compose-tmp e071bcfd37dfb02b4f1fa4b45fff8feb10d1cbd2 \
+ && mkdir -p /tmp/ccache/build && cd /tmp/ccache/build \
+ && cmake \
+    -DENABLE_TESTING=OFF \
+    -DUSE_LIBB2_FROM_INTERNET=ON \
+    -DUSE_LIBZSTD_FROM_INTERNET=ON .. \
+ && make ccache -j${PARALLEL_LEVEL} && make install && cd / && rm -rf ./ccache-${CCACHE_VERSION}*
+
 
 # Setup ccache env vars
 ENV CCACHE_NOHASHDIR=

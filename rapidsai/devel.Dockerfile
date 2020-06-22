@@ -73,7 +73,6 @@ RUN apt-get update -y --fix-missing \
       screen \
       tzdata \
       vim \
-      zlib1g-dev \
       libssl-dev libcurl4-openssl-dev zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
