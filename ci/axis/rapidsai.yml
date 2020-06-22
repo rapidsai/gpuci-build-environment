@@ -1,5 +1,5 @@
 BUILD_IMAGE:
-  - gpuci/rapidsai
+  - gpuci/rapidsai-enh-ccache-testing
 
 FROM_IMAGE:
   - gpuci/miniconda-cuda
@@ -8,7 +8,6 @@ IMAGE_NAME:
   - rapidsai
 
 DOCKER_FILE:
-  - base-runtime.Dockerfile
   - devel.Dockerfile
   - devel-centos7.Dockerfile
 
@@ -24,8 +23,6 @@ CUDA_VER:
   - 10.0
 
 IMAGE_TYPE:
-  - base
-  - runtime
   - devel
 
 LINUX_VER:
