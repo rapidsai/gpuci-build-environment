@@ -64,7 +64,6 @@ RUN apt-get update \
 RUN apt-get update -y --fix-missing \
     && apt-get -qq install apt-utils -y --no-install-recommends \
     && apt-get install -y \
-      awscli \
       jq \
       libnuma1 \
       libnuma-dev \
@@ -74,6 +73,12 @@ RUN apt-get update -y --fix-missing \
       zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Install latest awscli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install \
+    && rm -rf ./aws ./awscliv2.zip
 
 # Add core tools to base env
 RUN source activate base \

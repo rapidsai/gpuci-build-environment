@@ -51,13 +51,18 @@ channels: \n\
 
 # Update and add pkgs for gpuci builds
 RUN yum install -y \
-      awscli \
       clang \
       numactl-devel \
       numactl-libs \
       screen \
       vim \
     && yum clean all
+
+# Install latest awscli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install \
+    && rm -rf ./aws ./awscliv2.zip
 
 # Add core tools to base env
 RUN source activate base \
