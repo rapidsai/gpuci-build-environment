@@ -114,7 +114,7 @@ RUN curl -fsSLO --compressed "https://github.com/Kitware/CMake/releases/download
  && tar -xvzf cmake-$CMAKE_VERSION.tar.gz && cd cmake-$CMAKE_VERSION \
  && ./bootstrap --system-curl --parallel=${PARALLEL_LEVEL} && make install -j${PARALLEL_LEVEL} \
  && cd - && rm -rf ./cmake-$CMAKE_VERSION ./cmake-$CMAKE_VERSION.tar.gz \
- # Install ccache
+ # Install ccache from specific commit in ccache's master branch
  && git clone https://github.com/ccache/ccache.git /tmp/ccache && cd /tmp/ccache \
  && git checkout -b rapids-compose-tmp e071bcfd37dfb02b4f1fa4b45fff8feb10d1cbd2 \
  && mkdir -p /tmp/ccache/build && cd /tmp/ccache/build \
