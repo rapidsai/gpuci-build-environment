@@ -11,6 +11,8 @@ ARG PYTHON_VER=3.6
 # Optional arguments
 ARG BUILD_STACK_VER=7.5.0
 ARG CCACHE_VERSION=master
+ARG PARALLEL_LEVEL=16
+ARG CMAKE_VERSION=3.17.2
 
 # Capture argument used for FROM
 ARG CUDA_VER
@@ -70,7 +72,7 @@ RUN apt-get update -y --fix-missing \
       screen \
       tzdata \
       vim \
-      zlib1g-dev \
+      libssl-dev libcurl4-openssl-dev zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -117,30 +119,34 @@ RUN gpuci_retry conda install -y -n rapids --freeze-installed \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER}
 
-# Build ccache from source and create symlinks
-#RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o /tmp/ccache-${CCACHE_VERSION}.zip \
-#    && unzip -d /tmp/ccache-${CCACHE_VERSION} /tmp/ccache-${CCACHE_VERSION}.zip \
-#    && cd /tmp/ccache-${CCACHE_VERSION}/ccache-master \
-#    && ./autogen.sh \
-#    && ./configure --disable-man --with-libb2-from-internet --with-libzstd-from-internet\
-#    && make install -j \
-#    && cd / \
-#    && rm -rf /tmp/ccache-${CCACHE_VERSION}* \
-#    && mkdir -p /ccache
+ # Install CMake
+RUN curl -fsSLO --compressed "https://github.com/Kitware/CMake/releases/download/v$CMAKE_VERSION/cmake-$CMAKE_VERSION.tar.gz" \
+ && tar -xvzf cmake-$CMAKE_VERSION.tar.gz && cd cmake-$CMAKE_VERSION \
+ && ./bootstrap --system-curl --parallel=${PARALLEL_LEVEL} && make install -j${PARALLEL_LEVEL} \
+ && cd - && rm -rf ./cmake-$CMAKE_VERSION ./cmake-$CMAKE_VERSION.tar.gz \
+ # Install ccache from specific commit in ccache's master branch
+ && git clone https://github.com/ccache/ccache.git /tmp/ccache && cd /tmp/ccache \
+ && git checkout -b rapids-compose-tmp e071bcfd37dfb02b4f1fa4b45fff8feb10d1cbd2 \
+ && mkdir -p /tmp/ccache/build && cd /tmp/ccache/build \
+ && cmake \
+    -DENABLE_TESTING=OFF \
+    -DUSE_LIBB2_FROM_INTERNET=ON \
+    -DUSE_LIBZSTD_FROM_INTERNET=ON .. \
+ && make ccache -j${PARALLEL_LEVEL} && make install && cd / && rm -rf ./ccache-${CCACHE_VERSION}*
 
 # Setup ccache env vars
-#ENV CCACHE_NOHASHDIR=
-#ENV CCACHE_DIR="/ccache"
-#ENV CCACHE_COMPILERCHECK="%compiler% --version"
+ENV CCACHE_NOHASHDIR=
+ENV CCACHE_DIR="/ccache"
+ENV CCACHE_COMPILERCHECK="%compiler% --version"
 
 # Uncomment these env vars to force ccache to be enabled by default
-#ENV CC="/usr/local/bin/gcc"
-#ENV CXX="/usr/local/bin/g++"
-#ENV NVCC="/usr/local/bin/nvcc"
-#ENV CUDAHOSTCXX="/usr/local/bin/g++"
-#RUN ln -s "$(which ccache)" "/usr/local/bin/gcc" \
-#    && ln -s "$(which ccache)" "/usr/local/bin/g++" \
-#    && ln -s "$(which ccache)" "/usr/local/bin/nvcc"
+ENV CC="/usr/local/bin/gcc"
+ENV CXX="/usr/local/bin/g++"
+ENV NVCC="/usr/local/bin/nvcc"
+ENV CUDAHOSTCXX="/usr/local/bin/g++"
+RUN ln -s "$(which ccache)" "/usr/local/bin/gcc" \
+    && ln -s "$(which ccache)" "/usr/local/bin/g++" \
+    && ln -s "$(which ccache)" "/usr/local/bin/nvcc"
 
 # Clean up pkgs to reduce image size and chmod for all users
 RUN conda clean -afy \
