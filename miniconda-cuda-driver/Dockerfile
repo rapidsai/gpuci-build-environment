@@ -15,7 +15,7 @@ RUN source activate base \
     && gpuci_conda_retry install -k -y -c conda-forge \
       anaconda-client \
       codecov \
-      conda-build= \
+      conda-build =3.19.2 \
       conda-verify \
       ripgrep \
     && chmod -R ugo+w /opt/conda
