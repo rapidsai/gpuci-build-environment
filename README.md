@@ -187,8 +187,8 @@ files for linking during the build steps.
 - Tags - `${RAPIDS_VER}-cuda${CUDA_VER}-devel-ubuntu16.04-py${PYTHON_VER}`
   - Supports these options
     - `${RAPIDS_VER}` - Major and minor version of RAPIDS (e.g. `0.15`)
-    - `${CUDA_VER}` - `10.0`, `10.1`, `10.2`
-    - `${PYTHON_VER}` - `3.6`, `3.7`
+    - `${CUDA_VER}` - `10.1`, `10.2`
+    - `${PYTHON_VER}` - `3.7`
 
 ## RAPIDS Images
 
