@@ -151,10 +151,10 @@ release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-d
 - Tags - `${RAPIDS_VER}-cuda${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}-py${PYTHON_VER}`
   - Supports these options
     - `${RAPIDS_VER}` - Major and minor version of RAPIDS (e.g. `0.15`)
-    - `${CUDA_VER}` - `10.0`, `10.1`, `10.2`
+    - `${CUDA_VER}` - `10.1`, `10.2`
     - `${IMAGE_TYPE}` - `base`, `runtime`, `devel`
     - `${LINUX_VER}` - `ubuntu16.04`, `ubuntu18.04`, `centos7`
-    - `${PYTHON_VER}` - `3.6`, `3.7`
+    - `${PYTHON_VER}` - `3.7`
 
 #### `conda` Build Images
 

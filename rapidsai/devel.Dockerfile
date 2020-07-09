@@ -6,7 +6,7 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
 # Required arguments
 ARG RAPIDS_CHANNEL=rapidsai-nightly
 ARG RAPIDS_VER=0.15
-ARG PYTHON_VER=3.6
+ARG PYTHON_VER=3.7
 
 # Optional arguments
 ARG BUILD_STACK_VER=7.5.0
