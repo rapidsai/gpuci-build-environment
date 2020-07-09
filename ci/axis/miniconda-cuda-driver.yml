@@ -13,6 +13,7 @@ DOCKER_FILE:
 CUDA_VER:
   - 10.2
   - 10.1
+  - 10.0
 
 IMAGE_TYPE:
   - devel
@@ -26,6 +27,10 @@ DRIVER_VER:
   - 440
 
 exclude:
+  - CUDA_VER: 10.0	
+    DRIVER_VER: 418	
+  - CUDA_VER: 10.0	
+    DRIVER_VER: 440
   - CUDA_VER: 10.1
     DRIVER_VER: 410
   - CUDA_VER: 10.1
