@@ -103,7 +103,7 @@ wget --quiet https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz -O /gcc7.t
   - Used by CentOS 7 images during `gpuci/miniconda-cuda` build to install gcc7 without building
 - Tags - `${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}`
   - Supports these options
-    - `${CUDA_VER}` - `10.0`, `10.1`, `10.2`
+    - `${CUDA_VER}` - `10.1`, `10.2`
     - `${CUDA_TYPE}` - `devel`
     - `${LINUX_VER}` - `centos7`
 
