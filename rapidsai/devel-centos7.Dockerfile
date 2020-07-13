@@ -57,9 +57,13 @@ RUN yum install -y \
       vim \
     && yum clean all
 
+ARG JQPATH=/usr/local/bin/jq
+RUN wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -O ${JQPATH} \
+    && chmod +x $JQPATH
+
 # Install latest awscli
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
-    && unzip awscliv2.zip \
+    && unzip -q awscliv2.zip \
     && ./aws/install \
     && rm -rf ./aws ./awscliv2.zip
 
