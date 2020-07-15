@@ -15,7 +15,7 @@ env
 
 # Login to docker
 gpuci_logger "Logging into Docker..."
-echo $DH_TOKEN | docker login --username $DH_USER --password-stdin
+echo $DH_TOKEN | docker login --username $DH_USER --password-stdin &> /dev/null
 
 # Get build info ready
 gpuci_logger "Preparing to build..."
