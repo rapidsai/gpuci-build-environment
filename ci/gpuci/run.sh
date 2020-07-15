@@ -18,22 +18,22 @@ gpuci_logger "Logging into Docker..."
 echo $DH_TOKEN | docker login --username $DH_USER --password-stdin &> /dev/null
 
 # Get build info ready
-gpuci_logger "Preparing to build..."
+gpuci_logger "Preparing build args and info..."
 BUILD_TAG="${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}"
 BUILD_ARGS="--squash --build-arg FROM_IMAGE=$FROM_IMAGE --build-arg CUDA_VER=$CUDA_VER --build-arg IMAGE_TYPE=$IMAGE_TYPE --build-arg LINUX_VER=$LINUX_VER"
 # Check if PYTHON_VER is set
 if [ -z "$PYTHON_VER" ] ; then
-  gpuci_logger "PYTHON_VER is not set, skipping..."
+  echo "PYTHON_VER is not set, skipping..."
 else
-  gpuci_logger "PYTHON_VER is set to '$PYTHON_VER', adding to build args/tag..."
+  echo "PYTHON_VER is set to '$PYTHON_VER', adding to build args/tag..."
   BUILD_ARGS="${BUILD_ARGS} --build-arg PYTHON_VER=${PYTHON_VER}"
   BUILD_TAG="${BUILD_TAG}-py${PYTHON_VER}"
 fi
 # Check if DRIVER_VER is set
 if [ -z "$DRIVER_VER" ] ; then
-  gpuci_logger "DRIVER_VER is not set, skipping..."
+  echo "DRIVER_VER is not set, skipping..."
 else
-  gpuci_logger "DRIVER_VER is set to '$DRIVER_VER', adding to build args..."
+  echo "DRIVER_VER is set to '$DRIVER_VER', adding to build args..."
   BUILD_ARGS="${BUILD_ARGS} --build-arg DRIVER_VER=${DRIVER_VER}"
 fi
 # Check if RAPIDS_VER is set
