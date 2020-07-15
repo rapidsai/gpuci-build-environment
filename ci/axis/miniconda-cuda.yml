@@ -12,6 +12,7 @@ DOCKER_FILE:
   - Dockerfile
 
 CUDA_VER:
+  - 11.0
   - 10.2
   - 10.1
   - 10.0
@@ -40,4 +41,6 @@ exclude:
   - CUDA_VER: 10.1
     FROM_IMAGE: gpuci/cuda
   - CUDA_VER: 10.2
+    FROM_IMAGE: nvidia/cuda
+  - CUDA_VER: 11.0
     FROM_IMAGE: nvidia/cuda
