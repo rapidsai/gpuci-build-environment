@@ -62,14 +62,14 @@ RUN ln -s /opt/conda/envs/rapids /opt/conda/envs/gdf
 #
 # Once installed remove the meta-pkg so dependencies can be freely updated &
 # the meta-pkg can be installed again with updates
-RUN if [ "${IMAGE_TYPE}" == "runtime" ] ; then \
-      gpuci_retry conda install -y -n rapids --freeze-installed \
-        rapids-notebook-env=${RAPIDS_VER} \
-      && conda remove -y -n rapids --force-remove \
-        rapids-notebook-env=${RAPIDS_VER} ; \
-    else \
-      echo -e "\n\n>>>> SKIPPING: IMAGE_TYPE is not 'runtime'\n\n"; \
-    fi
+#RUN if [ "${IMAGE_TYPE}" == "runtime" ] ; then \
+#      gpuci_retry conda install -y -n rapids --freeze-installed \
+#        rapids-notebook-env=${RAPIDS_VER} \
+#      && conda remove -y -n rapids --force-remove \
+#        rapids-notebook-env=${RAPIDS_VER} ; \
+#    else \
+#      echo -e "\n\n>>>> SKIPPING: IMAGE_TYPE is not 'runtime'\n\n"; \
+#    fi
 
 # Clean up pkgs to reduce image size
 RUN conda clean -afy \

@@ -14,6 +14,7 @@ RAPIDS_VER:
   - 0.15
 
 CUDA_VER:
+  - 11.0
   - 10.2
   - 10.1
 
@@ -28,16 +29,20 @@ PYTHON_VER:
   - 3.8
 
 DRIVER_VER:
-  - 410
   - 418
   - 440
+  - 450
 
 exclude:
   - CUDA_VER: 10.1
-    DRIVER_VER: 410
-  - CUDA_VER: 10.1
     DRIVER_VER: 440
-  - CUDA_VER: 10.2
-    DRIVER_VER: 410
+  - CUDA_VER: 10.1
+    DRIVER_VER: 450
   - CUDA_VER: 10.2
     DRIVER_VER: 418
+  - CUDA_VER: 10.2
+    DRIVER_VER: 450
+  - CUDA_VER: 11.0
+    DRIVER_VER: 418
+  - CUDA_VER: 11.0
+    DRIVER_VER: 440
