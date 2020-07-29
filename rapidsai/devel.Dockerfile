@@ -87,7 +87,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 # Add core tools to base env
 RUN source activate base \
-    && conda install -y --override-channels gpuci-tools \
+    && conda install -y --override-channels -c gpuci gpuci-tools \
     && gpuci_retry conda install -y \
       anaconda-client \
       codecov

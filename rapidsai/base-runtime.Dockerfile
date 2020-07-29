@@ -44,7 +44,7 @@ channels: \n\
 
 # Create rapids conda env and make default
 RUN source activate base \
-    && conda install -y --override-channels gpuci-tools \
+    && conda install -y --override-channels -c gpuci gpuci-tools \
     && conda create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
