@@ -23,6 +23,7 @@ RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
+  - gpuci \n\
   - rapidsai \n\
   - conda-forge \n\
   - nvidia \n\
@@ -32,6 +33,7 @@ channels: \n\
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
+  - gpuci \n\
   - rapidsai \n\
   - rapidsai-nightly \n\
   - conda-forge \n\
