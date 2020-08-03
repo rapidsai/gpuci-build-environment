@@ -95,14 +95,14 @@ RUN ln -s /opt/conda/envs/rapids /opt/conda/envs/gdf
 #
 # Once installed remove the meta-pkg so dependencies can be freely updated &
 # the meta-pkg can be installed again with updates
-#RUN gpuci_retry conda install -y -n rapids --freeze-installed \
-#      rapids-build-env=${RAPIDS_VER} \
-#      rapids-doc-env=${RAPIDS_VER} \
-#      rapids-notebook-env=${RAPIDS_VER} \
-#    && conda remove -y -n rapids --force-remove \
-#      rapids-build-env=${RAPIDS_VER} \
-#      rapids-doc-env=${RAPIDS_VER} \
-#      rapids-notebook-env=${RAPIDS_VER}
+RUN gpuci_retry conda install -y -n rapids --freeze-installed \
+  rapids-build-env=${RAPIDS_VER} \
+  rapids-doc-env=${RAPIDS_VER} \
+  rapids-notebook-env=${RAPIDS_VER} \
+&& conda remove -y -n rapids --force-remove \
+  rapids-build-env=${RAPIDS_VER} \
+  rapids-doc-env=${RAPIDS_VER} \
+  rapids-notebook-env=${RAPIDS_VER}
 
 # Install gcc7 from prebuilt tarball
 RUN gpuci_retry wget --quiet ${CENTOS7_GCC7_URL} -O /gcc7.tgz \
