@@ -17,6 +17,10 @@ ARG TINI_URL=https://github.com/krallin/tini/releases/download/${TINI_VER}/tini
 ENV PATH=/opt/conda/bin:${PATH}
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Set CUDA_VERSION as in some 'nvidia/cuda' images this is not set
+## A lot of scripts and conda recipes depend on this env var
+ENV CUDA_VERSION=${FULL_CUDA_VERSION}
+
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
 

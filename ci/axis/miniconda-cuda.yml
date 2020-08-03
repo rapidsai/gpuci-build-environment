@@ -19,6 +19,16 @@ CUDA_VER:
   - 9.2
   - 9.0
 
+# CUDA_VERSION is not defined for CUDA 11 images - this defines it in this image
+## so it can be used in all images within gpuCI
+FULL_CUDA_VERSION:
+  - 11.0.2
+  - 10.2.89
+  - 10.1.243
+  - 10.0.130
+  - 9.2.148
+  - 9.0.176
+
 IMAGE_TYPE:
   - base
   - runtime
