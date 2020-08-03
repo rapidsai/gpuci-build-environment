@@ -33,17 +33,17 @@ LINUX_VER:
   - centos7
 
 exclude:
-  - CUDA_VER: 9.0
+  - CUDA_VER: 9.0.176
     LINUX_VER: ubuntu18.04
-  - CUDA_VER: 9.0
+  - CUDA_VER: 9.0.176
     FROM_IMAGE: gpuci/cuda
-  - CUDA_VER: 9.2
+  - CUDA_VER: 9.2.148
     FROM_IMAGE: gpuci/cuda
-  - CUDA_VER: 10.0
+  - CUDA_VER: 10.0.130
     FROM_IMAGE: gpuci/cuda
-  - CUDA_VER: 10.1
+  - CUDA_VER: 10.1.243
     FROM_IMAGE: gpuci/cuda
-  - CUDA_VER: 10.2
+  - CUDA_VER: 10.2.89
     FROM_IMAGE: nvidia/cuda
-  - CUDA_VER: 11.0
+  - CUDA_VER: 11.0.2
     FROM_IMAGE: nvidia/cuda
