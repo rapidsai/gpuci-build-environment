@@ -19,6 +19,12 @@ echo $DH_TOKEN | docker login --username $DH_USER --password-stdin &> /dev/null
 
 # Get build info ready
 gpuci_logger "Preparing build args and info..."
+# Check if CUDA_VER contains a patch version, if so remove it and def FULL_CUDA_VER
+if [ `tr -dc '.' <<<"$CUDA_VER" | awk '{ print length }'` -eq 2 ] ; then
+  FULL_CUDA_VER=$CUDA_VER
+  CUDA_VER=`echo $CUDA_VER  | tr '.' ' ' | awk '{ print $1 "." $2 }'`
+  gpuci_logger "Detected patch version in CUDA_VER - Set CUDA_VER='$CUDA_VER' and FULL_CUDA_VER='$FULL_CUDA_VER'"
+fi
 BUILD_TAG="${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}"
 # Check if PR build and modify BUILD_IMAGE and BUILD_TAG
 if [ ! -z "$PR_ID" ] ; then
@@ -36,6 +42,13 @@ if [ ! -z "$PR_ID" ] ; then
 fi
 # Setup initial BUILD_ARGS
 BUILD_ARGS="--squash --build-arg FROM_IMAGE=$FROM_IMAGE --build-arg CUDA_VER=$CUDA_VER --build-arg IMAGE_TYPE=$IMAGE_TYPE --build-arg LINUX_VER=$LINUX_VER"
+# Check if FULL_CUDA_VER is set
+if [ -z "$PYTHON_VER" ] ; then
+  echo "FULL_CUDA_VER is not set, skipping..."
+else
+  echo "FULL_CUDA_VER is set to '$FULL_CUDA_VER', adding to build args..."
+  BUILD_ARGS="${BUILD_ARGS} --build-arg FULL_CUDA_VER=${FULL_CUDA_VER}"
+fi
 # Check if PYTHON_VER is set
 if [ -z "$PYTHON_VER" ] ; then
   echo "PYTHON_VER is not set, skipping..."
