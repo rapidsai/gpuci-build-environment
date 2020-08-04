@@ -43,7 +43,7 @@ fi
 # Setup initial BUILD_ARGS
 BUILD_ARGS="--squash --build-arg FROM_IMAGE=$FROM_IMAGE --build-arg CUDA_VER=$CUDA_VER --build-arg IMAGE_TYPE=$IMAGE_TYPE --build-arg LINUX_VER=$LINUX_VER"
 # Check if FULL_CUDA_VER is set
-if [ -z "$PYTHON_VER" ] ; then
+if [ -z "$FULL_CUDA_VER" ] ; then
   echo "FULL_CUDA_VER is not set, skipping..."
 else
   echo "FULL_CUDA_VER is set to '$FULL_CUDA_VER', adding to build args..."
