@@ -96,7 +96,6 @@ RUN source activate base \
       -c nvidia \
       -c conda-forge \
       -c defaults \
-      nomkl \
       cudatoolkit=${CUDA_VER} \
       git \
       libgcc-ng=${BUILD_STACK_VER} \

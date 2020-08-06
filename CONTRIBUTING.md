@@ -83,7 +83,6 @@ RUN source activate base \
       -c nvidia \
       -c conda-forge \
       -c defaults \
-      nomkl \
       cudatoolkit=${CUDA_VER} \
       conda-forge::blas=1.1=openblas \
       libgcc-ng=${LIB_NG_VERSION} \
