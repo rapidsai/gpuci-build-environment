@@ -1,5 +1,5 @@
 BUILD_IMAGE:
-  - gpuci/rapidsai-enh-ccache-testing
+  - gpuci/rapidsai
 
 FROM_IMAGE:
   - gpuci/miniconda-cuda
