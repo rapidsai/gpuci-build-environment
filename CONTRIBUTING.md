@@ -62,16 +62,16 @@ Here is an example on extending the image:
 
 ```Dockerfile
 ARG FROM_IMAGE=gpuci/miniconda-cuda
-ARG CUDA_VERSION=9.2
+ARG CUDA_VERSION=10.1
 ARG CUDA_VER=${CUDA_VERSION}
 ARG CUDA_TYPE=devel
-ARG LINUX_VERSION=ubuntu16.04
+ARG LINUX_VERSION=ubuntu18.04
 FROM ${FROM_IMAGE}:${CUDA_VERSION}-${CUDA_TYPE}-${LINUX_VERSION}
 
 # Define arguments
 ARG CUDA_VER
-ARG PYTHON_VERSION=3.6
-ARG LIB_NG_VERSION=7.3.0
+ARG PYTHON_VERSION=3.7
+ARG LIB_NG_VERSION=7.5.0
 
 # Set environment
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
@@ -84,7 +84,7 @@ RUN source activate base \
       -c conda-forge \
       -c defaults \
       cudatoolkit=${CUDA_VER} \
-      conda-forge::blas=1.1=openblas \
+      conda-forge::blas \
       libgcc-ng=${LIB_NG_VERSION} \
       libstdcxx-ng=${LIB_NG_VERSION} \
       python=${PYTHON_VERSION} \
