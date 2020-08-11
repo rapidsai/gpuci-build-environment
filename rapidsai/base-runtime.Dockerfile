@@ -23,6 +23,7 @@ RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
+  - gpuci \n\
   - rapidsai \n\
   - conda-forge \n\
   - nvidia \n\
@@ -32,6 +33,7 @@ channels: \n\
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
+  - gpuci \n\
   - rapidsai \n\
   - rapidsai-nightly \n\
   - conda-forge \n\
@@ -42,7 +44,7 @@ channels: \n\
 
 # Create rapids conda env and make default
 RUN source activate base \
-    && conda install -y --override-channels -c gpuci gpuci-tools \
+    && conda install -y gpuci-tools \
     && conda create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \

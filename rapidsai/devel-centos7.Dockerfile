@@ -31,6 +31,7 @@ RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
+  - gpuci \n\
   - rapidsai \n\
   - conda-forge \n\
   - nvidia \n\
@@ -40,6 +41,7 @@ channels: \n\
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
+  - gpuci \n\
   - rapidsai \n\
   - rapidsai-nightly \n\
   - conda-forge \n\
@@ -69,7 +71,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 # Add core tools to base env
 RUN source activate base \
-    && conda install -y --override-channels -c gpuci gpuci-tools \
+    && conda install -y gpuci-tools \
     && gpuci_retry conda install -y \
       anaconda-client \
       codecov
