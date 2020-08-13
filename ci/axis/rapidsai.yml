@@ -1,5 +1,5 @@
 BUILD_IMAGE:
-  - gpuci/rapidsai-enh-ccache-testing
+  - gpuci/rapidsai
 
 FROM_IMAGE:
   - gpuci/miniconda-cuda
@@ -14,11 +14,13 @@ DOCKER_FILE:
 
 RAPIDS_VER:
   - 0.15
+  - 0.16
 
 RAPIDS_CHANNEL:
   - rapidsai-nightly
 
 CUDA_VER:
+  - 11.0
   - 10.2
   - 10.1
 

@@ -5,6 +5,7 @@ ARG LINUX_VER=ubuntu18.04
 FROM ${FROM_IMAGE}:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}
 
 # Pull argument from build args
+ARG FULL_CUDA_VER
 ARG LINUX_VER
 
 # Define versions and download locations
@@ -16,6 +17,10 @@ ARG TINI_URL=https://github.com/krallin/tini/releases/download/${TINI_VER}/tini
 # Set environment
 ENV PATH=/opt/conda/bin:${PATH}
 ENV DEBIAN_FRONTEND=noninteractive
+
+# Set CUDA_VERSION as in some 'nvidia/cuda' images this is not set
+## A lot of scripts and conda recipes depend on this env var
+ENV CUDA_VERSION=${FULL_CUDA_VER}
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]

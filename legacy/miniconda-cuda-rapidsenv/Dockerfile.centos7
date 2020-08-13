@@ -24,7 +24,6 @@ RUN source activate base \
       -c nvidia \
       -c conda-forge \
       -c defaults \
-      nomkl \
       cudatoolkit=${CUDA_VER} \
       conda-forge::blas=2.14=openblas \
       git \
