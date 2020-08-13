@@ -98,6 +98,7 @@ RUN source activate base \
       -c nvidia \
       -c conda-forge \
       -c defaults \
+      -c gpuci \
       nomkl \
       cudatoolkit=${CUDA_VER} \
       git \
