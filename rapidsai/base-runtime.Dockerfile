@@ -50,7 +50,6 @@ RUN source activate base \
       -c conda-forge \
       -c defaults \
       -c gpuci \
-      nomkl \
       cudatoolkit=${CUDA_VER} \
       git \
       gpuci-tools \
