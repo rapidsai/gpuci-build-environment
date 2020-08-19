@@ -49,8 +49,10 @@ RUN source activate base \
       -c nvidia \
       -c conda-forge \
       -c defaults \
+      -c gpuci \
       cudatoolkit=${CUDA_VER} \
       git \
+      gpuci-tools \
       libgcc-ng=${BUILD_STACK_VER} \
       libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
