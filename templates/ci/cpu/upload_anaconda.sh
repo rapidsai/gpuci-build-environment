@@ -10,11 +10,9 @@ export |<package>|_FILE=`conda build conda/recipes/|<package>| --output`
 export |<package>|_FILE=`conda build conda/recipes/|<package>| --python=$PYTHON --output`
 ##*
 
-SOURCE_BRANCH=master
 CUDA_REL=${CUDA_VERSION%.*}
 
-# Restrict uploads to master branch
-if [ ${GIT_BRANCH} != ${SOURCE_BRANCH} ]; then
+if [ ${BUILD_MODE} != "branch" ]; then
   echo "Skipping upload"
   return 0
 fi
