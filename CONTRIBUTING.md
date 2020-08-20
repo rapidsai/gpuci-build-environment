@@ -22,7 +22,7 @@ into three categories:
 
 ### Your first issue
 
-1. Read the project's [README.md](https://github.com/rapidsai/gpuci-build-environment/blob/master/README.md)
+1. Read the project's [README.md](https://github.com/rapidsai/gpuci-build-environment/blob/main/README.md)
     to learn how to setup the development environment
 2. Find an issue to work on. The best way is to look for the [good first issue](https://github.com/rapidsai/gpuci-build-environment/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
     or [help wanted](https://github.com/rapidsai/gpuci-build-environment/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) labels
@@ -37,7 +37,7 @@ Remember, if you are unsure about anything, don't hesitate to comment on issues
 and ask for clarifications!
 
 ### Attribution
-Portions adopted from https://github.com/pytorch/pytorch/blob/master/CONTRIBUTING.md
+Portions adopted from https://github.com/pytorch/pytorch/blob/main/CONTRIBUTING.md
 
 # Development and Repo Details
 
