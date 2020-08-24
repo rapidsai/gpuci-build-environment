@@ -37,7 +37,7 @@ Remember, if you are unsure about anything, don't hesitate to comment on issues
 and ask for clarifications!
 
 ### Attribution
-Portions adopted from https://github.com/pytorch/pytorch/blob/main/CONTRIBUTING.md
+Portions adopted from https://github.com/pytorch/pytorch/blob/master/CONTRIBUTING.md
 
 # Development and Repo Details
 
