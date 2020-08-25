@@ -30,7 +30,7 @@ driver installed to allow for CPU-only conda builds of most CUDA code.
   - [`Dockerfile`](miniconda-cuda/Dockerfile)
 - Build arguments
   - Depends on upstream `nvidia/cuda` combinations
-    - `CUDA_VER` - `9.0`, `9.2`, `10.0`, `10.1`, `10.2`
+    - `CUDA_VER` - `9.0`, `9.2`, `10.0`, `10.1`, `10.2`, `11.0`
     - `IMAGE_TYPE` - `base`, `runtime`, `devel`
     - `LINUX_VER` - `ubuntu16.04`, `ubuntu18.04`, `centos7`
   - Other arguments
@@ -56,7 +56,7 @@ driver installed to allow for CPU-only conda builds of most CUDA code.
   - [`Dockerfile`](miniconda-cuda-driver/Dockerfile)
 - Build arguments
   - Depends on upstream `nvidia/cuda` combinations
-    - `CUDA_VER` - `10.0`, `10.1`, `10.2`
+    - `CUDA_VER` - `10.1`, `10.2`, `11.0`
     - `IMAGE_TYPE` - `devel`
     - `LINUX_VER` - `ubuntu16.04` - *only* version currently supported
   - Other arguments
@@ -103,7 +103,7 @@ wget --quiet https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz -O /gcc7.t
   - Used by CentOS 7 images during `gpuci/miniconda-cuda` build to install gcc7 without building
 - Tags - `${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}`
   - Supports these options
-    - `${CUDA_VER}` - `10.1`, `10.2`
+    - `${CUDA_VER}` - `10.2`
     - `${CUDA_TYPE}` - `devel`
     - `${LINUX_VER}` - `centos7`
 
@@ -151,10 +151,10 @@ release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-d
 - Tags - `${RAPIDS_VER}-cuda${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}-py${PYTHON_VER}`
   - Supports these options
     - `${RAPIDS_VER}` - Major and minor version of RAPIDS (e.g. `0.15`)
-    - `${CUDA_VER}` - `10.1`, `10.2`
+    - `${CUDA_VER}` - `10.1`, `10.2`, `11.0`
     - `${IMAGE_TYPE}` - `base`, `runtime`, `devel`
     - `${LINUX_VER}` - `ubuntu16.04`, `ubuntu18.04`, `centos7`
-    - `${PYTHON_VER}` - `3.7`
+    - `${PYTHON_VER}` - `3.7`, `3.8`
 
 #### `conda` Build Images
 
@@ -187,8 +187,8 @@ files for linking during the build steps.
 - Tags - `${RAPIDS_VER}-cuda${CUDA_VER}-devel-ubuntu16.04-py${PYTHON_VER}`
   - Supports these options
     - `${RAPIDS_VER}` - Major and minor version of RAPIDS (e.g. `0.15`)
-    - `${CUDA_VER}` - `10.1`, `10.2`
-    - `${PYTHON_VER}` - `3.7`
+    - `${CUDA_VER}` - `10.1`, `10.2`, `11.0`
+    - `${PYTHON_VER}` - `3.7`, `3.8`
 
 ## RAPIDS Images
 
