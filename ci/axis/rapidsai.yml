@@ -13,7 +13,6 @@ DOCKER_FILE:
   - devel-centos7.Dockerfile
 
 RAPIDS_VER:
-  - 0.15
   - 0.16
 
 RAPIDS_CHANNEL:
@@ -39,10 +38,6 @@ PYTHON_VER:
   - 3.8
 
 exclude:
-  - RAPIDS_VER: 0.14
-    RAPIDS_CHANNEL: rapidsai-nightly
-  - RAPIDS_VER: 0.15
-    RAPIDS_CHANNEL: rapidsai
   - IMAGE_TYPE: base
     DOCKER_FILE: devel.Dockerfile
   - IMAGE_TYPE: base
