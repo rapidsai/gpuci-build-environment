@@ -4,13 +4,12 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-devel-centos7
 
 # Required arguments
 ARG RAPIDS_CHANNEL=rapidsai-nightly
-ARG RAPIDS_VER=0.14
-ARG PYTHON_VER=3.6
+ARG RAPIDS_VER=0.15
+ARG PYTHON_VER=3.7
 
 # Optional arguments
 ARG BUILD_STACK_VER=7.5.0
 ARG CENTOS7_GCC7_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz
-ARG CCACHE_VERSION=master
 
 # Capture argument used for FROM
 ARG CUDA_VER
@@ -20,7 +19,8 @@ ENV GCC7_DIR=/usr/local/gcc7
 ENV CC=${GCC7_DIR}/bin/gcc
 ENV CXX=${GCC7_DIR}/bin/g++
 ENV CUDAHOSTCXX=${GCC7_DIR}/bin/g++
-ENV LD_LIBRARY_PATH=${GCC7_DIR}/lib64:$CONDA_PREFIX:$LD_LIBRARY_PATH
+ENV CUDA_HOME=/usr/local/cuda
+ENV LD_LIBRARY_PATH=${GCC7_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV PATH=${GCC7_DIR}/bin:$PATH
 
 # Enables "source activate conda"
@@ -31,6 +31,7 @@ RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
+  - gpuci \n\
   - rapidsai \n\
   - conda-forge \n\
   - nvidia \n\
@@ -40,6 +41,7 @@ channels: \n\
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
+  - gpuci \n\
   - rapidsai \n\
   - rapidsai-nightly \n\
   - conda-forge \n\
@@ -48,16 +50,42 @@ channels: \n\
       && cat /conda/.condarc ; \
     fi
 
+# Update and add pkgs for gpuci builds
+RUN yum install -y \
+      clang \
+      numactl-devel \
+      numactl-libs \
+      screen \
+      vim \
+    && yum clean all
+
+ARG JQPATH=/usr/local/bin/jq
+RUN wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -O ${JQPATH} \
+    && chmod +x $JQPATH
+
+# Install latest awscli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip -q awscliv2.zip \
+    && ./aws/install \
+    && rm -rf ./aws ./awscliv2.zip
+
+# Add core tools to base env
+RUN source activate base \
+    && conda install -y gpuci-tools \
+    && gpuci_retry conda install -y \
+      anaconda-client \
+      codecov
+
 # Create `rapids` conda env and make default
 RUN source activate base \
-    && conda install -y --override-channels -c gpuci gpuci-tools \
     && gpuci_retry conda create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c defaults \
-      nomkl \
+      -c gpuci \
       cudatoolkit=${CUDA_VER} \
       git \
+      gpuci-tools \
       libgcc-ng=${BUILD_STACK_VER} \
       libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
@@ -84,34 +112,9 @@ RUN gpuci_retry wget --quiet ${CENTOS7_GCC7_URL} -O /gcc7.tgz \
     && tar xzvf /gcc7.tgz \
     && rm -f /gcc7.tgz
 
-# Build ccache from source and create symlinks
-RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o /tmp/ccache-${CCACHE_VERSION}.zip \
-    && unzip -d /tmp/ccache-${CCACHE_VERSION} /tmp/ccache-${CCACHE_VERSION}.zip \
-    && cd /tmp/ccache-${CCACHE_VERSION}/ccache-master \
-    && ./autogen.sh \
-    && ./configure --disable-man --with-libb2-from-internet --with-libzstd-from-internet \
-    && make install -j \
-    && cd / \
-    && rm -rf /tmp/ccache-${CCACHE_VERSION}* \
-    && ln -s "$(which ccache)" "/usr/local/bin/gcc" \
-    && ln -s "$(which ccache)" "/usr/local/bin/g++" \
-    && ln -s "$(which ccache)" "/usr/local/bin/nvcc" \
-    && mkdir -p /ccache
-
-# Setup ccache env vars
-ENV CCACHE_NOHASHDIR=
-ENV CCACHE_DIR="/ccache"
-ENV CCACHE_COMPILERCHECK="%compiler% --version"
-
-# Uncomment these env vars to force ccache to be enabled by default
-#ENV CC="/usr/local/bin/gcc"
-#ENV CXX="/usr/local/bin/g++"
-#ENV NVCC="/usr/local/bin/nvcc"
-#ENV CUDAHOSTCXX="/usr/local/bin/g++"
-
 # Clean up pkgs to reduce image size and chmod for all users
 RUN conda clean -afy \
-    && chmod -R ugo+w /opt/conda /ccache
+    && chmod -R ugo+w /opt/conda
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]

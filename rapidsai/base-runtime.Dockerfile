@@ -6,8 +6,8 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-runtime-${LINUX_VER} AS base
 # Required arguments
 ARG IMAGE_TYPE=base
 ARG RAPIDS_CHANNEL=rapidsai-nightly
-ARG RAPIDS_VER=0.14
-ARG PYTHON_VER=3.6
+ARG RAPIDS_VER=0.15
+ARG PYTHON_VER=3.7
 
 # Optional arguments
 ARG BUILD_STACK_VER=7.5.0
@@ -23,6 +23,7 @@ RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
+  - gpuci \n\
   - rapidsai \n\
   - conda-forge \n\
   - nvidia \n\
@@ -32,6 +33,7 @@ channels: \n\
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
+  - gpuci \n\
   - rapidsai \n\
   - rapidsai-nightly \n\
   - conda-forge \n\
@@ -42,14 +44,15 @@ channels: \n\
 
 # Create rapids conda env and make default
 RUN source activate base \
-    && conda install -y --override-channels -c gpuci gpuci-tools \
-    && conda create --no-default-packages --override-channels -n rapids \
+    && conda install -y gpuci-tools \
+    && gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c defaults \
-      nomkl \
+      -c gpuci \
       cudatoolkit=${CUDA_VER} \
       git \
+      gpuci-tools \
       libgcc-ng=${BUILD_STACK_VER} \
       libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \

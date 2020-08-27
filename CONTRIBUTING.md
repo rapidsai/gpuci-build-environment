@@ -50,9 +50,102 @@ gpuCI.
 
 There is one current exception `/legacy` which hosts legacy images.
 
-## Extending Containers
+## Extending Images
 
-More information to come...
+### How can I create images to build my project on gpuCI?
+
+gpuCI can use any docker images to build your project. However, the RAPIDS Ops team has some prebuilt parent images which make things easier especially if you depend on CUDA and Conda.
+
+See [Public Images](README.md#public-images) for list of options for `FROM`-ing
+
+Here is an example on extending the image:
+
+```Dockerfile
+ARG FROM_IMAGE=gpuci/miniconda-cuda
+ARG CUDA_VERSION=10.1
+ARG CUDA_VER=${CUDA_VERSION}
+ARG CUDA_TYPE=devel
+ARG LINUX_VERSION=ubuntu18.04
+FROM ${FROM_IMAGE}:${CUDA_VERSION}-${CUDA_TYPE}-${LINUX_VERSION}
+
+# Define arguments
+ARG CUDA_VER
+ARG PYTHON_VERSION=3.7
+ARG LIB_NG_VERSION=7.5.0
+
+# Set environment
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
+ENV PATH=${PATH}:/conda/bin
+
+# Create a dev conda env
+RUN source activate base \
+    && conda create --no-default-packages --override-channels -n dev \
+      -c nvidia \
+      -c conda-forge \
+      -c defaults \
+      cudatoolkit=${CUDA_VER} \
+      conda-forge::blas \
+      libgcc-ng=${LIB_NG_VERSION} \
+      libstdcxx-ng=${LIB_NG_VERSION} \
+      python=${PYTHON_VERSION} \
+      #TODO: Add additional conda packages here
+    && conda clean -afy \
+    && sed -i 's/conda activate base/conda activate dev/g' ~/.bashrc \
+    && chmod -R ugo+w /opt/conda
+
+## Enables "source activate conda"
+SHELL ["/bin/bash", "-c"]
+
+ENTRYPOINT [ "/usr/bin/tini", "--" ]
+CMD [ "/bin/bash" ]
+```
+
+If you can include all of the conda dependencies in the image, building the actual project will be much faster.
+
+
+### What name and tag do I use?
+
+`gpuci/<project>:${PROJECT_VERSION}-cuda${CUDA_VERSION}-devel-${LINUX_VERSION}-py${PYTHON_VERSION}`
+
+Example: `gpuci/rapidsai:0.15-cuda10.1-devel-ubuntu18.04-py3.6`
+
+
+### How can I use gcc7 in centos7 images?
+
+Simply include this snippet in a Dockerfile.centos7 file. You can use the same template above, replacing the 'Set environment section'
+
+```
+ARG CENTOS7_GCC7_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz
+
+# Update environment for gcc/g++ builds
+ENV GCC7_DIR=/usr/local/gcc7
+ENV CC=${GCC7_DIR}/bin/gcc
+ENV CXX=${GCC7_DIR}/bin/g++
+ENV CUDAHOSTCXX=${GCC7_DIR}/bin/g++
+ENV LD_LIBRARY_PATH=${GCC7_DIR}/lib64:$CONDA_PREFIX:$LD_LIBRARY_PATH
+ENV PATH=${GCC7_DIR}/bin:$PATH
+
+# Install gcc7 from prebuilt tarball
+RUN wget --quiet ${CENTOS7_GCC7_URL} -O /gcc7.tgz \
+    && tar xzvf /gcc7.tgz \
+    && rm -f /gcc7.tgz
+```
+
+
+### How do create the driver image?
+
+You don't need to do anything! By providing a `ubuntu16.04` image following the tag scheme above, gpuCI can automatically extend your image and add the drivers.
+
+It will create images named `gpuci/<project>-drivers:${PROJECT_VERSION}-cuda${CUDA_VERSION}-devel-${LINUX_VERSION}-py${PYTHON_VERSION}`
+
+Background: On gpuCI, CPU builds require the drivers to be force installed to the docker image. This is because there are no drivers or GPUs on the host to pass through using nvidia-docker. This is only used for Ubuntu 16.04 images.
+
+
+### Do I need to build and publish the images myself?
+
+Nope! If you can host your Dockerfile in a git repository accessible from the internet, gpuCI itself can build and publish them.
+
+Just contact the RAPIDS Ops team to set this up.
 
 ## gpuCI Integration
 

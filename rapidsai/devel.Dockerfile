@@ -5,12 +5,11 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
 
 # Required arguments
 ARG RAPIDS_CHANNEL=rapidsai-nightly
-ARG RAPIDS_VER=0.14
-ARG PYTHON_VER=3.6
+ARG RAPIDS_VER=0.15
+ARG PYTHON_VER=3.7
 
 # Optional arguments
 ARG BUILD_STACK_VER=7.5.0
-ARG CCACHE_VERSION=master
 
 # Capture argument used for FROM
 ARG CUDA_VER
@@ -19,6 +18,8 @@ ARG CUDA_VER
 ENV CC=/usr/bin/gcc
 ENV CXX=/usr/bin/g++
 ENV CUDAHOSTCXX=/usr/bin/g++
+ENV CUDA_HOME=/usr/local/cuda
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
@@ -28,6 +29,7 @@ RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
+  - gpuci \n\
   - rapidsai \n\
   - conda-forge \n\
   - nvidia \n\
@@ -37,6 +39,7 @@ channels: \n\
       echo -e "\
 ssl_verify: False \n\
 channels: \n\
+  - gpuci \n\
   - rapidsai \n\
   - rapidsai-nightly \n\
   - conda-forge \n\
@@ -45,17 +48,60 @@ channels: \n\
       && cat /conda/.condarc ; \
     fi
 
+# Install gcc7 - 7.5.0 to bring build stack in line with conda-forge
+RUN apt-get update \
+    && apt-get install -y software-properties-common \
+    && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
+    && apt-get update \
+    && apt-get install -y gcc-7 g++-7 \
+    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 7 \
+    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 7 \
+    && update-alternatives --set gcc /usr/bin/gcc-7 \
+    && update-alternatives --set g++ /usr/bin/g++-7 \
+    && gcc --version \
+    && g++ --version
+
+# Update and add pkgs for gpuci builds
+RUN apt-get update -y --fix-missing \
+    && apt-get -qq install apt-utils -y --no-install-recommends \
+    && apt-get install -y \
+      libnuma1 \
+      libnuma-dev \
+      screen \
+      tzdata \
+      vim \
+      zlib1g-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install latest jq
+ARG JQPATH=/usr/local/bin/jq
+RUN wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -O ${JQPATH} \
+    && chmod +x $JQPATH
+
+# Install latest awscli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip -q awscliv2.zip \
+    && ./aws/install \
+    && rm -rf ./aws ./awscliv2.zip
+
+# Add core tools to base env
+RUN source activate base \
+    && conda install -y gpuci-tools \
+    && gpuci_retry conda install -y \
+      anaconda-client \
+      codecov
+
 # Create `rapids` conda env and make default
 RUN source activate base \
-    && conda install -y --override-channels -c gpuci gpuci-tools
-
-RUN gpuci_retry conda create --no-default-packages --override-channels -n rapids \
+    && gpuci_retry conda create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c defaults \
-      nomkl \
+      -c gpuci \
       cudatoolkit=${CUDA_VER} \
       git \
+      gpuci-tools \
       libgcc-ng=${BUILD_STACK_VER} \
       libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
@@ -77,34 +123,9 @@ RUN gpuci_retry conda install -y -n rapids --freeze-installed \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER}
 
-# Build ccache from source and create symlinks
-RUN curl -s -L https://github.com/ccache/ccache/archive/master.zip -o /tmp/ccache-${CCACHE_VERSION}.zip \
-    && unzip -d /tmp/ccache-${CCACHE_VERSION} /tmp/ccache-${CCACHE_VERSION}.zip \
-    && cd /tmp/ccache-${CCACHE_VERSION}/ccache-master \
-    && ./autogen.sh \
-    && ./configure --disable-man --with-libb2-from-internet --with-libzstd-from-internet\
-    && make install -j \
-    && cd / \
-    && rm -rf /tmp/ccache-${CCACHE_VERSION}* \
-    && ln -s "$(which ccache)" "/usr/local/bin/gcc" \
-    && ln -s "$(which ccache)" "/usr/local/bin/g++" \
-    && ln -s "$(which ccache)" "/usr/local/bin/nvcc" \
-    && mkdir -p /ccache
-
-# Setup ccache env vars
-ENV CCACHE_NOHASHDIR=
-ENV CCACHE_DIR="/ccache"
-ENV CCACHE_COMPILERCHECK="%compiler% --version"
-
-# Uncomment these env vars to force ccache to be enabled by default
-#ENV CC="/usr/local/bin/gcc"
-#ENV CXX="/usr/local/bin/g++"
-#ENV NVCC="/usr/local/bin/nvcc"
-#ENV CUDAHOSTCXX="/usr/local/bin/g++"
-
 # Clean up pkgs to reduce image size and chmod for all users
 RUN conda clean -afy \
-    && chmod -R ugo+w /opt/conda /ccache
+    && chmod -R ugo+w /opt/conda
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]

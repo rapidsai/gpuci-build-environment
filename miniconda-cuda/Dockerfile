@@ -5,6 +5,7 @@ ARG LINUX_VER=ubuntu18.04
 FROM ${FROM_IMAGE}:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}
 
 # Pull argument from build args
+ARG FULL_CUDA_VER
 ARG LINUX_VER
 
 # Define versions and download locations
@@ -17,13 +18,17 @@ ARG TINI_URL=https://github.com/krallin/tini/releases/download/${TINI_VER}/tini
 ENV PATH=/opt/conda/bin:${PATH}
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Set CUDA_VERSION as in some 'nvidia/cuda' images this is not set
+## A lot of scripts and conda recipes depend on this env var
+ENV CUDA_VERSION=${FULL_CUDA_VER}
+
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
 
 # Update and add pkgs for Ubuntu
 RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
       apt-get update \
-      && apt-get install -y wget bzip2 ca-certificates curl tzdata patch unzip automake autoconf \
+      && apt-get install -y wget bzip2 ca-certificates curl tzdata patch unzip automake autoconf git \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/* ; \
     else \
@@ -34,7 +39,7 @@ RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
       yum -y update \
       && yum remove -y bind-license \
-      && yum -y install wget bzip2 ca-certificates curl which patch unzip make automake autoconf \
+      && yum -y install wget bzip2 ca-certificates curl which patch unzip make automake autoconf git \
       && yum clean all ; \
     else \
       echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'centos7'\n\n"; \

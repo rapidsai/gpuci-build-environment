@@ -7,8 +7,8 @@
 #########################
 ##*
 
-# Checkout master for comparison
-git checkout --quiet master
+# Checkout main for comparison
+git checkout --quiet main
 
 # Switch back to tip of PR branch
 git checkout --quiet current-pr-branch
@@ -17,7 +17,7 @@ git checkout --quiet current-pr-branch
 set +e
 
 # Get list of modified files between matster and PR branch
-CHANGELOG=`git diff --name-only master...current-pr-branch | grep CHANGELOG.md`
+CHANGELOG=`git diff --name-only main...current-pr-branch | grep CHANGELOG.md`
 # Check if CHANGELOG has PR ID
 PRNUM=`cat CHANGELOG.md | grep "$PR_ID"`
 RETVAL=0

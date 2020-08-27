@@ -10,11 +10,9 @@ export |<package>|_FILE=`conda build conda/recipes/|<package>| --output`
 export |<package>|_FILE=`conda build conda/recipes/|<package>| --python=$PYTHON --output`
 ##*
 
-SOURCE_BRANCH=master
 CUDA_REL=${CUDA_VERSION%.*}
 
-# Restrict uploads to master branch
-if [ ${GIT_BRANCH} != ${SOURCE_BRANCH} ]; then
+if [ ${BUILD_MODE} != "branch" ]; then
   echo "Skipping upload"
   return 0
 fi
@@ -37,7 +35,7 @@ if [ "$UPLOAD_LIBCUDF" == "1" ]; then
 fi
 
 if [ "$UPLOAD_CUDF" == "1" ]; then
-  LABEL_OPTION="--label main --label cuda9.2 --label cuda10.0"
+  LABEL_OPTION="--label main"
   echo "LABEL_OPTION=${LABEL_OPTION}"
 
   test -e ${|<package>|_FILE}

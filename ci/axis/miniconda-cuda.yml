@@ -3,6 +3,7 @@ BUILD_IMAGE:
 
 FROM_IMAGE:
   - nvidia/cuda
+#  - gpuci/cuda
 
 IMAGE_NAME:
   - miniconda-cuda
@@ -10,12 +11,16 @@ IMAGE_NAME:
 DOCKER_FILE:
   - Dockerfile
 
+# CUDA_VERSION is not defined for CUDA 11 images - this defines it in this image
+#   so it can be used in all images within gpuCI; to make parsing easier we add
+#   it to the existing CUDA_VER var and remove the patch version in run script
 CUDA_VER:
-  - 10.2
-  - 10.1
-  - 10.0
-  - 9.2
-  - 9.0
+  - 11.0.221
+  - 10.2.89
+  - 10.1.243
+  - 10.0.130
+  - 9.2.148
+  - 9.0.176
 
 IMAGE_TYPE:
   - base
@@ -28,5 +33,19 @@ LINUX_VER:
   - centos7
 
 exclude:
-  - CUDA_VER: 9.0
+  - CUDA_VER: 9.0.176
     LINUX_VER: ubuntu18.04
+# Uncomment below and `- gpuci/cuda` above to build using gpuCI CUDA images
+# NOTE: gpuci/cuda:11.0* is 11.0.194 and would need CUDA_VER to change on revert
+#  - CUDA_VER: 9.0.176
+#    FROM_IMAGE: gpuci/cuda
+#  - CUDA_VER: 9.2.148
+#    FROM_IMAGE: gpuci/cuda
+#  - CUDA_VER: 10.0.130
+#    FROM_IMAGE: gpuci/cuda
+#  - CUDA_VER: 10.1.243
+#    FROM_IMAGE: gpuci/cuda
+#  - CUDA_VER: 10.2.89
+#    FROM_IMAGE: nvidia/cuda
+#  - CUDA_VER: 11.0.194
+#    FROM_IMAGE: nvidia/cuda

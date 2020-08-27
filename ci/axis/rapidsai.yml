@@ -16,12 +16,12 @@ RAPIDS_VER:
   - 0.15
 
 RAPIDS_CHANNEL:
-  - rapidsai-nightly
+  - rapidsai
 
 CUDA_VER:
+  - 11.0
   - 10.2
   - 10.1
-  - 10.0
 
 IMAGE_TYPE:
   - base
@@ -34,14 +34,10 @@ LINUX_VER:
   - centos7
 
 PYTHON_VER:
-  - 3.6
   - 3.7
+  - 3.8
 
 exclude:
-  - RAPIDS_VER: 0.14
-    RAPIDS_CHANNEL: rapidsai-nightly
-  - RAPIDS_VER: 0.15
-    RAPIDS_CHANNEL: rapidsai
   - IMAGE_TYPE: base
     DOCKER_FILE: devel.Dockerfile
   - IMAGE_TYPE: base
