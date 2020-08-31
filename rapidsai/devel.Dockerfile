@@ -105,6 +105,7 @@ RUN source activate base \
       libgcc-ng=${BUILD_STACK_VER} \
       libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
+      "setuptools<50" \
     && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
 
 # Create symlink for old scripts expecting `gdf` conda env
