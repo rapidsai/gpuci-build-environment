@@ -65,6 +65,7 @@ RUN apt-get update \
 RUN apt-get update -y --fix-missing \
     && apt-get -qq install apt-utils -y --no-install-recommends \
     && apt-get install -y \
+      chrpath \
       libnuma1 \
       libnuma-dev \
       screen \
