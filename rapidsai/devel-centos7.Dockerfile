@@ -22,6 +22,7 @@ ENV CUDAHOSTCXX=${GCC7_DIR}/bin/g++
 ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=${GCC7_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV PATH=${GCC7_DIR}/bin:$PATH
+ENV CPLUS_INCLUDE_PATH="/usr/local/cuda-10.2/include"
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
