@@ -16,7 +16,7 @@ ARG TINI_URL=https://github.com/krallin/tini/releases/download/${TINI_VER}/tini
 
 # Set environment
 ENV CONDA_DIR=/opt/conda
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
+ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 ENV PATH=${CONDA_DIR}/bin:${PATH}
 ENV DEBIAN_FRONTEND=noninteractive
 
