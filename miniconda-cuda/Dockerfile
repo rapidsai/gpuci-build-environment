@@ -52,7 +52,18 @@ RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
       yum-config-manager --disable cuda \
       && yum -y update \
       && yum remove -y bind-license \
-      && yum -y install wget bzip2 ca-certificates curl which patch unzip make automake autoconf git \
+      && yum -y install \
+        autoconf \
+        automake \
+        bzip2 \
+        ca-certificates \
+        curl \
+        git \
+        make \
+        patch \
+        unzip \
+        wget \
+        which \
       && yum clean all ; \
     else \
       echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'centos7'\n\n"; \
