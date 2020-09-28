@@ -30,7 +30,17 @@ SHELL ["/bin/bash", "-c"]
 # Update and add pkgs for Ubuntu
 RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
       apt-get update \
-      && apt-get install -y wget bzip2 ca-certificates curl tzdata patch unzip automake autoconf git \
+      && apt-get install -y --no-install-recommends \
+        autoconf \
+        automake \
+        bzip2 \
+        ca-certificates \
+        curl \
+        git \
+        patch \
+        tzdata \
+        unzip \
+        wget \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/* ; \
     else \
