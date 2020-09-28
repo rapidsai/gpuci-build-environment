@@ -16,7 +16,7 @@ ARG TINI_URL=https://github.com/krallin/tini/releases/download/${TINI_VER}/tini
 
 # Set environment
 ENV CONDA_DIR=/opt/conda
-ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US:en
 ENV PATH=${CONDA_DIR}/bin:${PATH}
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -27,7 +27,7 @@ ENV CUDA_VERSION=${FULL_CUDA_VER}
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
 
-# Update and add pkgs for Ubuntu
+# Update and add pkgs for Ubuntu, also generate locales for 'en_US.UTF-8'
 RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
       apt-get update \
       && apt-get install -y --no-install-recommends \
@@ -37,12 +37,15 @@ RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
         ca-certificates \
         curl \
         git \
+        locales \
         patch \
         tzdata \
         unzip \
         wget \
       && apt-get clean \
-      && rm -rf /var/lib/apt/lists/* ; \
+      && rm -rf /var/lib/apt/lists/* \
+      && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+      && locale-gen ; \
     else \
       echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'ubuntu16.04' or 'ubuntu18.04'\n\n"; \
     fi
