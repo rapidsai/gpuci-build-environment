@@ -72,13 +72,13 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 # Add core tools to base env
 RUN source activate base \
     && conda install -y gpuci-tools \
-    && gpuci_retry conda install -y \
+    && gpuci_conda_retry install -y \
       anaconda-client \
       codecov
 
 # Create `rapids` conda env and make default
 RUN source activate base \
-    && gpuci_retry conda create --no-default-packages --override-channels -n rapids \
+    && gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c defaults \
@@ -99,11 +99,12 @@ RUN ln -s /opt/conda/envs/rapids /opt/conda/envs/gdf
 #
 # Once installed remove the meta-pkg so dependencies can be freely updated &
 # the meta-pkg can be installed again with updates
-RUN gpuci_retry conda install -y -n rapids --freeze-installed \
+RUN source activate base \
+    && gpuci_conda_retry install -y -n rapids --freeze-installed \
       rapids-build-env=${RAPIDS_VER} \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER} \
-    && conda remove -y -n rapids --force-remove \
+    && gpuci_conda_retry remove -y -n rapids --force-remove \
       rapids-build-env=${RAPIDS_VER} \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER}
