@@ -81,6 +81,8 @@ RUN wget --quiet ${MINICONDA_URL} -O /miniconda.sh \
     && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
     && echo "conda activate base" >> ~/.bashrc \
+    && echo ". /opt/conda/etc/profile.d/conda.sh" >> /etc/skel/.bashrc \
+    && echo "conda activate base" >> /etc/skel/.bashrc \
     && chmod -R ugo+w /opt/conda \
     && ln -s /opt/conda /conda
 
