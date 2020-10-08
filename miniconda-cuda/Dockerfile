@@ -51,10 +51,14 @@ RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
     fi
 
 # Disable CUDA repo using the appropriate manager
+#   Also add langpack for locale in CentOS 8
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
       yum-config-manager --disable cuda ; \
     elif [ "${LINUX_VER}" == "centos8" ] ; then \
-      dnf config-manager --disable cuda ; \
+      dnf install -y \
+        'dnf-command(config-manager)' \
+        glibc-langpack-en \
+      && dnf config-manager --set-disabled cuda ; \
     fi
 
 # Update and add pkgs for CentOS
