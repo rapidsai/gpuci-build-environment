@@ -15,6 +15,7 @@ DOCKER_FILE:
 #   so it can be used in all images within gpuCI; to make parsing easier we add
 #   it to the existing CUDA_VER var and remove the patch version in run script
 CUDA_VER:
+  - 11.1.74
   - 11.0.221
   - 10.2.89
   - 10.1.243
