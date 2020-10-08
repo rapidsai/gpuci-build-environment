@@ -108,7 +108,7 @@ RUN source activate base \
       python=${PYTHON_VER} \
       "setuptools<50" \
     && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc \
-    && cp /opt/conda/.condarc /opt/conda/evns/rapids/
+    && cp /opt/conda/.condarc /opt/conda/envs/rapids/
 
 # Create symlink for old scripts expecting `gdf` conda env
 RUN ln -s /opt/conda/envs/rapids /opt/conda/envs/gdf
