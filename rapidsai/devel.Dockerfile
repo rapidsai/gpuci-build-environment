@@ -87,15 +87,14 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && rm -rf ./aws ./awscliv2.zip
 
 # Add core tools to base env
-RUN source activate base \
-    && conda install -y gpuci-tools \
-    && gpuci_conda_retry install -y \
+RUN conda install -y gpuci-tools \
+    || conda install -y gpuci-tools
+RUN gpuci_conda_retry install -y \
       anaconda-client \
       codecov
 
 # Create `rapids` conda env and make default
-RUN source activate base \
-    && gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
+RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c defaults \
@@ -117,8 +116,7 @@ RUN ln -s /opt/conda/envs/rapids /opt/conda/envs/gdf
 #
 # Once installed remove the meta-pkg so dependencies can be freely updated &
 # the meta-pkg can be installed again with updates
-RUN source activate base \
-    && gpuci_conda_retry install -y -n rapids --freeze-installed \
+RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
       rapids-build-env=${RAPIDS_VER} \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER} \
