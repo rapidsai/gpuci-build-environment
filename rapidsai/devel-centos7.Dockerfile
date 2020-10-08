@@ -35,8 +35,8 @@ channels: \n\
   - rapidsai \n\
   - conda-forge \n\
   - nvidia \n\
-  - defaults \n" > /conda/.condarc \
-      && cat /conda/.condarc ; \
+  - defaults \n" > /opt/conda/.condarc \
+      && cat /opt/conda/.condarc ; \
     else \
       echo -e "\
 ssl_verify: False \n\
@@ -46,8 +46,8 @@ channels: \n\
   - rapidsai-nightly \n\
   - conda-forge \n\
   - nvidia \n\
-  - defaults \n" > /conda/.condarc \
-      && cat /conda/.condarc ; \
+  - defaults \n" > /opt/conda/.condarc \
+      && cat /opt/conda/.condarc ; \
     fi
 
 # Update and add pkgs for gpuci builds
