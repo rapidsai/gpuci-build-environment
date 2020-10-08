@@ -30,11 +30,29 @@ IMAGE_TYPE:
 LINUX_VER:
   - ubuntu16.04
   - ubuntu18.04
+  - ubuntu20.04
   - centos7
+  - centos8
 
 exclude:
   - CUDA_VER: 9.0.176
     LINUX_VER: ubuntu18.04
+  - CUDA_VER: 9.0.176
+    LINUX_VER: ubuntu20.04
+  - CUDA_VER: 9.2.148
+    LINUX_VER: ubuntu20.04
+  - CUDA_VER: 10.0.130
+    LINUX_VER: ubuntu20.04
+  - CUDA_VER: 10.1.243
+    LINUX_VER: ubuntu20.04
+  - CUDA_VER: 10.2.89
+    LINUX_VER: ubuntu20.04
+  - CUDA_VER: 9.0.176
+    LINUX_VER: centos8
+  - CUDA_VER: 9.2.148
+    LINUX_VER: centos8
+  - CUDA_VER: 10.0.130
+    LINUX_VER: centos8
 # Uncomment below and `- gpuci/cuda` above to build using gpuCI CUDA images
 # NOTE: gpuci/cuda:11.0* is 11.0.194 and would need CUDA_VER to change on revert
 #  - CUDA_VER: 9.0.176
