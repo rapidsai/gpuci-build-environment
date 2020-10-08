@@ -28,7 +28,7 @@ ENV CUDA_VERSION=${FULL_CUDA_VER}
 SHELL ["/bin/bash", "-c"]
 
 # Update and add pkgs for Ubuntu, also generate locales for 'en_US.UTF-8'
-RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
+RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
       apt-get update \
       && apt-get install -y --no-install-recommends \
         autoconf \
@@ -50,10 +50,16 @@ RUN if [ "${LINUX_VER}" != "centos7" ] ; then \
       echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'ubuntu16.04' or 'ubuntu18.04'\n\n"; \
     fi
 
-# Update and add pkgs for centOS
+# Disable CUDA repo using the appropriate manager
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
-      yum-config-manager --disable cuda \
-      && yum -y update \
+      yum-config-manager --disable cuda ; \
+    elif [ "${LINUX_VER}" == "centos8" ] ; then \
+      dnf config-manager --disable cuda ; \
+    fi
+
+# Update and add pkgs for CentOS
+RUN if [ "${LINUX_VER:0:6}" == "centos" ] ; then \
+      yum -y update \
       && yum remove -y bind-license \
       && yum -y install \
         autoconf \
@@ -69,7 +75,7 @@ RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
         which \
       && yum clean all ; \
     else \
-      echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'centos7'\n\n"; \
+      echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'centos7' or 'centos8'\n\n"; \
     fi
 
 # Install miniconda and configure
