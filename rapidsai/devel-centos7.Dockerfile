@@ -35,8 +35,8 @@ channels: \n\
   - rapidsai \n\
   - conda-forge \n\
   - nvidia \n\
-  - defaults \n" > /conda/.condarc \
-      && cat /conda/.condarc ; \
+  - defaults \n" > /opt/conda/.condarc \
+      && cat /opt/conda/.condarc ; \
     else \
       echo -e "\
 ssl_verify: False \n\
@@ -46,8 +46,8 @@ channels: \n\
   - rapidsai-nightly \n\
   - conda-forge \n\
   - nvidia \n\
-  - defaults \n" > /conda/.condarc \
-      && cat /conda/.condarc ; \
+  - defaults \n" > /opt/conda/.condarc \
+      && cat /opt/conda/.condarc ; \
     fi
 
 # Update and add pkgs for gpuci builds
@@ -70,15 +70,14 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && rm -rf ./aws ./awscliv2.zip
 
 # Add core tools to base env
-RUN source activate base \
-    && conda install -y gpuci-tools \
-    && gpuci_conda_retry install -y \
+RUN conda install -y gpuci-tools \
+    || conda install -y gpuci-tools
+RUN gpuci_conda_retry install -y \
       anaconda-client \
       codecov
 
 # Create `rapids` conda env and make default
-RUN source activate base \
-    && gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
+RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c defaults \
@@ -91,7 +90,7 @@ RUN source activate base \
       python=${PYTHON_VER} \
       "setuptools<50" \
     && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc \
-    && ln -s /opt/conda/.condarc /opt/conda/evns/rapids/.condarc
+    && cp /opt/conda/.condarc /opt/conda/envs/rapids/
 
 # Create symlink for old scripts expecting `gdf` conda env
 RUN ln -s /opt/conda/envs/rapids /opt/conda/envs/gdf
@@ -100,8 +99,7 @@ RUN ln -s /opt/conda/envs/rapids /opt/conda/envs/gdf
 #
 # Once installed remove the meta-pkg so dependencies can be freely updated &
 # the meta-pkg can be installed again with updates
-RUN source activate base \
-    && gpuci_conda_retry install -y -n rapids --freeze-installed \
+RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
       rapids-build-env=${RAPIDS_VER} \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER} \
