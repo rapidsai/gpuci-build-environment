@@ -21,6 +21,7 @@ SHELL ["/bin/bash", "-c"]
 # Add a condarc for channels and override settings
 RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
+auto_update_conda: False \n\
 ssl_verify: False \n\
 channels: \n\
   - gpuci \n\
@@ -31,6 +32,7 @@ channels: \n\
       && cat /opt/conda/.condarc ; \
     else \
       echo -e "\
+auto_update_conda: False \n\
 ssl_verify: False \n\
 channels: \n\
   - gpuci \n\

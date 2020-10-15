@@ -92,6 +92,7 @@ RUN wget --quiet ${MINICONDA_URL} -O /miniconda.sh \
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
     && echo "conda activate base" >> ~/.bashrc \
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> /etc/skel/.bashrc \
+    && echo "auto_update_conda: False" >> /opt/conda/.condarc \
     && chmod -R ugo+w /opt/conda \
     && ln -s /opt/conda /conda
 
