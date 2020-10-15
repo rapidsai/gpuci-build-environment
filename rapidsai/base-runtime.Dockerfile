@@ -25,8 +25,8 @@ ssl_verify: False \n\
 channels: \n\
   - gpuci \n\
   - rapidsai \n\
-  - conda-forge \n\
   - nvidia \n\
+  - conda-forge \n\
   - defaults \n" > /opt/conda/.condarc \
       && cat /opt/conda/.condarc ; \
     else \
@@ -36,8 +36,8 @@ channels: \n\
   - gpuci \n\
   - rapidsai-nightly \n\
   - rapidsai \n\
-  - conda-forge \n\
   - nvidia \n\
+  - conda-forge \n\
   - defaults \n" > /opt/conda/.condarc \
       && cat /opt/conda/.condarc ; \
     fi
