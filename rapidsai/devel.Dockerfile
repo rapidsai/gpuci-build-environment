@@ -108,8 +108,7 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
       "setuptools<50" \
-    && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc \
-    && cp /opt/conda/.condarc /opt/conda/envs/rapids/
+    && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
 
 # Create symlink for old scripts expecting `gdf` conda env
 RUN ln -s /opt/conda/envs/rapids /opt/conda/envs/gdf
