@@ -29,6 +29,7 @@ SHELL ["/bin/bash", "-c"]
 # Add a condarc for channels and override settings
 RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
+auto_update_conda: False \n\
 ssl_verify: False \n\
 channels: \n\
   - gpuci \n\
@@ -39,6 +40,7 @@ channels: \n\
       && cat /opt/conda/.condarc ; \
     else \
       echo -e "\
+auto_update_conda: False \n\
 ssl_verify: False \n\
 channels: \n\
   - gpuci \n\
@@ -89,8 +91,7 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
       "setuptools<50" \
-    && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc \
-    && cp /opt/conda/.condarc /opt/conda/envs/rapids/
+    && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
 
 # Create symlink for old scripts expecting `gdf` conda env
 RUN ln -s /opt/conda/envs/rapids /opt/conda/envs/gdf
