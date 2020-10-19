@@ -16,8 +16,6 @@ CUDA_VER:
   - 10.2
   - 10.1
   - 10.0
-  - 9.2
-  - 9.0
 
 IMAGE_TYPE:
   - devel
@@ -26,8 +24,6 @@ LINUX_VER:
   - ubuntu16.04
 
 DRIVER_VER:
-  - 384
-  - 396
   - 410
   - 418
   - 440
@@ -35,34 +31,6 @@ DRIVER_VER:
   - 455
 
 exclude:
-  - CUDA_VER: 9.0
-    DRIVER_VER: 396
-  - CUDA_VER: 9.0
-    DRIVER_VER: 410
-  - CUDA_VER: 9.0
-    DRIVER_VER: 418
-  - CUDA_VER: 9.0
-    DRIVER_VER: 440
-  - CUDA_VER: 9.0
-    DRIVER_VER: 450
-  - CUDA_VER: 9.0
-    DRIVER_VER: 455
-  - CUDA_VER: 9.2
-    DRIVER_VER: 384
-  - CUDA_VER: 9.2
-    DRIVER_VER: 410
-  - CUDA_VER: 9.2
-    DRIVER_VER: 418
-  - CUDA_VER: 9.2
-    DRIVER_VER: 440
-  - CUDA_VER: 9.2
-    DRIVER_VER: 450
-  - CUDA_VER: 9.2
-    DRIVER_VER: 455
-  - CUDA_VER: 10.0
-    DRIVER_VER: 384
-  - CUDA_VER: 10.0
-    DRIVER_VER: 396
   - CUDA_VER: 10.0
     DRIVER_VER: 418
   - CUDA_VER: 10.0
@@ -72,10 +40,6 @@ exclude:
   - CUDA_VER: 10.0
     DRIVER_VER: 455
   - CUDA_VER: 10.1
-    DRIVER_VER: 384
-  - CUDA_VER: 10.1
-    DRIVER_VER: 396
-  - CUDA_VER: 10.1
     DRIVER_VER: 410
   - CUDA_VER: 10.1
     DRIVER_VER: 440
@@ -83,10 +47,6 @@ exclude:
     DRIVER_VER: 450
   - CUDA_VER: 10.1
     DRIVER_VER: 455
-  - CUDA_VER: 10.2
-    DRIVER_VER: 384
-  - CUDA_VER: 10.2
-    DRIVER_VER: 396
   - CUDA_VER: 10.2
     DRIVER_VER: 410
   - CUDA_VER: 10.2
@@ -96,10 +56,6 @@ exclude:
   - CUDA_VER: 10.2
     DRIVER_VER: 455
   - CUDA_VER: 11.0
-    DRIVER_VER: 384
-  - CUDA_VER: 11.0
-    DRIVER_VER: 396
-  - CUDA_VER: 11.0
     DRIVER_VER: 410
   - CUDA_VER: 11.0
     DRIVER_VER: 418
@@ -107,10 +63,6 @@ exclude:
     DRIVER_VER: 440
   - CUDA_VER: 11.0
     DRIVER_VER: 455
-  - CUDA_VER: 11.1
-    DRIVER_VER: 384
-  - CUDA_VER: 11.1
-    DRIVER_VER: 396
   - CUDA_VER: 11.1
     DRIVER_VER: 410
   - CUDA_VER: 11.1
