@@ -11,6 +11,7 @@ DOCKER_FILE:
   - Dockerfile
 
 CUDA_VER:
+  - 11.1
   - 11.0
   - 10.2
   - 10.1
@@ -27,6 +28,7 @@ DRIVER_VER:
   - 418
   - 440
   - 450
+  - 455
 
 exclude:
   - CUDA_VER: 10.0
@@ -35,21 +37,37 @@ exclude:
     DRIVER_VER: 440
   - CUDA_VER: 10.0
     DRIVER_VER: 450
+  - CUDA_VER: 10.0
+    DRIVER_VER: 455
   - CUDA_VER: 10.1
     DRIVER_VER: 410
   - CUDA_VER: 10.1
     DRIVER_VER: 440
   - CUDA_VER: 10.1
     DRIVER_VER: 450
+  - CUDA_VER: 10.1
+    DRIVER_VER: 455
   - CUDA_VER: 10.2
     DRIVER_VER: 410
   - CUDA_VER: 10.2
     DRIVER_VER: 418
   - CUDA_VER: 10.2
     DRIVER_VER: 450
+  - CUDA_VER: 10.2
+    DRIVER_VER: 455
   - CUDA_VER: 11.0
     DRIVER_VER: 410
   - CUDA_VER: 11.0
     DRIVER_VER: 418
   - CUDA_VER: 11.0
     DRIVER_VER: 440
+  - CUDA_VER: 11.0
+    DRIVER_VER: 455
+  - CUDA_VER: 11.1
+    DRIVER_VER: 410
+  - CUDA_VER: 11.1
+    DRIVER_VER: 418
+  - CUDA_VER: 11.1
+    DRIVER_VER: 440
+  - CUDA_VER: 11.1
+    DRIVER_VER: 450
