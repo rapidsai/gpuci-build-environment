@@ -11,7 +11,6 @@ DOCKER_FILE:
   - Dockerfile
 
 RAPIDS_VER:
-  - 0.16
   - 0.17
 
 CUDA_VER:
