@@ -79,6 +79,13 @@ else
   echo "RAPIDS_CHANNEL is set to '$RAPIDS_CHANNEL', adding to build args..."
   BUILD_ARGS="${BUILD_ARGS} --build-arg RAPIDS_CHANNEL=${RAPIDS_CHANNEL}"
 fi
+# Check if ARCH_TYPE is set
+if [ -z "$ARCH_TYPE" ] ; then
+  echo "ARCH_TYPE is not set, skipping..."
+else
+  echo "ARCH_TYPE is set to '$ARCH_TYPE', adding to build args..."
+  BUILD_ARGS="${BUILD_ARGS} --build-arg ARCH_TYPE=${ARCH_TYPE}"
+fi
 
 # Ouput build config
 gpuci_logger "Build config info..."
