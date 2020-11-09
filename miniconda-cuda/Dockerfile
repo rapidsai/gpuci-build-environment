@@ -87,7 +87,7 @@ RUN wget --quiet ${MINICONDA_URL} -O /miniconda.sh \
     && /bin/bash /miniconda.sh -b -p /opt/conda \
     && rm -f /miniconda.sh \
     && echo "conda ${CONDA_VER}" >> /opt/conda/conda-meta/pinned \
-    && /opt/conda/bin/conda clean -afy \
+    && /opt/conda/bin/conda clean -tipsy \
     && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
     && echo "conda activate base" >> ~/.bashrc \

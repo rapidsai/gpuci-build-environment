@@ -78,7 +78,7 @@ RUN if [ "${IMAGE_TYPE}" == "runtime" ] ; then \
     fi
 
 # Clean up pkgs to reduce image size
-RUN conda clean -afy \
+RUN conda clean -tipsy \
     && chmod -R ugo+w /opt/conda
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
