@@ -32,7 +32,7 @@ if [ ! -z "$PR_ID" ] ; then
   BUILD_REPO=`echo $BUILD_IMAGE | tr '/' ' ' | awk '{ print $2 }'`
   BUILD_IMAGE="gpucitesting/${BUILD_REPO}-pr${PR_ID}"
   # Check if FROM_IMAGE to see if it is a root build
-  if [ "$FROM_IMAGE" == "gpuci/cuda" -o "$FROM_IMAGE" == "nvidia/cuda" ] ; then
+  if [[ "$FROM_IMAGE" == "gpuci/cuda" -o "$FROM_IMAGE" == "nvidia/cuda" -o "$FROM_IMAGE" == "nvidia/cuda-arm64" ]] ; then
     echo ">> No need to update FROM_IMAGE, using external image..."
   else
     echo ">> Need to update FROM_IMAGE to use PR's version for testing..."
