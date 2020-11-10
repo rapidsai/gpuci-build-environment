@@ -54,6 +54,7 @@ channels: \n\
 
 # Update and add pkgs for gpuci builds
 RUN yum install -y \
+      chrpath \
       clang \
       numactl-devel \
       numactl-libs \
