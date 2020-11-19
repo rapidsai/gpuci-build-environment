@@ -11,7 +11,7 @@ destination image.
 
 ### Image Flow Diagram
 
-![gpuCI images and relations](gpuci-images.png)
+![gpuCI images and relations](gpuci-images.png) 
 
 ## Public Images
 
