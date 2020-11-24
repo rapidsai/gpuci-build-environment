@@ -32,7 +32,9 @@ IMAGE_TYPE:
 LINUX_VER:
   - ubuntu16.04
   - ubuntu18.04
+  - ubuntu20.04
   - centos7
+  - centos8
 
 PYTHON_VER:
   - 3.7
@@ -56,3 +58,5 @@ exclude:
     LINUX_VER: ubuntu16.04
   - DOCKER_FILE: devel-centos7.Dockerfile
     LINUX_VER: ubuntu18.04
+  - DOCKER_FILE: devel-centos7.Dockerfile
+    LINUX_VER: ubuntu20.04
