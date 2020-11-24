@@ -35,6 +35,7 @@ channels: \n\
   - gpuci \n\
   - rapidsai \n\
   - nvidia \n\
+  - pytorch \n\
   - conda-forge \n\
   - defaults \n" > /opt/conda/.condarc \
       && cat /opt/conda/.condarc ; \
@@ -47,6 +48,7 @@ channels: \n\
   - rapidsai-nightly \n\
   - rapidsai \n\
   - nvidia \n\
+  - pytorch \n\
   - conda-forge \n\
   - defaults \n" > /opt/conda/.condarc \
       && cat /opt/conda/.condarc ; \
