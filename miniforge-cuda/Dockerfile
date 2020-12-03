@@ -89,6 +89,7 @@ RUN wget --quiet ${MINIFORGE_URL} -O /miniforge.sh \
     && echo "conda activate base" >> ~/.bashrc \
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> /etc/skel/.bashrc \
     && echo "auto_update_conda: False" >> /opt/conda/.condarc \
+    && echo "ssl_verify: False" >> /opt/conda/.condarc \
     && chmod -R ugo+w /opt/conda \
     && ln -s /opt/conda /conda
 
