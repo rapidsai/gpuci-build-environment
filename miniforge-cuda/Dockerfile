@@ -9,15 +9,12 @@ ARG FULL_CUDA_VER
 ARG LINUX_VER
 
 # Define versions and download locations
-ARG CONDA_VER=4.8.3
-ARG TINI_VER=v0.18.0
-ARG MINICONDA_URL=http://repo.anaconda.com/miniconda/Miniconda3-py38_${CONDA_VER}-Linux-x86_64.sh
-ARG TINI_URL=https://github.com/krallin/tini/releases/download/${TINI_VER}/tini
+ARG ARCH_TYPE=x86_64
+ARG CONDA_VER=4.8.3-5
+ARG MINIFORGE_URL=https://github.com/conda-forge/miniforge/releases/download/${CONDA_VER}/Miniforge3-${CONDA_VER}-Linux-${ARCH_TYPE}.sh
 
 # Set environment
-ENV CONDA_DIR=/opt/conda
-ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US:en
-ENV PATH=${CONDA_DIR}/bin:${PATH}
+ENV PATH=/opt/conda/bin:${PATH}
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Set CUDA_VERSION as in some 'nvidia/cuda' images this is not set
@@ -83,22 +80,21 @@ RUN if [ "${LINUX_VER:0:6}" == "centos" ] ; then \
     fi
 
 # Install miniconda and configure
-RUN wget --quiet ${MINICONDA_URL} -O /miniconda.sh \
-    && /bin/bash /miniconda.sh -b -p /opt/conda \
-    && rm -f /miniconda.sh \
-    && echo "conda ${CONDA_VER}" >> /opt/conda/conda-meta/pinned \
+RUN wget --quiet ${MINIFORGE_URL} -O /miniforge.sh \
+    && /bin/bash /miniforge.sh -b -p /opt/conda \
+    && rm -f /miniforge.sh \
     && /opt/conda/bin/conda clean -tipsy \
     && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
     && echo "conda activate base" >> ~/.bashrc \
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> /etc/skel/.bashrc \
     && echo "auto_update_conda: False" >> /opt/conda/.condarc \
+    && echo "ssl_verify: False" >> /opt/conda/.condarc \
     && chmod -R ugo+w /opt/conda \
     && ln -s /opt/conda /conda
 
 # Install tini for init
-RUN wget --quiet ${TINI_URL} -O /usr/bin/tini \
-    && chmod +x /usr/bin/tini
+RUN conda install -k -y tini
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]

@@ -32,7 +32,7 @@ if [ ! -z "$PR_ID" ] ; then
   BUILD_REPO=`echo $BUILD_IMAGE | tr '/' ' ' | awk '{ print $2 }'`
   BUILD_IMAGE="gpucitesting/${BUILD_REPO}-pr${PR_ID}"
   # Check if FROM_IMAGE to see if it is a root build
-  if [ "$FROM_IMAGE" == "gpuci/cuda" -o "$FROM_IMAGE" == "nvidia/cuda" ] ; then
+  if [[ "$FROM_IMAGE" == "gpuci/cuda" || "$FROM_IMAGE" == "nvidia/cuda" ]] ; then
     echo ">> No need to update FROM_IMAGE, using external image..."
   else
     echo ">> Need to update FROM_IMAGE to use PR's version for testing..."
@@ -78,6 +78,13 @@ if [ -z "$RAPIDS_CHANNEL" ] ; then
 else
   echo "RAPIDS_CHANNEL is set to '$RAPIDS_CHANNEL', adding to build args..."
   BUILD_ARGS="${BUILD_ARGS} --build-arg RAPIDS_CHANNEL=${RAPIDS_CHANNEL}"
+fi
+# Check if ARCH_TYPE is set
+if [ -z "$ARCH_TYPE" ] ; then
+  echo "ARCH_TYPE is not set, skipping..."
+else
+  echo "ARCH_TYPE is set to '$ARCH_TYPE', adding to build args..."
+  BUILD_ARGS="${BUILD_ARGS} --build-arg ARCH_TYPE=${ARCH_TYPE}"
 fi
 
 # Ouput build config
