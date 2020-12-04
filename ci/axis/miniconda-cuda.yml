@@ -46,8 +46,12 @@ exclude:
     LINUX_VER: ubuntu20.04
   - CUDA_VER: 10.1.243
     LINUX_VER: ubuntu20.04
+  - CUDA_VER: 10.1.243
+    LINUX_VER: centos8
   - CUDA_VER: 10.2.89
     LINUX_VER: ubuntu20.04
+  - CUDA_VER: 10.2.89
+    LINUX_VER: centos8
   - CUDA_VER: 9.0.176
     LINUX_VER: centos8
   - CUDA_VER: 9.2.148
