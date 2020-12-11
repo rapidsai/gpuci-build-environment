@@ -32,7 +32,9 @@ IMAGE_TYPE:
 LINUX_VER:
   - ubuntu16.04
   - ubuntu18.04
+  - ubuntu20.04
   - centos7
+  - centos8
 
 PYTHON_VER:
   - 3.7
@@ -52,7 +54,20 @@ exclude:
   - IMAGE_TYPE: devel
     DOCKER_FILE: devel.Dockerfile
     LINUX_VER: centos7
+  - IMAGE_TYPE: devel
+    DOCKER_FILE: devel.Dockerfile
+    LINUX_VER: centos8
   - DOCKER_FILE: devel-centos7.Dockerfile
     LINUX_VER: ubuntu16.04
   - DOCKER_FILE: devel-centos7.Dockerfile
     LINUX_VER: ubuntu18.04
+  - DOCKER_FILE: devel-centos7.Dockerfile
+    LINUX_VER: ubuntu20.04
+  - LINUX_VER: ubuntu20.04
+    CUDA_VER: 10.1
+  - LINUX_VER: centos8
+    CUDA_VER: 10.1
+  - LINUX_VER: ubuntu20.04
+    CUDA_VER: 10.2
+  - LINUX_VER: centos8
+    CUDA_VER: 10.2
