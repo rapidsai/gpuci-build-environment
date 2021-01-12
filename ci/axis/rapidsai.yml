@@ -39,6 +39,9 @@ PYTHON_VER:
   - 3.7
   - 3.8
 
+BUILD_STACK_VER:
+  - 9.3.0
+
 exclude:
   - IMAGE_TYPE: base
     DOCKER_FILE: devel.Dockerfile
