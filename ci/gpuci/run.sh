@@ -28,7 +28,7 @@ fi
 BUILD_TAG="${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}"
 # Check if PR build and modify BUILD_IMAGE and BUILD_TAG
 if [ "$PR_ID" == "BRANCH" ] ; then
-  echo "PR_ID is set to 'BRANCH;, skipping PR updates"
+  echo "PR_ID is set to 'BRANCH', skipping PR updates"
 else
   echo "PR_ID is set to '$PR_ID', updating BUILD_IMAGE..."
   BUILD_REPO=`echo $BUILD_IMAGE | tr '/' ' ' | awk '{ print $2 }'`
