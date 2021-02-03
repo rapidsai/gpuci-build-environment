@@ -15,7 +15,7 @@ pipeline {
         stage('gpuCI/build/miniconda-cuda') {
           steps {
             build(
-              job: 'gpuci/gpuci-build-environment/miniconda-cuda-test-build',
+              job: 'gpuci/gpuci-build-environment-jobs/miniconda-cuda',
               wait: true,
               propagate: true,
               parameters: [
@@ -31,7 +31,7 @@ pipeline {
         stage('gpuCI/build/miniforge-cuda') {
           steps {
             build(
-              job: 'gpuci/gpuci-build-environment/miniforge-cuda-test-build',
+              job: 'gpuci/gpuci-build-environment-jobs/miniforge-cuda',
               wait: true,
               propagate: true,
               parameters: [
@@ -49,7 +49,7 @@ pipeline {
     stage('gpuCI/build/miniconda-cuda-driver') {
       steps {
         build(
-          job: 'gpuci/gpuci-build-environment/miniconda-cuda-driver-test-build',
+          job: 'gpuci/gpuci-build-environment-jobs/miniconda-cuda-driver',
           wait: true,
           propagate: true,
           parameters: [
@@ -65,7 +65,7 @@ pipeline {
     stage('gpuCI/build/rapidsai') {
       steps {
         build(
-          job: 'gpuci/gpuci-build-environment/rapidsai-test-build',
+          job: 'gpuci/gpuci-build-environment-jobs/rapidsai',
           wait: true,
           propagate: true,
           parameters: [
@@ -81,7 +81,7 @@ pipeline {
     stage('gpuCI/build/rapidsai-driver') {
       steps {
         build(
-          job: 'gpuci/gpuci-build-environment/rapidsai-driver-test-build',
+          job: 'gpuci/gpuci-build-environment-jobs/rapidsai-driver',
           wait: true,
           propagate: true,
           parameters: [
