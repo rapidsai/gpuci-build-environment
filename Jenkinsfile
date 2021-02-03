@@ -19,7 +19,7 @@ pipeline {
               wait: true,
               propagate: true,
               parameters: [
-                string(name: 'PR_ID', value: env.CHANGE_ID),
+                string(name: 'PR_ID', value: (env.CHANGE_ID == null) ? "BRANCH" : env.CHANGE_ID),
                 string(name: 'COMMIT_HASH', value: env.GIT_COMMIT),
                 string(name: 'SOURCE_BRANCH', value: env.CHANGE_BRANCH),
                 string(name: 'TARGET_BRANCH', value: env.CHANGE_TARGET)
