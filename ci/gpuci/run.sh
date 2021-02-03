@@ -4,9 +4,6 @@ set -e
 # Overwrite HOME to WORKSPACE
 export HOME=$WORKSPACE
 
-# TODO Remove after Jenkins jobs are updated
-export BUILD_STACK_VER=9.3.0
-
 # Install gpuCI tools
 curl -s https://raw.githubusercontent.com/rapidsai/gpuci-tools/main/install.sh | bash
 source ~/.bashrc
