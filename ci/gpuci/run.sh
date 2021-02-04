@@ -2,7 +2,7 @@
 set -e
 
 # Overwrite HOME to WORKSPACE
-export HOME=$WORKSPACE
+export HOME="$WORKSPACE"
 
 # TODO Remove after Jenkins jobs are updated
 export BUILD_STACK_VER=9.3.0
