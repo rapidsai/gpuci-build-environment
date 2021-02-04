@@ -20,7 +20,7 @@ pipeline {
               propagate: true,
               parameters: [
                 string(name: 'PR_ID', value: (env.CHANGE_ID == null) ? 'BRANCH' : env.CHANGE_ID),
-                string(name: 'COMMIT_HASH', value: (env.CHANGE_ID == null) ? env.GIT_BRANCH : env.GIT_COMMIT)
+                string(name: 'COMMIT_HASH', value: (env.CHANGE_ID == null) ? env.GIT_BRANCH : 'origin/pr/'+env.CHANGE_ID+'/merge')
               ]
             )
           }
@@ -33,7 +33,7 @@ pipeline {
               propagate: true,
               parameters: [
                 string(name: 'PR_ID', value: (env.CHANGE_ID == null) ? 'BRANCH' : env.CHANGE_ID),
-                string(name: 'COMMIT_HASH', value: (env.CHANGE_ID == null) ? env.GIT_BRANCH : env.GIT_COMMIT)
+                string(name: 'COMMIT_HASH', value: (env.CHANGE_ID == null) ? env.GIT_BRANCH : 'origin/pr/'+env.CHANGE_ID+'/merge')
               ]
             )
           }
