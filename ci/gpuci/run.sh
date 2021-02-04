@@ -9,8 +9,8 @@ export BUILD_STACK_VER=9.3.0
 
 # Install gpuCI tools
 curl -s https://raw.githubusercontent.com/rapidsai/gpuci-tools/main/install.sh | bash
-source ~/.bashrc
-cd ~
+export PATH="$HOME/.gpuci:$PATH"
+cd "$WORKSPACE"
 
 # Show env
 gpuci_logger "Exposing current environment..."
