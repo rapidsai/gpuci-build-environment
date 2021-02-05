@@ -65,6 +65,11 @@ RUN apt-get update \
     && gcc --version \
     && g++ --version
 
+# Install latest version of 'libstdc++6' on 'ubuntu18.04' - see PR #159
+RUN if [ "${LINUX_VER}" == "ubuntu18.04" ] ; then \
+      apt-get upgrade -y libstdc++6 ; \
+    fi
+
 # Update and add pkgs for gpuci builds
 RUN apt-get update -y --fix-missing \
     && apt-get -qq install apt-utils -y --no-install-recommends \
