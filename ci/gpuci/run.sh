@@ -8,7 +8,7 @@ export HOME="$WORKSPACE"
 export BUILD_STACK_VER=9.3.0
 
 # Install gpuCI tools
-curl -s --retry 5 https://raw.githubusercontent.com/rapidsai/gpuci-tools/main/install.sh -o gpuci-tools-install.sh
+curl -s --retry 5 --retry-delay 5 --retry-all-errors https://raw.githubusercontent.com/rapidsai/gpuci-tools/main/install.sh -o gpuci-tools-install.sh
 bash gpuci-tools-install.sh
 export PATH="$HOME/.gpuci:$PATH"
 cd "$WORKSPACE"
