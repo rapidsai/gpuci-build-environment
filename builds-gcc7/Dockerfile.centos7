@@ -49,6 +49,6 @@ RUN mkdir -p ${GCC9_DIR} \
 
 # Pull gcc9's libstdc++ into gcc7's lib64
 RUN rm -rfv "${GCC7_DIR}/lib64/libstdc++.*" \
-    && ls -la "${GCC9_DIR}/lib64/libstdc++.*" \
+    && ls -la "${GCC9_DIR}/lib64" \
     && cp -av "${GCC9_DIR}/lib64/libstdc++.*" ${GCC7_DIR}/lib64 \
-    && ls -la "${GCC7_DIR}/lib64/libstdc++.*"
+    && ls -la "${GCC7_DIR}/lib64"
