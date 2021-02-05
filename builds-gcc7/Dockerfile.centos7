@@ -48,6 +48,6 @@ RUN mkdir -p ${GCC9_DIR} \
     && rm -r ${GCC9_DIR}/${GCC9_VER} ${GCC9_DIR}/${GCC9_VER}.tar.gz
 
 # Pull gcc9's libstdc++ into gcc7's lib64
-RUN rm -rfv ${GCC7_DIR}/lib64/libstdc++.so* \
-    && cp ${GCC9_DIR}/lib64/libstdc++.so* ${GCC7_DIR}/lib64 \
-    && ls -la ${GCC7_DIR}/lib64/libstdc++.so*
+RUN rm -rfv ${GCC7_DIR}/lib64/libstdc++* \
+    && cp ${GCC9_DIR}/lib64/libstdc++* ${GCC7_DIR}/lib64 \
+    && ls -la ${GCC7_DIR}/lib64/libstdc++*
