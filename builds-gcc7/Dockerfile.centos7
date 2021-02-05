@@ -6,9 +6,9 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}
 
 # Define arguments
 ARG GCC7_DIR=/usr/local/gcc7
-ARG GCC7_VER=gcc-7.5.0
+ARG GCC7_VER=7.5.0
 ARG GCC9_DIR=/usr/local/gcc9
-ARG GCC9_VER=gcc-9.3.0
+ARG GCC9_VER=9.3.0
 ARG NUM_BUILD_CPUS=16
 
 # Add /usr/local/cuda/* temporarily to LD_LIBRARY_PATH to support various build steps
@@ -31,21 +31,21 @@ RUN yum upgrade -y \
 # NOTE: this step requires packages gmp-devel, mpfr-devel,
 # libmpc-devel, and file (see above)
 RUN mkdir -p ${GCC7_DIR} \
-    && cd ${GCC7_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/${GCC7_VER}/${GCC7_VER}.tar.gz \
-    && cd ${GCC7_DIR} && tar zxf ${GCC7_VER}.tar.gz \
-    && cd ${GCC7_DIR}/${GCC7_VER} \
+    && cd ${GCC7_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/gcc-${GCC7_VER}/gcc-${GCC7_VER}.tar.gz \
+    && cd ${GCC7_DIR} && tar zxf gcc-${GCC7_VER}.tar.gz \
+    && cd ${GCC7_DIR}/gcc-${GCC7_VER} \
     && ./configure --prefix=${GCC7_DIR} --disable-multilib \
     && make -j${NUM_BUILD_CPUS} && make install \
-    && rm -r ${GCC7_DIR}/${GCC7_VER} ${GCC7_DIR}/${GCC7_VER}.tar.gz
+    && rm -r ${GCC7_DIR}/gcc-${GCC7_VER} ${GCC7_DIR}/gcc-${GCC7_VER}.tar.gz
 
 # Build gcc 9
 RUN mkdir -p ${GCC9_DIR} \
-    && cd ${GCC9_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/${GCC9_VER}/${GCC9_VER}.tar.gz \
-    && cd ${GCC9_DIR} && tar zxf ${GCC9_VER}.tar.gz \
-    && cd ${GCC9_DIR}/${GCC9_VER} \
+    && cd ${GCC9_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/gcc-${GCC9_VER}/gcc-${GCC9_VER}.tar.gz \
+    && cd ${GCC9_DIR} && tar zxf gcc-${GCC9_VER}.tar.gz \
+    && cd ${GCC9_DIR}/gcc-${GCC9_VER} \
     && ./configure --prefix=${GCC9_DIR} --disable-multilib \
     && make -j${NUM_BUILD_CPUS} && make install \
-    && rm -r ${GCC9_DIR}/${GCC9_VER} ${GCC9_DIR}/${GCC9_VER}.tar.gz
+    && rm -r ${GCC9_DIR}/gcc-${GCC9_VER} ${GCC9_DIR}/gcc-${GCC9_VER}.tar.gz
 
 # Pull gcc9's libstdc++ into gcc7's lib64
 RUN rm -rfv ${GCC7_DIR}/lib64/libstdc++.* \
@@ -54,7 +54,7 @@ RUN rm -rfv ${GCC7_DIR}/lib64/libstdc++.* \
     && ls -la ${GCC7_DIR}/lib64/libstdc++.*
 
 # Pull gcc9's headers into gcc7's
-RUN rm -rfv ${GCC7_DIR}/include/c++/7.5.0/* \
-    && ls -la ${GCC9_DIR}/include/c++/9.3.0/* \
-    && cp -av ${GCC9_DIR}/include/c++/9.3.0/* ${GCC7_DIR}/include/c++/7.5.0 \
-    && ls -la ${GCC7_DIR}/include/c++/7.5.0/*
+RUN rm -rfv ${GCC7_DIR}/include/c++/${GCC7_VER}/* \
+    && ls -la ${GCC9_DIR}/include/c++/${GCC9_VER}/* \
+    && cp -av ${GCC9_DIR}/include/c++/${GCC9_VER}/* ${GCC7_DIR}/include/c++/${GCC7_VER} \
+    && ls -la ${GCC7_DIR}/include/c++/${GCC7_VER}/*
