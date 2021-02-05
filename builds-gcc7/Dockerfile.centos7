@@ -54,7 +54,7 @@ RUN rm -rfv ${GCC7_DIR}/lib64/libstdc++.* \
     && ls -la ${GCC7_DIR}/lib64/libstdc++.*
 
 # Pull gcc9's headers into gcc7's
-RUN rm -rfv ${GCC7_DIR}/include/c++/${GCC7_VER}/* \
-    && ls -la ${GCC9_DIR}/include/c++/${GCC9_VER}/* \
-    && cp -av ${GCC9_DIR}/include/c++/${GCC9_VER}/* ${GCC7_DIR}/include/c++/${GCC7_VER} \
-    && ls -la ${GCC7_DIR}/include/c++/${GCC7_VER}/*
+RUN rm -rfv ${GCC7_DIR}/include/c++/7.5.0/* \
+    && ls -la ${GCC9_DIR}/include/c++/9.3.0/* \
+    && cp -av ${GCC9_DIR}/include/c++/9.3.0/* ${GCC7_DIR}/include/c++/7.5.0 \
+    && ls -la ${GCC7_DIR}/include/c++/7.5.0/*
