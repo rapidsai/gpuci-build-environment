@@ -5,9 +5,10 @@ set -e
 export HOME="$WORKSPACE"
 
 # Install gpuCI tools
-curl -s https://raw.githubusercontent.com/rapidsai/gpuci-tools/main/install.sh | bash
-source ~/.bashrc
-cd ~
+rm -rf .gpuci
+git clone https://github.com/rapidsai/gpuci-tools.git .gpuci
+chmod +x .gpuci/tools/*
+export PATH="$PWD/.gpuci/tools:$PATH"
 
 # Show env
 gpuci_logger "Exposing current environment..."
