@@ -41,8 +41,8 @@ RUN mkdir -p ${GCC7_DIR} \
 # Build gcc 9
 RUN mkdir -p ${GCC9_DIR} \
     && cd ${GCC9_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/${GCC9_VER}/${GCC9_VER}.tar.gz \
-    && cd ${GCC9_DIR} && tar zxf ${GCC7_VER}.tar.gz \
-    && cd ${GCC9_DIR}/${GCC7_VER} \
+    && cd ${GCC9_DIR} && tar zxf ${GCC9_VER}.tar.gz \
+    && cd ${GCC9_DIR}/${GCC9_VER} \
     && ./configure --prefix=${GCC9_DIR} --disable-multilib \
     && make -j${NUM_BUILD_CPUS} \
     && rm -r ${GCC9_DIR}/${GCC9_VER} ${GCC9_DIR}/${GCC9_VER}.tar.gz
