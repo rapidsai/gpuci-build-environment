@@ -8,7 +8,7 @@ export HOME="$WORKSPACE"
 export BUILD_STACK_VER=9.3.0
 
 # Install gpuCI tools
-cd "$WORKSPACE"
+rm -rf .gpuci
 git clone https://github.com/rapidsai/gpuci-tools.git .gpuci
 chmod +x .gpuci/tools/*
 export PATH="$PWD/.gpuci/tools:$PATH"
