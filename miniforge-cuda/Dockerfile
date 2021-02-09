@@ -49,12 +49,9 @@ RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
 
 # Disable CUDA repo using the appropriate manager to prevent cross CUDA version
 # updates seen on 10.1 with 10.2 libraries
-# CentOS 7 - version lock glibc to the current version from the `nvidia/cuda`
 # CentOS 8 - install glibc langpack
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
-      yum-config-manager --disable cuda \
-      && yum -y install yum-versionlock \
-      && yum versionlock glibc glibc-common glibc-devel glibc-headers ; \
+      yum-config-manager --disable cuda ; \
     elif [ "${LINUX_VER}" == "centos8" ] ; then \
       dnf install -y \
         'dnf-command(config-manager)' \
