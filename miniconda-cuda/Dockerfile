@@ -51,8 +51,10 @@ RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
       echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'ubuntu16.04' or 'ubuntu18.04'\n\n"; \
     fi
 
-# Disable CUDA repo using the appropriate manager and version lock glibc to
-# the current version from the `nvidia/cuda` images
+# Disable CUDA repo using the appropriate manager to prevent cross CUDA version
+# updates seen on 10.1 with 10.2 libraries
+# CentOS 7 - version lock glibc to the current version from the `nvidia/cuda`
+# CentOS 8 - install glibc langpack
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
       yum-config-manager --disable cuda \
       && yum -y install yum-versionlock \
@@ -60,9 +62,8 @@ RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
     elif [ "${LINUX_VER}" == "centos8" ] ; then \
       dnf install -y \
         'dnf-command(config-manager)' \
-        'dnf-command(versionlock)' \
-      && dnf config-manager --set-disabled cuda \
-      && dnf versionlock glibc glibc-common glibc-devel glibc-headers ; \
+        glibc-langpack-en \
+      && dnf config-manager --set-disabled cuda ; \
     fi
 
 # Update and add pkgs for CentOS
