@@ -47,15 +47,18 @@ RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
       echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'ubuntu16.04' or 'ubuntu18.04'\n\n"; \
     fi
 
-# Disable CUDA repo using the appropriate manager
-#   Also add langpack for locale in CentOS 8
+# Disable CUDA repo using the appropriate manager and version lock glibc to
+# the current version from the `nvidia/cuda` images
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
-      yum-config-manager --disable cuda ; \
+      yum-config-manager --disable cuda \
+      && yum -y install yum-versionlock \
+      && yum versionlock glibc glibc-common glibc-devel glibc-headers ; \
     elif [ "${LINUX_VER}" == "centos8" ] ; then \
       dnf install -y \
         'dnf-command(config-manager)' \
-        glibc-langpack-en \
-      && dnf config-manager --set-disabled cuda ; \
+        'dnf-command(versionlock)' \
+      && dnf config-manager --set-disabled cuda \
+      && dnf versionlock glibc glibc-common glibc-devel glibc-headers ; \
     fi
 
 # Update and add pkgs for CentOS
