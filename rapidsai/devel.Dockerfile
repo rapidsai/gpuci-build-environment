@@ -53,8 +53,8 @@ channels: \n\
     fi
 
 # Install gcc7 - 7.5.0 for CUDA 10.X builds and install latest
-#  'libstdc++6' to be compatible with conda-forge dependencies
-#  for from-source builds, see PR #159
+# 'libstdc++6' to be compatible with conda-forge dependencies
+# for from-source builds
 RUN apt-get update \
     && apt-get install -y software-properties-common \
     && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
