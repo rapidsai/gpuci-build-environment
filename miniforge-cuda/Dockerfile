@@ -80,22 +80,24 @@ RUN if [ "${LINUX_VER:0:6}" == "centos" ] ; then \
       echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'centos7' or 'centos8'\n\n"; \
     fi
 
-# Install miniconda and configure
+# Install miniforge and configure
 RUN wget --quiet ${MINIFORGE_URL} -O /miniforge.sh \
     && /bin/bash /miniforge.sh -b -p /opt/conda \
     && rm -f /miniforge.sh \
-    && /opt/conda/bin/conda clean -tipsy \
     && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
     && echo "conda activate base" >> ~/.bashrc \
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> /etc/skel/.bashrc \
     && echo "auto_update_conda: False" >> /opt/conda/.condarc \
     && echo "ssl_verify: False" >> /opt/conda/.condarc \
-    && chmod -R ugo+w /opt/conda \
     && ln -s /opt/conda /conda
 
 # Install tini for init
 RUN conda install -k -y tini
+
+# Clean up conda and set permissions for all users
+RUN /opt/conda/bin/conda clean -tipsy \
+    && chmod -R ugo+w /opt/conda
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
