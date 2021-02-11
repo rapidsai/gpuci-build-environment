@@ -99,5 +99,5 @@ RUN conda install -k -y tini
 RUN /opt/conda/bin/conda clean -tipsy \
     && chmod -R ugo+w /opt/conda
 
-ENTRYPOINT [ "/usr/bin/tini", "--" ]
+ENTRYPOINT [ "/opt/conda/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
