@@ -133,7 +133,8 @@ RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
       rapids-notebook-env=${RAPIDS_VER}
 
 # Clean up pkgs to reduce image size and chmod for all users
-RUN conda clean -tipsy \
+RUN conda clean -tipy \
+    && conda clean -tipy \
     && chmod -R ugo+w /opt/conda
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
