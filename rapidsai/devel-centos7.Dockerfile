@@ -120,8 +120,7 @@ RUN gpuci_retry wget --quiet ${CENTOS7_GCC7_URL} -O /gcc7.tgz \
     && rm -f /gcc7.tgz
 
 # Clean up pkgs to reduce image size and chmod for all users
-RUN conda clean -tipy \
-    && conda activate rapids \
+RUN chmod -R ugo+w /opt/conda \
     && conda clean -tipy \
     && chmod -R ugo+w /opt/conda
 
