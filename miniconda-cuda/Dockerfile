@@ -97,7 +97,7 @@ RUN wget --quiet ${MINICONDA_URL} -O /miniconda.sh \
     && ln -s /opt/conda /conda
 
 # Clean up conda and set permissions for all users
-RUN chmod -R ugo+w /opt/conda\
+RUN chmod -R ugo+w /opt/conda \
     && /opt/conda/bin/conda clean -tipy \
     && chmod -R ugo+w /opt/conda
 
