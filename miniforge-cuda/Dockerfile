@@ -96,7 +96,7 @@ RUN wget --quiet ${MINIFORGE_URL} -O /miniforge.sh \
 RUN conda install -k -y tini
 
 # Clean up conda and set permissions for all users
-RUN /opt/conda/bin/conda clean -tipsy \
+RUN /opt/conda/bin/conda clean -tipy \
     && chmod -R ugo+w /opt/conda
 
 ENTRYPOINT [ "/opt/conda/bin/tini", "--" ]
