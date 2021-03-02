@@ -52,12 +52,14 @@ channels: \n\
       && cat /opt/conda/.condarc ; \
     fi
 
-# Install gcc7 - 7.5.0 to bring build stack in line with conda-forge
+# Install gcc7 - 7.5.0 for CUDA 10.X builds and install latest
+# 'libstdc++6' to be compatible with conda-forge dependencies
+# for from-source builds
 RUN apt-get update \
     && apt-get install -y software-properties-common \
     && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
     && apt-get update \
-    && apt-get install -y gcc-7 g++-7 \
+    && apt-get install -y gcc-7 g++-7 libstdc++6 \
     && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 7 \
     && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 7 \
     && update-alternatives --set gcc /usr/bin/gcc-7 \
@@ -131,7 +133,8 @@ RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
       rapids-notebook-env=${RAPIDS_VER}
 
 # Clean up pkgs to reduce image size and chmod for all users
-RUN conda clean -tipsy \
+RUN chmod -R ugo+w /opt/conda \
+    && conda clean -tipy \
     && chmod -R ugo+w /opt/conda
 
 ENTRYPOINT [ "/usr/bin/tini", "--" ]

@@ -14,6 +14,7 @@ DOCKER_FILE:
 
 RAPIDS_VER:
   - 0.18
+  - 0.19
 
 RAPIDS_CHANNEL:
   - rapidsai-nightly

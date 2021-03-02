@@ -47,8 +47,9 @@ RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
       echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'ubuntu16.04' or 'ubuntu18.04'\n\n"; \
     fi
 
-# Disable CUDA repo using the appropriate manager
-#   Also add langpack for locale in CentOS 8
+# Disable CUDA repo using the appropriate manager to prevent cross CUDA version
+# updates seen on 10.1 with 10.2 libraries
+# CentOS 8 - install glibc langpack
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
       yum-config-manager --disable cuda ; \
     elif [ "${LINUX_VER}" == "centos8" ] ; then \
@@ -79,22 +80,25 @@ RUN if [ "${LINUX_VER:0:6}" == "centos" ] ; then \
       echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'centos7' or 'centos8'\n\n"; \
     fi
 
-# Install miniconda and configure
+# Install miniforge and configure
 RUN wget --quiet ${MINIFORGE_URL} -O /miniforge.sh \
     && /bin/bash /miniforge.sh -b -p /opt/conda \
     && rm -f /miniforge.sh \
-    && /opt/conda/bin/conda clean -tipsy \
     && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
     && echo "conda activate base" >> ~/.bashrc \
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> /etc/skel/.bashrc \
     && echo "auto_update_conda: False" >> /opt/conda/.condarc \
     && echo "ssl_verify: False" >> /opt/conda/.condarc \
-    && chmod -R ugo+w /opt/conda \
     && ln -s /opt/conda /conda
 
 # Install tini for init
 RUN conda install -k -y tini
 
-ENTRYPOINT [ "/usr/bin/tini", "--" ]
+# Clean up conda and set permissions for all users
+RUN chmod -R ugo+w /opt/conda \
+    && /opt/conda/bin/conda clean -tipy \
+    && chmod -R ugo+w /opt/conda
+
+ENTRYPOINT [ "/opt/conda/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
