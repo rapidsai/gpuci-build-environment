@@ -3,7 +3,7 @@ BUILD_IMAGE:
 
 FROM_IMAGE:
   - nvidia/cuda
-  - gpuci/cuda
+#  - gpuci/cuda
 
 IMAGE_NAME:
   - miniconda-cuda
