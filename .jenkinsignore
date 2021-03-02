@@ -2,3 +2,5 @@
 **/*.md
 **/*.png
 LICENSE
+.jenkinsignore
+.gitignore
