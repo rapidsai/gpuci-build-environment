@@ -20,20 +20,20 @@ RAPIDS_CHANNEL:
 
 CUDA_VER:
   - 11.0
-#  - 10.2
-#  - 10.1
+  - 10.2
+  - 10.1
 
 IMAGE_TYPE:
-#  - base
-#  - runtime
+  - base
+  - runtime
   - devel
 
 LINUX_VER:
   - ubuntu16.04
-#  - ubuntu18.04
-#  - ubuntu20.04
-#  - centos7
-#  - centos8
+  - ubuntu18.04
+  - ubuntu20.04
+  - centos7
+  - centos8
 
 PYTHON_VER:
   - 3.7

@@ -14,28 +14,28 @@ ARCH_TYPE:
   - x86_64
 
 # CUDA_VERSION is not defined for CUDA 11 images - this defines it in this image
-#   so it can be used in all images within gpuCI; to make parsing easier we add
-#   it to the existing CUDA_VER var and remove the patch version in run script
+# so it can be used in all images within gpuCI; to make parsing easier we add
+# it to the existing CUDA_VER var and remove the patch version in run script
 CUDA_VER:
-#  - 11.1.74
+  - 11.1.74
   - 11.0.221
-#  - 10.2.89
-#  - 10.1.243
-#  - 10.0.130
-#  - 9.2.148
-#  - 9.0.176
+  - 10.2.89
+  - 10.1.243
+  - 10.0.130
+  - 9.2.148
+  - 9.0.176
 
 IMAGE_TYPE:
-#  - base
-#  - runtime
+  - base
+  - runtime
   - devel
 
 LINUX_VER:
   - ubuntu16.04
-#  - ubuntu18.04
-#  - ubuntu20.04
-#  - centos7
-#  - centos8
+  - ubuntu18.04
+  - ubuntu20.04
+  - centos7
+  - centos8
 
 exclude:
   - CUDA_VER: 9.0.176
