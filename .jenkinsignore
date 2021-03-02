@@ -1,0 +1,4 @@
+# Ignore file for PR/branch testing; uses ant pattern matching
+**/*.md
+**/*.png
+LICENSE
