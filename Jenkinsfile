@@ -5,11 +5,6 @@ pipeline {
     }
   }
   stages {
-    stage('gpuCI/env-check') {
-      steps {
-        sh 'env'
-      }
-    }
     stage('gpuCI/parallel/miniconda-miniforge') {
       parallel {
         stage('gpuCI/build/miniconda-cuda') {
