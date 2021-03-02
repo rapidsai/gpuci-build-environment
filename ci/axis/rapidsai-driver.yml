@@ -11,13 +11,12 @@ DOCKER_FILE:
   - Dockerfile
 
 RAPIDS_VER:
-  - 0.18
   - 0.19
 
 CUDA_VER:
   - 11.0
-  - 10.2
-  - 10.1
+#  - 10.2
+#  - 10.1
 
 IMAGE_TYPE:
   - devel
@@ -27,7 +26,7 @@ LINUX_VER:
 
 PYTHON_VER:
   - 3.7
-  - 3.8
+#  - 3.8
 
 DRIVER_VER:
   - 418
