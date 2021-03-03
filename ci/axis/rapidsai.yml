@@ -13,7 +13,6 @@ DOCKER_FILE:
   - devel-centos7.Dockerfile
 
 RAPIDS_VER:
-  - 0.18
   - 0.19
 
 RAPIDS_CHANNEL:
