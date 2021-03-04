@@ -4,9 +4,6 @@ set -e
 # Overwrite HOME to WORKSPACE
 export HOME="$WORKSPACE"
 
-# TODO Remove after Jenkins jobs are updated
-export BUILD_STACK_VER=9.3.0
-
 # Install gpuCI tools
 rm -rf .gpuci
 git clone https://github.com/rapidsai/gpuci-tools.git .gpuci
@@ -31,7 +28,9 @@ if [ `tr -dc '.' <<<"$CUDA_VER" | awk '{ print length }'` -eq 2 ] ; then
 fi
 BUILD_TAG="${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}"
 # Check if PR build and modify BUILD_IMAGE and BUILD_TAG
-if [ ! -z "$PR_ID" ] ; then
+if [ "$PR_ID" == "BRANCH" ] ; then
+  echo "PR_ID is set to 'BRANCH', skipping PR updates"
+else
   echo "PR_ID is set to '$PR_ID', updating BUILD_IMAGE..."
   BUILD_REPO=`echo $BUILD_IMAGE | tr '/' ' ' | awk '{ print $2 }'`
   BUILD_IMAGE="gpucitesting/${BUILD_REPO}-pr${PR_ID}"

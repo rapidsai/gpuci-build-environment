@@ -14,8 +14,8 @@ ARCH_TYPE:
   - x86_64
 
 # CUDA_VERSION is not defined for CUDA 11 images - this defines it in this image
-#   so it can be used in all images within gpuCI; to make parsing easier we add
-#   it to the existing CUDA_VER var and remove the patch version in run script
+# so it can be used in all images within gpuCI; to make parsing easier we add
+# it to the existing CUDA_VER var and remove the patch version in run script
 CUDA_VER:
   - 11.1.74
   - 11.0.221
