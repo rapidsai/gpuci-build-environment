@@ -27,6 +27,17 @@ if [ `tr -dc '.' <<<"$CUDA_VER" | awk '{ print length }'` -eq 2 ] ; then
   gpuci_logger "Detected patch version in CUDA_VER - Set CUDA_VER='$CUDA_VER' and FULL_CUDA_VER='$FULL_CUDA_VER'"
 fi
 BUILD_TAG="${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}"
+# Check if CUDA 11+, if so include patch version in CUDA_VER for nvidia/cuda & gpuci/cuda FROM images
+if [[ "${CUDA_VER:0:2}" == "10" || "${CUDA_VER:0:2}" == "9" ]] ; then
+  echo "Detected CUDA 9/10, no need to update CUDA_VER..."
+else
+  echo "Detected CUDA 11+, checking FROM_IMAGE..."
+  if [[ "$FROM_IMAGE" == "gpuci/cuda" || "$FROM_IMAGE" == "nvidia/cuda" ]] ; then
+    echo ">> Need to update CUDA_VER to pull correct external image..."
+    CUDA_VER=FULL_CUDA_VER
+    echo ">> CUDA_VER is now set to '$CUDA_VER'..."
+  fi
+fi
 # Check if PR build and modify BUILD_IMAGE and BUILD_TAG
 if [ "$PR_ID" == "BRANCH" ] ; then
   echo "PR_ID is set to 'BRANCH', skipping PR updates"
