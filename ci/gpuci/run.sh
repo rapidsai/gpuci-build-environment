@@ -28,7 +28,7 @@ if [ `tr -dc '.' <<<"$CUDA_VER" | awk '{ print length }'` -eq 2 ] ; then
 fi
 BUILD_TAG="${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}"
 # Check if CUDA 11+, if so include patch version in CUDA_VER for nvidia/cuda & gpuci/cuda FROM images
-if [[ "${CUDA_VER:0:2}" == "10" || "${CUDA_VER:0:2}" == "9" ]] ; then
+if [[ "${CUDA_VER:0:2}" == "10" || "${CUDA_VER:0:1}" == "9" ]] ; then
   echo "Detected CUDA 9/10, no need to update CUDA_VER..."
 else
   echo "Detected CUDA 11+, checking FROM_IMAGE..."
