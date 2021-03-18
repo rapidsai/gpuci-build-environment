@@ -11,6 +11,7 @@ DOCKER_FILE:
   - Dockerfile
 
 CUDA_VER:
+  - 11.2
   - 11.1
   - 11.0
   - 10.2
