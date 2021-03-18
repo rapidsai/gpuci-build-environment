@@ -15,7 +15,6 @@ ARG MINIFORGE_URL=https://github.com/conda-forge/miniforge/releases/download/${C
 
 # Set environment
 ENV PATH=/opt/conda/bin:${PATH}
-ENV DEBIAN_FRONTEND=noninteractive
 
 # Set CUDA_VERSION as in some 'nvidia/cuda' images this is not set
 ## A lot of scripts and conda recipes depend on this env var

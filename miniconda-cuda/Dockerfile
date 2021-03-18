@@ -18,7 +18,6 @@ ARG TINI_URL=https://github.com/krallin/tini/releases/download/${TINI_VER}/tini
 ENV CONDA_DIR=/opt/conda
 ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US:en
 ENV PATH=${CONDA_DIR}/bin:${PATH}
-ENV DEBIAN_FRONTEND=noninteractive
 
 # Set CUDA_VERSION as in some 'nvidia/cuda' images this is not set
 ## A lot of scripts and conda recipes depend on this env var
