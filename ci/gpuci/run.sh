@@ -34,7 +34,7 @@ else
   echo "Detected CUDA 11+, checking FROM_IMAGE..."
   if [[ "$FROM_IMAGE" == "gpuci/cuda" || "$FROM_IMAGE" == "nvidia/cuda" ]] ; then
     echo ">> Need to update CUDA_VER to pull correct external image..."
-    CUDA_VER=FULL_CUDA_VER
+    CUDA_VER=$FULL_CUDA_VER
     echo ">> CUDA_VER is now set to '$CUDA_VER'..."
   fi
 fi
