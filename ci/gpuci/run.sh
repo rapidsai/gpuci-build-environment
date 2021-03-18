@@ -33,9 +33,11 @@ if [[ "${CUDA_VER:0:2}" == "10" || "${CUDA_VER:0:2}" == "9" ]] ; then
 else
   echo "Detected CUDA 11+, checking FROM_IMAGE..."
   if [[ "$FROM_IMAGE" == "gpuci/cuda" || "$FROM_IMAGE" == "nvidia/cuda" ]] ; then
-    echo ">> Need to update CUDA_VER to pull correct external image..."
+    echo ">> FROM_IMAGE is an external image, need to update CUDA_VER to pull correct external image..."
     CUDA_VER=$FULL_CUDA_VER
     echo ">> CUDA_VER is now set to '$CUDA_VER'..."
+  else
+    echo ">> FROM_IMAGE not an external image, no need to update CUDA_VER..."
   fi
 fi
 # Check if PR build and modify BUILD_IMAGE and BUILD_TAG
