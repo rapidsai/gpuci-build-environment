@@ -19,6 +19,7 @@ RAPIDS_CHANNEL:
   - rapidsai-nightly
 
 CUDA_VER:
+  - 11.2
   - 11.0
   - 10.2
   - 10.1
@@ -73,3 +74,5 @@ exclude:
     CUDA_VER: 10.2
   - LINUX_VER: centos8
     CUDA_VER: 10.2
+  - LINUX_VER: centos7
+    CUDA_VER: 11.2
