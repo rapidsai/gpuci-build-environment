@@ -1,6 +1,7 @@
 ARG FROM_IMAGE=gpuci/miniconda-cuda
 ARG CUDA_VER=10.2
-FROM ${FROM_IMAGE}:${CUDA_VER}-devel-centos7
+ARG LINUX_VER=centos7
+FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
 
 # Required arguments
 ARG RAPIDS_CHANNEL=rapidsai-nightly
