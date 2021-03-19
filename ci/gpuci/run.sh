@@ -130,3 +130,13 @@ gpuci_logger "Starting upload..."
 GPUCI_RETRY_MAX=5
 GPUCI_RETRY_SLEEP=120
 gpuci_retry docker push ${BUILD_IMAGE}:${BUILD_TAG}
+
+# Logout of docker
+gpuci_logger "Logout of Docker..."
+docker logout
+
+# Clean up build
+gpuci_logger "Clean up docker builds on system..."
+docker system df
+docker system prune --volumes -f
+docker system df
