@@ -30,7 +30,7 @@ SHELL ["/bin/bash", "-c"]
 RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
       apt-get update -q \
       && apt-get upgrade -y \
-      && apt-get install -y --no-install-recommends \
+      && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         autoconf \
         automake \
         bzip2 \
