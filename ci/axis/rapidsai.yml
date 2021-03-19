@@ -10,7 +10,7 @@ IMAGE_NAME:
 DOCKER_FILE:
   - base-runtime.Dockerfile
   - devel.Dockerfile
-  - devel-centos7.Dockerfile
+  - devel-centos.Dockerfile
 
 RAPIDS_VER:
   - 0.19
@@ -47,11 +47,11 @@ exclude:
   - IMAGE_TYPE: base
     DOCKER_FILE: devel.Dockerfile
   - IMAGE_TYPE: base
-    DOCKER_FILE: devel-centos7.Dockerfile
+    DOCKER_FILE: devel-centos.Dockerfile
   - IMAGE_TYPE: runtime
     DOCKER_FILE: devel.Dockerfile
   - IMAGE_TYPE: runtime
-    DOCKER_FILE: devel-centos7.Dockerfile
+    DOCKER_FILE: devel-centos.Dockerfile
   - IMAGE_TYPE: devel
     DOCKER_FILE: base-runtime.Dockerfile
   - IMAGE_TYPE: devel
@@ -60,11 +60,11 @@ exclude:
   - IMAGE_TYPE: devel
     DOCKER_FILE: devel.Dockerfile
     LINUX_VER: centos8
-  - DOCKER_FILE: devel-centos7.Dockerfile
+  - DOCKER_FILE: devel-centos.Dockerfile
     LINUX_VER: ubuntu16.04
-  - DOCKER_FILE: devel-centos7.Dockerfile
+  - DOCKER_FILE: devel-centos.Dockerfile
     LINUX_VER: ubuntu18.04
-  - DOCKER_FILE: devel-centos7.Dockerfile
+  - DOCKER_FILE: devel-centos.Dockerfile
     LINUX_VER: ubuntu20.04
   - LINUX_VER: ubuntu20.04
     CUDA_VER: 10.1
