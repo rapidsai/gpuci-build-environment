@@ -22,7 +22,7 @@ RUN source activate base \
 
 # Update and add pkgs
 RUN apt-get update -q \
-    && apt-get -qq install apt-utils -y --no-install-recommends \
+    && DEBIAN_FRONTEND=noninteractive apt-get -qq install apt-utils -y --no-install-recommends \
       nvidia-${DRIVER_VER}-dev \
       libcuda1-${DRIVER_VER} \
     && apt-get clean \
