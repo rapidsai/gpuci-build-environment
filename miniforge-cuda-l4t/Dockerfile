@@ -93,7 +93,8 @@ RUN wget --quiet ${MINIFORGE_URL} -O /miniforge.sh \
     && ln -s /opt/conda /conda
 
 # Install tini for init
-RUN conda install -k -y tini
+RUN conda install -k -y tini \
+    || conda install -k -y tini
 
 RUN chmod -R ugo+w /opt/conda
 
