@@ -1,0 +1,26 @@
+BUILD_IMAGE:
+  - gpuci/miniforge-cuda-l4t
+
+FROM_IMAGE:
+  - gpuci/cuda-l4t
+
+IMAGE_NAME:
+  - miniforge-cuda-l4t
+
+DOCKER_FILE:
+  - Dockerfile
+
+# CUDA_VERSION is not defined for CUDA 11 images - this defines it in this image
+# so it can be used in all images within gpuCI; to make parsing easier we add
+# it to the existing CUDA_VER var and remove the patch version in run script
+CUDA_VER:
+  - 10.2.89
+
+IMAGE_TYPE:
+  - runtime
+  - devel
+
+LINUX_VER:
+  - ubuntu18.04
+
+exclude:
