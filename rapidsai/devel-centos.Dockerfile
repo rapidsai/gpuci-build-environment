@@ -1,6 +1,7 @@
 ARG FROM_IMAGE=gpuci/miniconda-cuda
 ARG CUDA_VER=10.2
-FROM ${FROM_IMAGE}:${CUDA_VER}-devel-centos7
+ARG LINUX_VER=centos7
+FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
 
 # Required arguments
 ARG RAPIDS_CHANNEL=rapidsai-nightly
@@ -9,7 +10,7 @@ ARG PYTHON_VER=3.7
 
 # Optional arguments
 ARG BUILD_STACK_VER=9.3.0
-ARG CENTOS7_GCC7_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz
+ARG GCC7_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz
 
 # Capture argument used for FROM
 ARG CUDA_VER
@@ -55,7 +56,8 @@ channels: \n\
     fi
 
 # Update and add pkgs for gpuci builds
-RUN yum install -y \
+RUN yum install -y epel-release \
+    && yum install -y \
       chrpath \
       clang \
       numactl-devel \
@@ -115,7 +117,7 @@ RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
       rapids-notebook-env=${RAPIDS_VER}
 
 # Install gcc7 from prebuilt tarball
-RUN gpuci_retry wget --quiet ${CENTOS7_GCC7_URL} -O /gcc7.tgz \
+RUN gpuci_retry wget --quiet ${GCC7_URL} -O /gcc7.tgz \
     && tar xzvf /gcc7.tgz \
     && rm -f /gcc7.tgz
 
