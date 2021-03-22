@@ -1,0 +1,36 @@
+BUILD_IMAGE:
+  - gpuci/rapidsai-l4t
+
+FROM_IMAGE:
+  - gpuci/miniforge-cuda-l4t
+
+IMAGE_NAME:
+  - rapidsai-l4t
+
+DOCKER_FILE:
+  - Dockerfile
+
+RAPIDS_VER:
+  - 0.19
+
+RAPIDS_CHANNEL:
+  - rapidsai-nightly
+
+CUDA_VER:
+  - 10.2
+
+IMAGE_TYPE:
+  - runtime
+  - devel
+
+LINUX_VER:
+  - ubuntu18.04
+
+PYTHON_VER:
+  - 3.7
+  - 3.8
+
+BUILD_STACK_VER:
+  - 9.3.0
+
+exclude:
