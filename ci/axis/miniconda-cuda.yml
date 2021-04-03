@@ -59,8 +59,6 @@ exclude:
     LINUX_VER: centos8
   - CUDA_VER: 10.0.130
     LINUX_VER: centos8
-  - CUDA_VER: 11.2.2
-    LINUX_VER: centos7
 # Uncomment below and `- gpuci/cuda` above to build using gpuCI CUDA images
 # NOTE: gpuci/cuda:11.0* is 11.0.194 and would need CUDA_VER to change on revert
 #  - CUDA_VER: 9.0.176
