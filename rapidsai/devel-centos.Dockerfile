@@ -57,7 +57,7 @@ channels: \n\
 
 # Update and add pkgs for gpuci builds
 RUN yum install -y epel-release \
-    && yum install -y \
+    && yum install -y --setopt=install_weak_deps=False \
       chrpath \
       clang \
       numactl-devel \

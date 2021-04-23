@@ -67,7 +67,7 @@ RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
 RUN if [ "${LINUX_VER:0:6}" == "centos" ] ; then \
       yum -y update \
       && yum remove -y bind-license \
-      && yum -y install \
+      && yum -y install --setopt=install_weak_deps=False \
         autoconf \
         automake \
         bzip2 \
