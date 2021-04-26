@@ -1,5 +1,5 @@
 ARG FROM_IMAGE=gpuci/miniconda-cuda
-ARG CUDA_VER=10.2
+ARG CUDA_VER=11.0
 ARG LINUX_VER=centos7
 FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
 
@@ -10,19 +10,19 @@ ARG PYTHON_VER=3.7
 
 # Optional arguments
 ARG BUILD_STACK_VER=9.3.0
-ARG GCC7_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz
+ARG GCC9_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc9.tgz
 
 # Capture argument used for FROM
 ARG CUDA_VER
 
 # Update environment for gcc/g++ builds
-ENV GCC7_DIR=/usr/local/gcc7
-ENV CC=${GCC7_DIR}/bin/gcc
-ENV CXX=${GCC7_DIR}/bin/g++
-ENV CUDAHOSTCXX=${GCC7_DIR}/bin/g++
+ENV GCC9_DIR=/usr/local/gcc9
+ENV CC=${GCC9_DIR}/bin/gcc
+ENV CXX=${GCC9_DIR}/bin/g++
+ENV CUDAHOSTCXX=${GCC9_DIR}/bin/g++
 ENV CUDA_HOME=/usr/local/cuda
-ENV LD_LIBRARY_PATH=${GCC7_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
-ENV PATH=${GCC7_DIR}/bin:$PATH
+ENV LD_LIBRARY_PATH=${GCC9_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
+ENV PATH=${GCC9_DIR}/bin:$PATH
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
@@ -116,10 +116,10 @@ RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER}
 
-# Install gcc7 from prebuilt tarball
-RUN gpuci_retry wget --quiet ${GCC7_URL} -O /gcc7.tgz \
-    && tar xzvf /gcc7.tgz \
-    && rm -f /gcc7.tgz
+# Install gcc9 from prebuilt tarball
+RUN gpuci_retry wget --quiet ${GCC9_URL} -O /gcc9.tgz \
+    && tar xzvf /gcc9.tgz \
+    && rm -f /gcc9.tgz
 
 # Clean up pkgs to reduce image size and chmod for all users
 RUN chmod -R ugo+w /opt/conda \
