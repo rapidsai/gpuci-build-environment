@@ -13,7 +13,6 @@ DOCKER_FILE:
   - devel-centos.Dockerfile
 
 RAPIDS_VER:
-  - 0.19
   - '0.20'
 
 RAPIDS_CHANNEL:
@@ -22,8 +21,6 @@ RAPIDS_CHANNEL:
 CUDA_VER:
   - 11.2
   - 11.0
-  - 10.2
-  - 10.1
 
 IMAGE_TYPE:
   - base
@@ -67,11 +64,3 @@ exclude:
     LINUX_VER: ubuntu18.04
   - DOCKER_FILE: devel-centos.Dockerfile
     LINUX_VER: ubuntu20.04
-  - LINUX_VER: ubuntu20.04
-    CUDA_VER: 10.1
-  - LINUX_VER: centos8
-    CUDA_VER: 10.1
-  - LINUX_VER: ubuntu20.04
-    CUDA_VER: 10.2
-  - LINUX_VER: centos8
-    CUDA_VER: 10.2
