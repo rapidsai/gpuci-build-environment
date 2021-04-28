@@ -104,7 +104,6 @@ RUN gpuci_conda_retry install -y \
 RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
-      -c defaults \
       -c gpuci \
       cudatoolkit=${CUDA_VER} \
       git \

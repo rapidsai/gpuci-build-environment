@@ -82,7 +82,6 @@ RUN source activate base \
     && conda create --no-default-packages --override-channels -n dev \
       -c nvidia \
       -c conda-forge \
-      -c defaults \
       cudatoolkit=${CUDA_VER} \
       conda-forge::blas \
       libgcc-ng=${LIB_NG_VERSION} \
