@@ -28,8 +28,7 @@ channels: \n\
   - rapidsai \n\
   - nvidia \n\
   - pytorch \n\
-  - conda-forge \n\
-  - defaults \n" > /opt/conda/.condarc \
+  - conda-forge \n" > /opt/conda/.condarc \
       && cat /opt/conda/.condarc ; \
     else \
       echo -e "\
@@ -41,8 +40,7 @@ channels: \n\
   - rapidsai \n\
   - nvidia \n\
   - pytorch \n\
-  - conda-forge \n\
-  - defaults \n" > /opt/conda/.condarc \
+  - conda-forge \n" > /opt/conda/.condarc \
       && cat /opt/conda/.condarc ; \
     fi
 
