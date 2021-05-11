@@ -9,6 +9,7 @@ IMAGE_NAME:
 
 DOCKER_FILE:
   - Dockerfile
+  - centos.Dockerfile
 
 RAPIDS_VER:
   - '0.20'
@@ -22,6 +23,7 @@ IMAGE_TYPE:
 
 LINUX_VER:
   - ubuntu16.04
+  - centos7
 
 PYTHON_VER:
   - 3.7
@@ -36,3 +38,7 @@ exclude:
     DRIVER_VER: 460
   - CUDA_VER: 11.2
     DRIVER_VER: 450
+  - DOCKER_FILE: Dockerfile
+    LINUX_VER: centos7
+  - DOCKER_FILE: centos.Dockerfile
+    LINUX_VER: ubuntu16.04
