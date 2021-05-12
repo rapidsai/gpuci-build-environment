@@ -44,7 +44,7 @@ RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
       && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
       && locale-gen ; \
     else \
-      echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'ubuntu16.04' or 'ubuntu18.04'\n\n"; \
+      echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'ubuntu'\n\n"; \
     fi
 
 # Disable CUDA repo using the appropriate manager to prevent cross CUDA version

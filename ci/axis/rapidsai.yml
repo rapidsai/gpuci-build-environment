@@ -28,7 +28,6 @@ IMAGE_TYPE:
   - devel
 
 LINUX_VER:
-  - ubuntu16.04
   - ubuntu18.04
   - ubuntu20.04
   - centos7
@@ -58,8 +57,6 @@ exclude:
   - IMAGE_TYPE: devel
     DOCKER_FILE: devel.Dockerfile
     LINUX_VER: centos8
-  - DOCKER_FILE: devel-centos.Dockerfile
-    LINUX_VER: ubuntu16.04
   - DOCKER_FILE: devel-centos.Dockerfile
     LINUX_VER: ubuntu18.04
   - DOCKER_FILE: devel-centos.Dockerfile
