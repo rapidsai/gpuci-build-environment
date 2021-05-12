@@ -11,7 +11,7 @@ DOCKER_FILE:
   - Dockerfile
 
 RAPIDS_VER:
-  - 0.19
+  - '21.06'
 
 RAPIDS_CHANNEL:
   - rapidsai-nightly
