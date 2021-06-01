@@ -9,6 +9,7 @@ IMAGE_NAME:
 
 DOCKER_FILE:
   - Dockerfile
+  - centos7.Dockerfile
 
 CUDA_VER:
   - 11.2
@@ -20,6 +21,7 @@ IMAGE_TYPE:
 
 LINUX_VER:
   - ubuntu16.04
+  - centos7
 
 DRIVER_VER:
   - 450
@@ -27,6 +29,10 @@ DRIVER_VER:
   - 460
 
 exclude:
+  - DOCKER_FILE: Dockerfile
+    LINUX_VER: centos7
+  - DOCKER_FILE: centos7.Dockerfile
+    LINUX_VER: ubuntu16.04
   - CUDA_VER: 11.0
     DRIVER_VER: 455
   - CUDA_VER: 11.0
