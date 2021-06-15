@@ -12,7 +12,6 @@ DOCKER_FILE:
   - centos.Dockerfile
 
 RAPIDS_VER:
-  - '21.06'
   - '21.08'
 
 CUDA_VER:
