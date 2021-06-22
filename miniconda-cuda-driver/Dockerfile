@@ -23,6 +23,7 @@ RUN source activate base \
 # Update and add pkgs
 RUN apt-get update -q \
     && apt-get -qq install apt-utils -y --no-install-recommends \
+      nvidia-driver-${DRIVER_VER} \
       cuda-drivers-${DRIVER_VER} \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
