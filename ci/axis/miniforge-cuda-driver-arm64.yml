@@ -1,15 +1,14 @@
 BUILD_IMAGE:
-  - gpuci/miniconda-cuda-driver
+  - gpuci/miniforge-cuda-driver-arm64
 
 FROM_IMAGE:
-  - gpuci/miniconda-cuda
+  - gpuci/miniforge-cuda-arm64
 
 IMAGE_NAME:
-  - miniconda-cuda-driver
+  - miniforge-cuda-driver
 
 DOCKER_FILE:
-  - Dockerfile
-  - centos7.Dockerfile
+  - ubuntu.Dockerfile
 
 CUDA_VER:
   - 11.2
@@ -21,7 +20,6 @@ IMAGE_TYPE:
 
 LINUX_VER:
   - ubuntu18.04
-  - centos7
 
 DRIVER_VER:
   - 450
@@ -29,10 +27,6 @@ DRIVER_VER:
   - 460
 
 exclude:
-  - DOCKER_FILE: Dockerfile
-    LINUX_VER: centos7
-  - DOCKER_FILE: centos7.Dockerfile
-    LINUX_VER: ubuntu18.04
   - CUDA_VER: 11.0
     DRIVER_VER: 455
   - CUDA_VER: 11.0

@@ -1,5 +1,5 @@
 ARG FROM_IMAGE=gpuci/miniconda-cuda
-ARG CUDA_VER=11.0
+ARG CUDA_VER=11.2
 ARG IMAGE_TYPE=devel
 ARG LINUX_VER=centos7
 FROM ${FROM_IMAGE}:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}
@@ -7,7 +7,7 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}
 #    and installs build deps for conda builds
 
 # Required arguments
-ARG DRIVER_VER="450"
+ARG DRIVER_VER="440"
 
 # Add core tools to base env
 RUN source activate base \
@@ -22,6 +22,8 @@ RUN source activate base \
 
 # Add NVIDIA repository
 RUN yum-config-manager --add-repo http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-rhel7.repo
+
+RUN yum install -y epel-release
 
 # Install NVIDIA driver
 RUN yum install -y epel-release \
