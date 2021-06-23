@@ -20,7 +20,7 @@ IMAGE_TYPE:
   - devel
 
 LINUX_VER:
-  - ubuntu16.04
+  - ubuntu18.04
   - centos7
 
 DRIVER_VER:
@@ -32,7 +32,7 @@ exclude:
   - DOCKER_FILE: Dockerfile
     LINUX_VER: centos7
   - DOCKER_FILE: centos7.Dockerfile
-    LINUX_VER: ubuntu16.04
+    LINUX_VER: ubuntu18.04
   - CUDA_VER: 11.0
     DRIVER_VER: 455
   - CUDA_VER: 11.0

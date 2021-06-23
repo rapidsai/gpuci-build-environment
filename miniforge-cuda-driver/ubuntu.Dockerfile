@@ -24,8 +24,8 @@ RUN source activate base \
 RUN if [ $(arch) = "x86_64" ]; then \
     apt-get update -q \
     && apt-get -qq install apt-utils -y --no-install-recommends \
-      nvidia-${DRIVER_VER}-dev \
-      libcuda1-${DRIVER_VER} \
+      nvidia-driver-${DRIVER_VER} \
+      cuda-drivers-${DRIVER_VER} \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* ; \
   elif [ $(arch) = "aarch64" ]; then \

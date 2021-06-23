@@ -14,6 +14,7 @@ ARG DRIVER_VER="440"
 RUN yum-config-manager --add-repo http://developer.download.nvidia.com/compute/cuda/repos/rhel7/x86_64/cuda-rhel7.repo
 
 # Install NVIDIA driver
-RUN yum install -y nvidia-driver-branch-${DRIVER_VER}-cuda \
+RUN yum install -y epel-release \
+    && yum install -y nvidia-driver-branch-${DRIVER_VER}-cuda \
     && yum clean all \
     && rm -rf /var/cache/yum
