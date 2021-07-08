@@ -32,7 +32,7 @@ if [[ "${CUDA_VER:0:2}" == "10" || "${CUDA_VER:0:1}" == "9" ]] ; then
   echo "Detected CUDA 9/10, no need to update CUDA_VER..."
 else
   echo "Detected CUDA 11+, checking FROM_IMAGE..."
-  if [[ "$FROM_IMAGE" == "gpuci/cuda" || "$FROM_IMAGE" == "nvidia/cuda" || "$FROM_IMAGE" == "nvidia/cuda-arm64" ]] ; then
+  if [[ "$FROM_IMAGE" == "gpuci/cuda" || "$FROM_IMAGE" == "nvidia/cuda"  ]] ; then
     echo ">> FROM_IMAGE is an external image, need to update CUDA_VER to pull correct external image..."
     CUDA_VER=$FULL_CUDA_VER
     echo ">> CUDA_VER is now set to '$CUDA_VER'..."
@@ -48,7 +48,7 @@ else
   BUILD_REPO=`echo $BUILD_IMAGE | tr '/' ' ' | awk '{ print $2 }'`
   BUILD_IMAGE="gpucitesting/${BUILD_REPO}-pr${PR_ID}"
   # Check if FROM_IMAGE to see if it is a root build
-  if [[ "$FROM_IMAGE" == "gpuci/cuda" || "$FROM_IMAGE" == "nvidia/cuda" || "$FROM_IMAGE" == "gpuci/cuda-l4t" || "$FROM_IMAGE" == "nvidia/cuda-arm64" ]]; then
+  if [[ "$FROM_IMAGE" == "gpuci/cuda" || "$FROM_IMAGE" == "nvidia/cuda" || "$FROM_IMAGE" == "gpuci/cuda-l4t" ]]; then
     echo ">> No need to update FROM_IMAGE, using external image..."
   else
     echo ">> Need to update FROM_IMAGE to use PR's version for testing..."

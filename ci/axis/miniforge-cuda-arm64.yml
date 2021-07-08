@@ -2,7 +2,7 @@ BUILD_IMAGE:
   - gpuci/miniforge-cuda-arm64
 
 FROM_IMAGE:
-  - nvidia/cuda-arm64
+  - nvidia/cuda
 
 IMAGE_NAME:
   - miniforge-cuda
