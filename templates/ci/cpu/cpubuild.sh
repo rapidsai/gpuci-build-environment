@@ -43,7 +43,8 @@ logger "Get env..."
 env
 
 logger "Activate conda env..."
-source activate gdf
+. /opt/conda/etc/profile.d/conda.sh
+conda activate rapids
 
 logger "Check versions..."
 python --version
