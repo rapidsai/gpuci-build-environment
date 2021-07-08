@@ -61,9 +61,6 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       "setuptools<50" \
     && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
 
-# Create symlink for old scripts expecting `gdf` conda env
-RUN ln -s /opt/conda/envs/rapids /opt/conda/envs/gdf
-
 # For `runtime` images install notebook env meta-pkg
 #
 # Once installed remove the meta-pkg so dependencies can be freely updated &
