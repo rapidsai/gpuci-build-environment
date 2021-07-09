@@ -58,6 +58,7 @@ RUN yum install -y epel-release \
     && yum install -y --setopt=install_weak_deps=False \
       chrpath \
       clang \
+      file \
       numactl-devel \
       numactl-libs \
       screen \
