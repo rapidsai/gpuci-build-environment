@@ -44,7 +44,8 @@ logger "Check GPU usage..."
 nvidia-smi
 
 logger "Activate conda env..."
-source activate gdf
+. /opt/conda/etc/profile.d/conda.sh
+conda activate rapids
 ##*
 ## EDIT: Install all build, runtime, and test dependencies
 conda install |<build_dep>| |<runtime_dep>| |<test_dep>|
