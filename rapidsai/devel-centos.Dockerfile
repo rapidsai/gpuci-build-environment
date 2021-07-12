@@ -81,10 +81,11 @@ RUN conda install -y gpuci-tools \
 RUN gpuci_conda_retry install -y \
       anaconda-client \
       codecov \
+      mamba \
       rapids-scout-local
 
 # Create `rapids` conda env and make default
-RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
+RUN gpuci_mamba_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c gpuci \
@@ -102,11 +103,11 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
 #
 # Once installed remove the meta-pkg so dependencies can be freely updated &
 # the meta-pkg can be installed again with updates
-RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
+RUN gpuci_mamba_retry install -y -n rapids --freeze-installed \
       rapids-build-env=${RAPIDS_VER} \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER} \
-    && gpuci_conda_retry remove -y -n rapids --force-remove \
+    && gpuci_mamba_retry remove -y -n rapids --force-remove \
       rapids-build-env=${RAPIDS_VER} \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER}
