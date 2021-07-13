@@ -21,6 +21,9 @@ ENV CUDAHOSTCXX=/usr/bin/g++
 ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 
+# Set variable for mambarc
+ENV CONDARC=/opt/conda/.condarc
+
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
 
@@ -35,7 +38,7 @@ channels: \n\
   - nvidia \n\
   - pytorch \n\
   - conda-forge \n" > /opt/conda/.condarc \
-      && cat /opt/conda/.condarc ; \
+      && cat ${CONDARC} ; \
     else \
       echo -e "\
 auto_update_conda: False \n\
@@ -47,7 +50,7 @@ channels: \n\
   - nvidia \n\
   - pytorch \n\
   - conda-forge \n" > /opt/conda/.condarc \
-      && cat /opt/conda/.condarc ; \
+      && cat ${CONDARC} ; \
     fi
 
 # Install gcc9
@@ -118,11 +121,12 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
 #
 # Once installed remove the meta-pkg so dependencies can be freely updated &
 # the meta-pkg can be installed again with updates
-RUN gpuci_mamba_retry install -y -n rapids --freeze-installed \
+RUN source activate rapids \
+    && gpuci_mamba_retry install -y --freeze-installed \
       rapids-build-env=${RAPIDS_VER} \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER} \
-    && gpuci_mamba_retry remove -y -n rapids --force-remove \
+    && gpuci_mamba_retry remove -y --force-remove \
       rapids-build-env=${RAPIDS_VER} \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER}
