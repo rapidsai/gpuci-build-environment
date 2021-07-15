@@ -122,11 +122,11 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
 # Once installed remove the meta-pkg so dependencies can be freely updated &
 # the meta-pkg can be installed again with updates
 RUN source activate rapids \
-    && gpuci_mamba_retry install -y --freeze-installed \
+    && gpuci_conda_retry install -y --freeze-installed \
       rapids-build-env=${RAPIDS_VER} \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER} \
-    && gpuci_mamba_retry remove -y --force-remove \
+    && gpuci_conda_retry remove -y --force-remove \
       rapids-build-env=${RAPIDS_VER} \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER}
