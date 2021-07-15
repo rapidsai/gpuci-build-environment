@@ -98,7 +98,6 @@ RUN conda install -y gpuci-tools \
 RUN gpuci_conda_retry install -y \
       anaconda-client \
       codecov \
-      mamba \
       rapids-scout-local
 
 # Create `rapids` conda env and make default
