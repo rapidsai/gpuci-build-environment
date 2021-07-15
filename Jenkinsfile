@@ -4,6 +4,9 @@ pipeline {
       label 'runner'
     }
   }
+  options {
+    retry(2)
+  }
   stages {
     stage('gpuCI/parallel/miniconda-miniforge') {
       parallel {
