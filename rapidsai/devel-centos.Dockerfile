@@ -24,6 +24,9 @@ ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=${GCC9_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV PATH=${GCC9_DIR}/bin:$PATH
 
+# Set variable for mambarc
+ENV CONDARC=/opt/conda/.condarc
+
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
 
@@ -38,7 +41,7 @@ channels: \n\
   - nvidia \n\
   - pytorch \n\
   - conda-forge \n" > /opt/conda/.condarc \
-      && cat /opt/conda/.condarc ; \
+      && cat ${CONDARC} ; \
     else \
       echo -e "\
 auto_update_conda: False \n\
@@ -50,7 +53,7 @@ channels: \n\
   - nvidia \n\
   - pytorch \n\
   - conda-forge \n" > /opt/conda/.condarc \
-      && cat /opt/conda/.condarc ; \
+      && cat ${CONDARC} ; \
     fi
 
 # Update and add pkgs for gpuci builds
@@ -93,6 +96,7 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       gpuci-tools \
       libgcc-ng=${BUILD_STACK_VER} \
       libstdcxx-ng=${BUILD_STACK_VER} \
+      mamba \
       python=${PYTHON_VER} \
       'python_abi=*=*cp*' \
       "setuptools<50" \
