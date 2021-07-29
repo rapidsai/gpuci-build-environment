@@ -9,7 +9,7 @@ ARG FULL_CUDA_VER
 ARG LINUX_VER
 
 # Define versions and download locations
-ARG CONDA_VER=4.8.3
+ARG CONDA_VER=4.10.3
 ARG TINI_VER=v0.18.0
 ARG MINICONDA_URL=http://repo.anaconda.com/miniconda/Miniconda3-py38_${CONDA_VER}-Linux-x86_64.sh
 ARG TINI_URL=https://github.com/krallin/tini/releases/download/${TINI_VER}/tini
