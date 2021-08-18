@@ -31,6 +31,6 @@ PYTHON_VER:
   - 3.8
 
 BUILD_STACK_VER:
-  - 9.3.0
+  - 9.4.0
 
 exclude:

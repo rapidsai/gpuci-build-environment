@@ -6,7 +6,7 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}
 
 # Define arguments
 ARG GCC9_DIR=/usr/local/gcc9
-ARG GCC9_VER=9.3.0
+ARG GCC9_VER=9.4.0
 ARG NUM_BUILD_CPUS=16
 
 # Add /usr/local/cuda/* temporarily to LD_LIBRARY_PATH to support various build steps
