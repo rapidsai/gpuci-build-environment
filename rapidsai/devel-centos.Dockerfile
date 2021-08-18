@@ -9,7 +9,7 @@ ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
 
 # Optional arguments
-ARG BUILD_STACK_VER=9.3.0
+ARG BUILD_STACK_VER=9.4.0
 ARG GCC9_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc9.tgz
 
 # Capture argument used for FROM
