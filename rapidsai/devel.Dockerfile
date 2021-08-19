@@ -117,8 +117,8 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
     && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
 
 # Install Git LFS
-curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
-sudo apt-get install git-lfs
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash \
+    && sudo apt-get install git-lfs
 
 # Install build/doc/notebook env meta-pkgs
 #
