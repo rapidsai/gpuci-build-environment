@@ -93,6 +93,7 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       -c gpuci \
       cudatoolkit=${CUDA_VER} \
       git \
+      git-lfs \
       gpuci-tools \
       libgcc-ng=${BUILD_STACK_VER} \
       libstdcxx-ng=${BUILD_STACK_VER} \
