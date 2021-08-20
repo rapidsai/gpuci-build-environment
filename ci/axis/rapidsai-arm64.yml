@@ -1,0 +1,50 @@
+BUILD_IMAGE:
+  - gpuci/rapidsai-arm64
+
+FROM_IMAGE:
+  - gpuci/miniforge-cuda-arm64
+
+IMAGE_NAME:
+  - rapidsai
+
+DOCKER_FILE:
+  - devel.arm64.Dockerfile
+
+RAPIDS_VER:
+  - '21.10'
+
+RAPIDS_CHANNEL:
+  - rapidsai-nightly
+
+CUDA_VER:
+  - 11.2
+  - 11.4
+
+# TODO: Build all image types
+IMAGE_TYPE:
+#  - base
+#  - runtime
+  - devel
+
+LINUX_VER:
+  - ubuntu18.04
+
+PYTHON_VER:
+  - 3.7
+  - 3.8
+
+BUILD_STACK_VER:
+  - 9.4.0
+
+# TODO: Fix excludes
+exclude:
+#  - IMAGE_TYPE: base
+#    DOCKER_FILE: devel.Dockerfile
+#  - IMAGE_TYPE: base
+#    DOCKER_FILE: devel-centos.Dockerfile
+#  - IMAGE_TYPE: runtime
+#    DOCKER_FILE: devel.Dockerfile
+#  - IMAGE_TYPE: runtime
+#    DOCKER_FILE: devel-centos.Dockerfile
+#  - IMAGE_TYPE: devel
+#    DOCKER_FILE: base-runtime.Dockerfile
