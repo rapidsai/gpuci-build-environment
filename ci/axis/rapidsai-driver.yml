@@ -24,6 +24,7 @@ IMAGE_TYPE:
 
 LINUX_VER:
   - centos7
+  - ubuntu20.04
 
 PYTHON_VER:
   - 3.7
