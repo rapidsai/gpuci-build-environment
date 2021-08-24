@@ -1,8 +1,8 @@
 BUILD_IMAGE:
-  - gpuci/rapidsai-arm64
+  - gpuci/rapidsai
 
 FROM_IMAGE:
-  - gpuci/miniforge-cuda-arm64
+  - gpuci/miniforge-cuda
 
 IMAGE_NAME:
   - rapidsai

@@ -1,5 +1,5 @@
 BUILD_IMAGE:
-  - gpuci/miniforge-cuda-arm64
+  - gpuci/miniforge-cuda
 
 FROM_IMAGE:
   - nvidia/cuda

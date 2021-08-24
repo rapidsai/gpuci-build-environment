@@ -1,8 +1,8 @@
 BUILD_IMAGE:
-  - gpuci/rapidsai-driver-arm64
+  - gpuci/rapidsai-driver
 
 FROM_IMAGE:
-  - gpuci/rapidsai-arm64
+  - gpuci/rapidsai
 
 IMAGE_NAME:
   - rapidsai-driver

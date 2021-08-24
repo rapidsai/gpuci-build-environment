@@ -1,8 +1,8 @@
 BUILD_IMAGE:
-  - gpuci/miniforge-cuda-driver-arm64
+  - gpuci/miniforge-cuda-driver
 
 FROM_IMAGE:
-  - gpuci/miniforge-cuda-arm64
+  - gpuci/miniforge-cuda
 
 IMAGE_NAME:
   - miniforge-cuda-driver

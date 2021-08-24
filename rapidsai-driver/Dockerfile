@@ -1,4 +1,4 @@
-ARG FROM_IMAGE=gpuci/rapidsai-arm64
+ARG FROM_IMAGE=gpuci/rapidsai
 ARG RAPIDS_VER=0.15
 ARG CUDA_VER=11.2
 ARG IMAGE_TYPE=devel
