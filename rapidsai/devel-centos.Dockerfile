@@ -22,7 +22,7 @@ ENV CXX=${GCC9_DIR}/bin/g++
 ENV CUDAHOSTCXX=${GCC9_DIR}/bin/g++
 ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=${GCC9_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
-ENV PATH=${GCC9_DIR}/bin:$PATH
+ENV PATH=${GCC9_DIR}/bin:/usr/lib64/openmpi/bin:$PATH
 
 # Set variable for mambarc
 ENV CONDARC=/opt/conda/.condarc
@@ -64,6 +64,7 @@ RUN yum install -y epel-release \
       file \
       numactl-devel \
       numactl-libs \
+      openmpi-devel \
       screen \
       vim \
     && yum clean all
