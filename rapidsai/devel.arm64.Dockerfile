@@ -74,6 +74,8 @@ RUN apt-get update -y --fix-missing \
       file \
       libnuma1 \
       libnuma-dev \
+      libopenmpi-dev \
+      openmpi-bin \
       screen \
       tzdata \
       vim \
