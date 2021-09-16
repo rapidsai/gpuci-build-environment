@@ -72,8 +72,6 @@ RUN apt-get update -y --fix-missing \
     && apt-get install -y \
       chrpath \
       file \
-      libnuma1 \
-      libnuma-dev \
       libopenmpi-dev \
       openmpi-bin \
       screen \

@@ -62,8 +62,6 @@ RUN yum install -y epel-release \
       chrpath \
       clang \
       file \
-      numactl-devel \
-      numactl-libs \
       openmpi-devel \
       screen \
       vim \
