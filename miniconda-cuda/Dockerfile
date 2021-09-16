@@ -39,6 +39,8 @@ RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
         curl \
         git \
         locales \
+        libnuma1 \
+        libnuma-dev \
         patch \
         tzdata \
         unzip \
@@ -75,6 +77,8 @@ RUN if [ "${LINUX_VER:0:6}" == "centos" ] ; then \
         curl \
         git \
         make \
+        numactl-devel \
+        numactl-libs \
         patch \
         unzip \
         wget \
