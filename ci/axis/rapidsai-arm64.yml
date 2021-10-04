@@ -8,6 +8,7 @@ IMAGE_NAME:
   - rapidsai
 
 DOCKER_FILE:
+  - devel-centos.arm64.Dockerfile
   - devel.arm64.Dockerfile
   - base-runtime.Dockerfile
 
@@ -29,6 +30,8 @@ IMAGE_TYPE:
 
 LINUX_VER:
   - ubuntu18.04
+  - ubuntu20.04
+  - centos8
 
 PYTHON_VER:
   - 3.7
@@ -40,7 +43,18 @@ BUILD_STACK_VER:
 exclude:
   - IMAGE_TYPE: base
     DOCKER_FILE: devel.arm64.Dockerfile
+  - IMAGE_TYPE: base
+    DOCKER_FILE: devel-centos.arm64.Dockerfile
   - IMAGE_TYPE: runtime
     DOCKER_FILE: devel.arm64.Dockerfile
+  - IMAGE_TYPE: runtime
+    DOCKER_FILE: devel-centos.arm64.Dockerfile
   - IMAGE_TYPE: devel
     DOCKER_FILE: base-runtime.Dockerfile
+  - IMAGE_TYPE: devel
+    LINUX_VER: centos8
+    DOCKER_FILE: devel.arm64.Dockerfile
+  - LINUX_VER: ubuntu18.04
+    DOCKER_FILE: devel-centos.arm64.Dockerfile
+  - LINUX_VER: ubuntu20.04
+    DOCKER_FILE: devel-centos.arm64.Dockerfile
