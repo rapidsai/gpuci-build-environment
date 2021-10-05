@@ -8,7 +8,9 @@ IMAGE_NAME:
   - rapidsai
 
 DOCKER_FILE:
+  - devel-centos.arm64.Dockerfile
   - devel.arm64.Dockerfile
+  - base-runtime.Dockerfile
 
 RAPIDS_VER:
   - '21.10'
@@ -21,14 +23,15 @@ CUDA_VER:
   - 11.2
   - 11.4
 
-# TODO: Build all image types
 IMAGE_TYPE:
-#  - base
-#  - runtime
+  - base
+  - runtime
   - devel
 
 LINUX_VER:
   - ubuntu18.04
+  - ubuntu20.04
+  - centos8
 
 PYTHON_VER:
   - 3.7
@@ -37,15 +40,21 @@ PYTHON_VER:
 BUILD_STACK_VER:
   - 9.4.0
 
-# TODO: Fix excludes
 exclude:
-#  - IMAGE_TYPE: base
-#    DOCKER_FILE: devel.Dockerfile
-#  - IMAGE_TYPE: base
-#    DOCKER_FILE: devel-centos.Dockerfile
-#  - IMAGE_TYPE: runtime
-#    DOCKER_FILE: devel.Dockerfile
-#  - IMAGE_TYPE: runtime
-#    DOCKER_FILE: devel-centos.Dockerfile
-#  - IMAGE_TYPE: devel
-#    DOCKER_FILE: base-runtime.Dockerfile
+  - IMAGE_TYPE: base
+    DOCKER_FILE: devel.arm64.Dockerfile
+  - IMAGE_TYPE: base
+    DOCKER_FILE: devel-centos.arm64.Dockerfile
+  - IMAGE_TYPE: runtime
+    DOCKER_FILE: devel.arm64.Dockerfile
+  - IMAGE_TYPE: runtime
+    DOCKER_FILE: devel-centos.arm64.Dockerfile
+  - IMAGE_TYPE: devel
+    DOCKER_FILE: base-runtime.Dockerfile
+  - IMAGE_TYPE: devel
+    LINUX_VER: centos8
+    DOCKER_FILE: devel.arm64.Dockerfile
+  - LINUX_VER: ubuntu18.04
+    DOCKER_FILE: devel-centos.arm64.Dockerfile
+  - LINUX_VER: ubuntu20.04
+    DOCKER_FILE: devel-centos.arm64.Dockerfile
