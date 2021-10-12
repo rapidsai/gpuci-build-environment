@@ -45,8 +45,8 @@ channels: \n\
     fi
 
 # Create rapids conda env and make default
-RUN conda install -y gpuci-tools \
-    || conda install -y gpuci-tools
+RUN conda install -y gpuci-tools mamba \
+    || conda install -y gpuci-tools mamba
 RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
