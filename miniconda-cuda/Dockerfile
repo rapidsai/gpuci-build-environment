@@ -98,14 +98,14 @@ RUN wget --quiet ${MINICONDA_URL} -O /miniconda.sh \
     && echo "auto_update_conda: False" >> /opt/conda/.condarc \
     && ln -s /opt/conda /conda
 
+# Install tini for init
+RUN conda install -k -y tini \
+    || conda install -k -y tini
+
 # Clean up conda and set permissions for all users
 RUN chmod -R ugo+w /opt/conda \
     && /opt/conda/bin/conda clean -tipy \
     && chmod -R ugo+w /opt/conda
-
-# Install tini for init
-RUN conda install -k -y tini \
-    || conda install -k -y tini
 
 ENTRYPOINT [ "/opt/conda/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
