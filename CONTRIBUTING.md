@@ -95,7 +95,7 @@ RUN source activate base \
 ## Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
 
-ENTRYPOINT [ "/usr/bin/tini", "--" ]
+ENTRYPOINT [ "/opt/conda/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
 ```
 

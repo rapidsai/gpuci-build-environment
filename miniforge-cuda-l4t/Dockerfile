@@ -98,6 +98,5 @@ RUN conda install -k -y tini \
 
 RUN chmod -R ugo+w /opt/conda
 
-# FIXME: /usr/bin/tini not found
 ENTRYPOINT [ "/opt/conda/bin/tini", "--" ]
 CMD [ "/bin/bash" ]

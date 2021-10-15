@@ -10,9 +10,7 @@ ARG LINUX_VER
 
 # Define versions and download locations
 ARG CONDA_VER=4.10.3
-ARG TINI_VER=v0.18.0
 ARG MINICONDA_URL=http://repo.anaconda.com/miniconda/Miniconda3-py38_${CONDA_VER}-Linux-x86_64.sh
-ARG TINI_URL=https://github.com/krallin/tini/releases/download/${TINI_VER}/tini
 
 # Set environment
 ENV CONDA_DIR=/opt/conda
@@ -100,14 +98,14 @@ RUN wget --quiet ${MINICONDA_URL} -O /miniconda.sh \
     && echo "auto_update_conda: False" >> /opt/conda/.condarc \
     && ln -s /opt/conda /conda
 
+# Install tini for init
+RUN conda install -k -y tini \
+    || conda install -k -y tini
+
 # Clean up conda and set permissions for all users
 RUN chmod -R ugo+w /opt/conda \
     && /opt/conda/bin/conda clean -tipy \
     && chmod -R ugo+w /opt/conda
 
-# Install tini for init
-RUN wget --quiet ${TINI_URL} -O /usr/bin/tini \
-    && chmod +x /usr/bin/tini
-
-ENTRYPOINT [ "/usr/bin/tini", "--" ]
+ENTRYPOINT [ "/opt/conda/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
