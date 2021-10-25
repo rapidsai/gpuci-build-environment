@@ -11,6 +11,7 @@ DOCKER_FILE:
   - ubuntu.Dockerfile
 
 CUDA_VER:
+  - 11.5
   - 11.4
   - 11.3
   - 11.2
@@ -29,6 +30,7 @@ DRIVER_VER:
   - 460
   - 465
   - 470
+  - 495
 
 exclude:
   - CUDA_VER: 11.0
@@ -39,6 +41,8 @@ exclude:
     DRIVER_VER: 465
   - CUDA_VER: 11.0
     DRIVER_VER: 470
+  - CUDA_VER: 11.0
+    DRIVER_VER: 495
 
   - CUDA_VER: 11.1
     DRIVER_VER: 450
@@ -48,6 +52,8 @@ exclude:
     DRIVER_VER: 465
   - CUDA_VER: 11.1
     DRIVER_VER: 470
+  - CUDA_VER: 11.1
+    DRIVER_VER: 495
 
   - CUDA_VER: 11.2
     DRIVER_VER: 450
@@ -57,6 +63,8 @@ exclude:
     DRIVER_VER: 465
   - CUDA_VER: 11.2
     DRIVER_VER: 470
+  - CUDA_VER: 11.2
+    DRIVER_VER: 495
 
   - CUDA_VER: 11.3
     DRIVER_VER: 450
@@ -66,6 +74,8 @@ exclude:
     DRIVER_VER: 460
   - CUDA_VER: 11.3
     DRIVER_VER: 470
+  - CUDA_VER: 11.3
+    DRIVER_VER: 495
 
   - CUDA_VER: 11.4
     DRIVER_VER: 450
@@ -75,3 +85,16 @@ exclude:
     DRIVER_VER: 460
   - CUDA_VER: 11.4
     DRIVER_VER: 465
+  - CUDA_VER: 11.4
+    DRIVER_VER: 495
+
+  - CUDA_VER: 11.5
+    DRIVER_VER: 450
+  - CUDA_VER: 11.5
+    DRIVER_VER: 455
+  - CUDA_VER: 11.5
+    DRIVER_VER: 460
+  - CUDA_VER: 11.5
+    DRIVER_VER: 465
+  - CUDA_VER: 11.5
+    DRIVER_VER: 470
