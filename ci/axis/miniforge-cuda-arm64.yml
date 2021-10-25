@@ -50,3 +50,5 @@ exclude:
     CUDA_VER: 11.3.1
   - FROM_IMAGE: gpuci/cuda
     CUDA_VER: 11.4.1
+  - FROM_IMAGE: nvidia/cuda
+    CUDA_VER: 11.5.0
