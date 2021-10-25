@@ -11,10 +11,10 @@ DOCKER_FILE:
   - Dockerfile
 
 RAPIDS_VER:
-  - '21.10'
   - '21.12'
 
 CUDA_VER:
+  - 11.5
   - 11.4
   - 11.2
 
@@ -31,9 +31,18 @@ PYTHON_VER:
 DRIVER_VER:
   - 460
   - 470
+  - 495
 
 exclude:
   - CUDA_VER: 11.2
     DRIVER_VER: 470
+  - CUDA_VER: 11.2
+    DRIVER_VER: 495
   - CUDA_VER: 11.4
     DRIVER_VER: 460
+  - CUDA_VER: 11.4
+    DRIVER_VER: 495
+  - CUDA_VER: 11.5
+    DRIVER_VER: 460
+  - CUDA_VER: 11.5
+    DRIVER_VER: 470
