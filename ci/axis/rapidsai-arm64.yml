@@ -13,7 +13,6 @@ DOCKER_FILE:
   - base-runtime.Dockerfile
 
 RAPIDS_VER:
-  - '21.10'
   - '21.12'
 
 RAPIDS_CHANNEL:
