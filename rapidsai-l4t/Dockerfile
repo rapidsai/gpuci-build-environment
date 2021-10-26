@@ -110,7 +110,7 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
       'python_abi=*=*cp*' \
-      "setuptools<50" \
+      "setuptools>50" \
     && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
 
 # Clean up pkgs to reduce image size and chmod for all users
