@@ -4,11 +4,6 @@ ARG CUDA_TYPE=devel
 ARG LINUX_VER=centos7
 FROM ${FROM_IMAGE}:${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}
 
-# Define arguments
-ARG GCC9_DIR=/usr/local/gcc9
-ARG GCC9_VER=9.4.0
-ARG NUM_BUILD_CPUS=16
-
 # Add /usr/local/cuda/* temporarily to LD_LIBRARY_PATH to support various build steps
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH_POSTBUILD:/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs
 
@@ -25,6 +20,11 @@ RUN yum upgrade -y \
       make \
       gmp-devel mpfr-devel libmpc-devel file
 
+# Define arguments
+ARG GCC9_DIR=/usr/local/gcc9
+ARG GCC9_VER=9.4.0
+ARG NUM_BUILD_CPUS=16
+
 # Build gcc 9
 RUN mkdir -p ${GCC9_DIR} \
     && cd ${GCC9_DIR} && wget -q http://ftp.gnu.org/gnu/gcc/gcc-${GCC9_VER}/gcc-${GCC9_VER}.tar.gz \
@@ -33,3 +33,16 @@ RUN mkdir -p ${GCC9_DIR} \
     && ./configure --prefix=${GCC9_DIR} --disable-multilib \
     && make -j${NUM_BUILD_CPUS} && make install \
     && rm -r ${GCC9_DIR}/gcc-${GCC9_VER} ${GCC9_DIR}/gcc-${GCC9_VER}.tar.gz
+
+ARG BINUTILS_VER=2.37
+ARG BINUTILS_DIR=/usr/local/binutils
+
+# Build binutils
+RUN mkdir -p /usr/local/src/binutils/build ${BINUTILS_DIR} \
+ && wget -q -O- https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.gz \
+  | tar -C /usr/local/src/binutils --strip-components=1 -xzf - \
+ && cd /usr/local/src/binutils/build \
+ && ../configure --prefix=${BINUTILS_DIR} \
+ && make -j${NUM_BUILD_CPUS} \
+ && make -j${NUM_BUILD_CPUS} install \
+ && cd / && rm -r /usr/local/src/binutils
