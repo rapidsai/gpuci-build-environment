@@ -94,7 +94,6 @@ RUN conda install -y gpuci-tools \
     || conda install -y gpuci-tools
 RUN gpuci_conda_retry install -y \
       anaconda-client \
-      boa \
       codecov \
       jq \
       mamba \
