@@ -11,6 +11,7 @@ ARG PYTHON_VER=3.7
 # Optional arguments
 ARG BUILD_STACK_VER=9.4.0
 ARG GCC9_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc9.tgz
+ARG BINUTILS_DIR=/usr/local/binutils
 
 # Capture argument used for FROM
 ARG CUDA_VER
@@ -22,13 +23,24 @@ ENV CXX=${GCC9_DIR}/bin/g++
 ENV CUDAHOSTCXX=${GCC9_DIR}/bin/g++
 ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=${GCC9_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
-ENV PATH=${GCC9_DIR}/bin:/usr/lib64/openmpi/bin:$PATH
+ENV PATH=${GCC9_DIR}/bin:${BINUTILS_DIR}/bin:/usr/lib64/openmpi/bin:$PATH
 
 # Set variable for mambarc
 ENV CONDARC=/opt/conda/.condarc
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
+
+ARG BINUTILS_VER=2.37
+# Build binutils
+RUN mkdir -p /usr/local/src/binutils/build ${BINUTILS_DIR} \
+ && wget -q -O- https://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VER}.tar.gz \
+  | tar -C /usr/local/src/binutils --strip-components=1 -xzf - \
+ && cd /usr/local/src/binutils/build \
+ && ../configure --prefix=${BINUTILS_DIR} \
+ && make -j$(nproc --ignore 2) \
+ && make -j$(nproc --ignore 2) install \
+ && cd / && rm -rf /usr/local/src/binutils
 
 # Add a condarc for channels and override settings
 RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
