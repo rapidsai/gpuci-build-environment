@@ -4,6 +4,13 @@ ARG CUDA_TYPE=devel
 ARG LINUX_VER=centos7
 FROM ${FROM_IMAGE}:${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}
 
+# Define arguments
+ARG GCC7_DIR=/usr/local/gcc7
+ARG GCC7_VER=7.5.0
+ARG GCC9_DIR=/usr/local/gcc9
+ARG GCC9_VER=9.4.0
+ARG NUM_BUILD_CPUS=16
+
 # Add /usr/local/cuda/* temporarily to LD_LIBRARY_PATH to support various build steps
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH_POSTBUILD:/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs
 
@@ -20,11 +27,6 @@ RUN yum upgrade -y \
       make \
       gmp-devel mpfr-devel libmpc-devel file
 
-# Define arguments
-ARG GCC7_DIR=/usr/local/gcc7
-ARG GCC7_VER=7.5.0
-ARG NUM_BUILD_CPUS=16
-
 # Build gcc 7 and set the environment to use it
 # NOTE: this step requires packages gmp-devel, mpfr-devel,
 # libmpc-devel, and file (see above)
@@ -35,9 +37,6 @@ RUN mkdir -p ${GCC7_DIR} \
     && ./configure --prefix=${GCC7_DIR} --disable-multilib \
     && make -j${NUM_BUILD_CPUS} && make install \
     && rm -r ${GCC7_DIR}/gcc-${GCC7_VER} ${GCC7_DIR}/gcc-${GCC7_VER}.tar.gz
-
-ARG GCC9_DIR=/usr/local/gcc9
-ARG GCC9_VER=9.4.0
 
 # Build gcc 9
 RUN mkdir -p ${GCC9_DIR} \
@@ -53,16 +52,3 @@ RUN rm -rfv ${GCC7_DIR}/lib64/libstdc++.* \
     && ls -la ${GCC9_DIR}/lib64/libstdc++.* \
     && cp -av ${GCC9_DIR}/lib64/libstdc++.* ${GCC7_DIR}/lib64 \
     && ls -la ${GCC7_DIR}/lib64/libstdc++.*
-
-ARG BINUTILS_VER=2.37
-ARG BINUTILS_DIR=/usr/local/binutils
-
-# Build binutils
-RUN mkdir -p /usr/local/src/binutils/build ${BINUTILS_DIR} \
- && wget -q -O- https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.gz \
-  | tar -C /usr/local/src/binutils --strip-components=1 -xzf - \
- && cd /usr/local/src/binutils/build \
- && ../configure --prefix=${BINUTILS_DIR} \
- && make -j${NUM_BUILD_CPUS} \
- && make -j${NUM_BUILD_CPUS} install \
- && cd / && rm -r /usr/local/src/binutils
