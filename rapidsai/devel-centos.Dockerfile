@@ -31,6 +31,11 @@ ENV CONDARC=/opt/conda/.condarc
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
 
+# Install gcc9 from prebuilt tarball
+RUN wget --quiet ${GCC9_URL} -O /gcc9.tgz \
+    && tar xzvf /gcc9.tgz \
+    && rm -f /gcc9.tgz
+
 ARG BINUTILS_VER=2.37
 # Build binutils
 RUN mkdir -p /usr/local/src/binutils/build ${BINUTILS_DIR} \
@@ -126,11 +131,6 @@ RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
       rapids-build-env=${RAPIDS_VER} \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER}
-
-# Install gcc9 from prebuilt tarball
-RUN gpuci_retry wget --quiet ${GCC9_URL} -O /gcc9.tgz \
-    && tar xzvf /gcc9.tgz \
-    && rm -f /gcc9.tgz
 
 # Clean up pkgs to reduce image size and chmod for all users
 RUN chmod -R ugo+w /opt/conda \
