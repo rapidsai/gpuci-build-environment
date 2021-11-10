@@ -12,6 +12,7 @@ DOCKER_FILE:
 
 RAPIDS_VER:
   - '21.12'
+  - '22.02'
 
 RAPIDS_CHANNEL:
   - rapidsai-nightly
