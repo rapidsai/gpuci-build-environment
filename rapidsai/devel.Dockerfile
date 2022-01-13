@@ -135,8 +135,5 @@ RUN chmod -R ugo+w /opt/conda \
     && conda clean -tipy \
     && chmod -R ugo+w /opt/conda
 
-# Add GDS header cufile.h to image
-COPY cufile.h /usr/local/cuda/targets/x86_64-linux/lib/cufile.h
-
 ENTRYPOINT [ "/opt/conda/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
