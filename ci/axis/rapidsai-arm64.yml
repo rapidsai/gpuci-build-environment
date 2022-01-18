@@ -43,6 +43,8 @@ BUILD_STACK_VER:
   - 9.4.0
 
 exclude:
+  - LINUX_VER: ubuntu20.04
+    CUDA_VER: 11.1
   - IMAGE_TYPE: base
     DOCKER_FILE: devel.arm64.Dockerfile
   - IMAGE_TYPE: base
