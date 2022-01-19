@@ -154,7 +154,7 @@ release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-d
     - `${CUDA_VER}` - `11.0`, `11.2`
     - `${IMAGE_TYPE}` - `base`, `runtime`, `devel`
     - `${LINUX_VER}` - `ubuntu18.04`, `ubuntu20.04`, `centos7`, `centos8`
-    - `${PYTHON_VER}` - `3.7`, `3.8`
+    - `${PYTHON_VER}` - `3.7`, `3.8`, `3.9`
 
 #### `conda` Build Images
 
