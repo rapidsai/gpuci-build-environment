@@ -103,8 +103,8 @@ RUN gpuci_conda_retry install -y \
 # Install sccache
 RUN wget https://github.com/mozilla/sccache/releases/download/v0.2.15/sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz \
     && tar -xzf sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz \
-    && rm -r sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz \
-    && cp sccache-v0.2.15-x86_64-unknown-linux-musl/sccache /usr/local/bin \
+    && mv sccache-v0.2.15-x86_64-unknown-linux-musl/sccache /usr/local/bin \
+    && rm -rf sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz sccache-v0.2.15-x86_64-unknown-linux-musl/ \
     && chmod +x /usr/local/bin/sccache
 
 # Create `rapids` conda env and make default
