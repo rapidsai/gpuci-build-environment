@@ -102,6 +102,12 @@ RUN gpuci_conda_retry install -y \
       codecov \
       mamba \
       rapids-scout-local
+# Install sccache
+RUN wget https://github.com/mozilla/sccache/releases/download/v0.2.15/sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz \
+    && tar -xzf sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz \
+    && rm -r sccache-v0.2.15-x86_64-unknown-linux-musl.tar.gz \
+    && cp sccache-v0.2.15-x86_64-unknown-linux-musl/sccache /usr/local/bin \
+    && chmod +x /usr/local/bin/sccache
 
 # Create `rapids` conda env and make default
 RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
