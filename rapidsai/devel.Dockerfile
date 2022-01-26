@@ -7,7 +7,6 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
 ARG RAPIDS_CHANNEL=rapidsai-nightly
 ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
-ARG SCCACHE_VERSION=0.2.15
 
 # Optional arguments
 ARG BUILD_STACK_VER=9.4.0
@@ -101,18 +100,13 @@ RUN gpuci_conda_retry install -y \
       codecov \
       mamba \
       rapids-scout-local
-# Install sccache
-RUN wget https://github.com/mozilla/sccache/releases/download/v${SCCACHE_VERSION}/sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz \
-    && tar -xzf sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz \
-    && mv sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl/sccache /usr/local/bin \
-    && rm -rf sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl.tar.gz sccache-v${SCCACHE_VERSION}-x86_64-unknown-linux-musl/ \
-    && chmod +x /usr/local/bin/sccache
 
 # Create `rapids` conda env and make default
 RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c gpuci \
+      sccache \
       cudatoolkit=${CUDA_VER} \
       git \
       git-lfs \
