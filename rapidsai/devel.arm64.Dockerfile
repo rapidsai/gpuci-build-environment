@@ -106,6 +106,7 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       -c conda-forge \
       -c gpuci \
       -c rapidsai-nightly \
+      sccache \
       cudatoolkit=${CUDA_VER} \
       git \
       git-lfs \
