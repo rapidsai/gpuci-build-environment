@@ -37,7 +37,6 @@ LINUX_VER:
   - centos8
 
 PYTHON_VER:
-  - 3.7
   - 3.8
   - 3.9
 
