@@ -21,6 +21,11 @@ ENV CUDAHOSTCXX=/usr/bin/g++
 ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 
+# sccache variables
+ENV SCCACHE_BUCKET=rapids-sccache
+ENV SCCACHE_REGION=us-west-2
+ENV SCCACHE_IDLE_TIMEOUT=32768
+
 # Set variable for mambarc
 ENV CONDARC=/opt/conda/.condarc
 

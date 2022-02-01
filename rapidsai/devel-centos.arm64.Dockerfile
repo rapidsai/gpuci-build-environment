@@ -24,6 +24,11 @@ ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=${GCC9_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV PATH=${GCC9_DIR}/bin:/usr/lib64/openmpi/bin:$PATH
 
+# sccache variables
+ENV SCCACHE_BUCKET=rapids-sccache
+ENV SCCACHE_REGION=us-west-2
+ENV SCCACHE_IDLE_TIMEOUT=32768
+
 # Set variable for mambarc
 ENV CONDARC=/opt/conda/.condarc
 
