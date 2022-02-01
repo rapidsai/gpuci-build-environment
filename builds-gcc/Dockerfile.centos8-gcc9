@@ -12,6 +12,10 @@ ARG NUM_BUILD_CPUS=16
 # Add /usr/local/cuda/* temporarily to LD_LIBRARY_PATH to support various build steps
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH_POSTBUILD:/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs
 
+# Fix CentOS8 EOL
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* \
+    && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-* 
+
 RUN yum install -y epel-release
 
 # Needed for libmpc-devel
