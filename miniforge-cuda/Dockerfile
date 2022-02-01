@@ -53,6 +53,8 @@ RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
       yum-config-manager --disable cuda ; \
     elif [ "${LINUX_VER}" == "centos8" ] ; then \
+      sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* \
+      && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-* ; \
       dnf install -y \
         'dnf-command(config-manager)' \
         glibc-langpack-en \

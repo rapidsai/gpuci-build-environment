@@ -30,6 +30,10 @@ ENV CONDARC=/opt/conda/.condarc
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
 
+# Fix CentOS8 EOL
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* \
+    && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-* 
+
 # Add a condarc for channels and override settings
 RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
