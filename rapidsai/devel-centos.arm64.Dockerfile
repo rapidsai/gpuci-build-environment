@@ -23,6 +23,10 @@ ENV CUDAHOSTCXX=${GCC9_DIR}/bin/g++
 ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=${GCC9_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV PATH=${GCC9_DIR}/bin:/usr/lib64/openmpi/bin:$PATH
+ENV NVCC=/usr/local/cuda/bin/nvcc
+ENV CUDAToolkit_ROOT=/usr/local/cuda
+ENV CUDACXX=/usr/local/cuda/bin/nvcc 
+
 
 # Set variable for mambarc
 ENV CONDARC=/opt/conda/.condarc
