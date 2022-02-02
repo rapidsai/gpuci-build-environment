@@ -24,6 +24,11 @@ ENV NVCC=/usr/local/cuda/bin/nvcc
 ENV CUDAToolkit_ROOT=/usr/local/cuda
 ENV CUDACXX=/usr/local/cuda/bin/nvcc 
 
+# Add sccache variables
+ENV CMAKE_CUDA_COMPILER_LAUNCHER=sccache
+ENV CMAKE_CXX_COMPILER_LAUNCHER=sccache
+ENV CMAKE_C_COMPILER_LAUNCHER=sccache
+
 # Set variable for mambarc
 ENV CONDARC=/opt/conda/.condarc
 
