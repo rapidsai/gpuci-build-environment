@@ -14,7 +14,6 @@ ARG CONDA_VER=4.8.3-5
 ARG MINIFORGE_URL=https://github.com/conda-forge/miniforge/releases/download/${CONDA_VER}/Miniforge3-${CONDA_VER}-Linux-${ARCH_TYPE}.sh
 
 # Set environment
-ENV PATH=/opt/conda/bin:${PATH}
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Set CUDA_VERSION as in some 'nvidia/cuda' images this is not set
