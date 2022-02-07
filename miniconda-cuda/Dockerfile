@@ -100,14 +100,15 @@ RUN wget --quiet ${MINICONDA_URL} -O /miniconda.sh \
     && echo "auto_update_conda: False" >> /opt/conda/.condarc \
     && ln -s /opt/conda /conda
 
-# Install tini for init
-RUN conda install -k -y tini \
-    || conda install -k -y tini
+# Install tini
+ARG TINI_VER=v0.19.0
+RUN wget "https://github.com/krallin/tini/releases/download/${TINI_VER}/tini-amd64" -O /tini \
+    && chmod +x /tini
 
 # Clean up conda and set permissions for all users
 RUN chmod -R ugo+w /opt/conda \
     && /opt/conda/bin/conda clean -tipy \
     && chmod -R ugo+w /opt/conda
 
-ENTRYPOINT [ "/opt/conda/bin/tini", "--" ]
+ENTRYPOINT [ "/tini", "--" ]
 CMD [ "/bin/bash" ]

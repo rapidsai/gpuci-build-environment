@@ -94,11 +94,12 @@ RUN wget --quiet ${MINIFORGE_URL} -O /miniforge.sh \
     && echo "ssl_verify: False" >> /opt/conda/.condarc \
     && ln -s /opt/conda /conda
 
-# Install tini for init
-RUN conda install -k -y tini \
-    || conda install -k -y tini
+# Install tini
+ARG TINI_VER=v0.19.0
+RUN wget "https://github.com/krallin/tini/releases/download/${TINI_VER}/tini-arm64" -O /tini \
+    && chmod +x /tini
 
 RUN chmod -R ugo+w /opt/conda
 
-ENTRYPOINT [ "/opt/conda/bin/tini", "--" ]
+ENTRYPOINT [ "/tini", "--" ]
 CMD [ "/bin/bash" ]
