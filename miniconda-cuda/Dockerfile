@@ -21,8 +21,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 ## A lot of scripts and conda recipes depend on this env var
 ENV CUDA_VERSION=${FULL_CUDA_VER}
 
-# Enables "source activate conda"
-SHELL ["/bin/bash", "-c"]
+# Enables "conda activate"
+SHELL ["/bin/bash", "--login", "-c"]
 
 # Update and add pkgs for Ubuntu, also generate locales for 'en_US.UTF-8'
 RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
@@ -93,9 +93,7 @@ RUN wget --quiet ${MINICONDA_URL} -O /miniconda.sh \
     && rm -f /miniconda.sh \
     && echo "conda ${CONDA_VER}" >> /opt/conda/conda-meta/pinned \
     && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
-    && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
-    && echo "conda activate base" >> ~/.bashrc \
-    && echo ". /opt/conda/etc/profile.d/conda.sh" >> /etc/skel/.bashrc \
+    && echo "conda activate base" >> /etc/profile.d/conda.sh \
     && echo "auto_update_conda: False" >> /opt/conda/.condarc \
     && ln -s /opt/conda /conda
 

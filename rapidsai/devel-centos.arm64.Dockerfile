@@ -27,9 +27,6 @@ ENV PATH=${GCC9_DIR}/bin:/usr/lib64/openmpi/bin:$PATH
 # Set variable for mambarc
 ENV CONDARC=/opt/conda/.condarc
 
-# Enables "source activate conda"
-SHELL ["/bin/bash", "-c"]
-
 # Fix CentOS8 EOL
 RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* \
     && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-* 
@@ -98,10 +95,9 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       mamba \
       python="${PYTHON_VER}" \
       "python_abi=*=*cp*" \
-      rapids-scout-local \
       sccache \
       "setuptools>50" \
-    && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
+    && sed -i 's/conda activate base/conda activate rapids/g' /etc/profile.d/conda.sh
 
 # Install build/doc/notebook env meta-pkgs
 #

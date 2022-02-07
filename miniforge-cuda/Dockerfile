@@ -20,8 +20,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 ## A lot of scripts and conda recipes depend on this env var
 ENV CUDA_VERSION=${FULL_CUDA_VER}
 
-# Enables "source activate conda"
-SHELL ["/bin/bash", "-c"]
+# Enables "conda activate"
+SHELL ["/bin/bash", "--login", "-c"]
 
 # Update and add pkgs for Ubuntu, also generate locales for 'en_US.UTF-8'
 RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
@@ -86,9 +86,7 @@ RUN wget --quiet ${MINIFORGE_URL} -O /miniforge.sh \
     && /bin/bash /miniforge.sh -b -p /opt/conda \
     && rm -f /miniforge.sh \
     && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
-    && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
-    && echo "conda activate base" >> ~/.bashrc \
-    && echo ". /opt/conda/etc/profile.d/conda.sh" >> /etc/skel/.bashrc \
+    && echo "conda activate base" >> /etc/profile.d/conda.sh \
     && echo "auto_update_conda: False" >> /opt/conda/.condarc \
     && echo "ssl_verify: False" >> /opt/conda/.condarc \
     && ln -s /opt/conda /conda

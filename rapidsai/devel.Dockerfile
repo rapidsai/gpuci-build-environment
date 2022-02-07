@@ -24,9 +24,6 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 # Set variable for mambarc
 ENV CONDARC=/opt/conda/.condarc
 
-# Enables "source activate conda"
-SHELL ["/bin/bash", "-c"]
-
 # Add a condarc for channels and override settings
 RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
@@ -112,10 +109,9 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       mamba \
       python="${PYTHON_VER}" \
       "python_abi=*=*cp*" \
-      rapids-scout-local \
       sccache \
       "setuptools>50" \
-    && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
+    && sed -i 's/conda activate base/conda activate rapids/g' /etc/profile.d/conda.sh
 
 # Install build/doc/notebook env meta-pkgs
 #

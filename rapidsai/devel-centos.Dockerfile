@@ -28,9 +28,6 @@ ENV PATH=${GCC9_DIR}/bin:${BINUTILS_DIR}/bin:/usr/lib64/openmpi/bin:$PATH
 # Set variable for mambarc
 ENV CONDARC=/opt/conda/.condarc
 
-# Enables "source activate conda"
-SHELL ["/bin/bash", "-c"]
-
 # Install gcc9 from prebuilt tarball
 RUN wget --quiet ${GCC9_URL} -O /gcc9.tgz \
     && tar xzvf /gcc9.tgz \
@@ -114,10 +111,9 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       mamba \
       python="${PYTHON_VER}" \
       "python_abi=*=*cp*" \
-      rapids-scout-local \
       sccache \
       "setuptools>50" \
-    && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
+    && sed -i 's/conda activate base/conda activate rapids/g' /etc/profile.d/conda.sh
 
 # Install build/doc/notebook env meta-pkgs
 #

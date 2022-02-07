@@ -22,9 +22,6 @@ ENV CUDAHOSTCXX=/usr/bin/g++
 ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 
-# Enables "source activate conda"
-SHELL ["/bin/bash", "-c"]
-
 # Add a condarc for channels and override settings
 RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
@@ -108,7 +105,7 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       python="${PYTHON_VER}" \
       "python_abi=*=*cp*" \
       "setuptools>50" \
-    && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
+    && sed -i 's/conda activate base/conda activate rapids/g' /etc/profile.d/conda.sh
 
 # Clean up pkgs to reduce image size and chmod for all users
 RUN chmod -R ugo+w /opt/conda \

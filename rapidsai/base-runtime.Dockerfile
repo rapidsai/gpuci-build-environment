@@ -15,9 +15,6 @@ ARG BUILD_STACK_VER=9.4.0
 # Capture argument used for FROM
 ARG CUDA_VER
 
-# Enables "source activate conda"
-SHELL ["/bin/bash", "-c"]
-
 # Add a condarc for channels and override settings
 RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
       echo -e "\
@@ -60,7 +57,7 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       python="${PYTHON_VER}" \
       "python_abi=*=*cp*" \
       "setuptools>50" \
-    && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
+    && sed -i 's/conda activate base/conda activate rapids/g' /etc/profile.d/conda.sh
 
 # For `runtime` images install notebook env meta-pkg
 #

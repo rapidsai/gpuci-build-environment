@@ -78,7 +78,7 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV PATH=${PATH}:/conda/bin
 
 # Create a dev conda env
-RUN source activate base \
+RUN conda activate base \
     && conda create --no-default-packages --override-channels -n dev \
       -c nvidia \
       -c conda-forge \
@@ -92,8 +92,8 @@ RUN source activate base \
     && sed -i 's/conda activate base/conda activate dev/g' ~/.bashrc \
     && chmod -R ugo+w /opt/conda
 
-## Enables "source activate conda"
-SHELL ["/bin/bash", "-c"]
+## Enables "conda activate"
+SHELL ["/bin/bash", "--login", "-c"]
 
 ENTRYPOINT [ "/tini", "--" ]
 CMD [ "/bin/bash" ]
