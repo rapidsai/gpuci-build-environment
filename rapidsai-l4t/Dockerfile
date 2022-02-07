@@ -93,23 +93,20 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv
 RUN conda install -y gpuci-tools \
     || conda install -y gpuci-tools
 
-RUN gpuci_conda_retry install -y \
-      anaconda-client \
-      codecov
-# FIXME: Install rapids-scout-local
-#      rapids-scout-local
-
 # Create `rapids` conda env and make default
 RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c gpuci \
+      anaconda-client \
+      codecov \
       git \
       gpuci-tools \
-      libgcc-ng=${BUILD_STACK_VER} \
-      libstdcxx-ng=${BUILD_STACK_VER} \
-      python=${PYTHON_VER} \
-      'python_abi=*=*cp*' \
+      libgcc-ng="${BUILD_STACK_VER}" \
+      libstdcxx-ng="${BUILD_STACK_VER}" \
+      mamba \
+      python="${PYTHON_VER}" \
+      "python_abi=*=*cp*" \
       "setuptools>50" \
     && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
 

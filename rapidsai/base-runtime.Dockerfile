@@ -45,19 +45,20 @@ channels: \n\
     fi
 
 # Create rapids conda env and make default
-RUN conda install -y gpuci-tools mamba \
-    || conda install -y gpuci-tools mamba
+RUN conda install -y gpuci-tools \
+    || conda install -y gpuci-tools
 RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c gpuci \
-      cudatoolkit=${CUDA_VER} \
+      cudatoolkit="${CUDA_VER}" \
       git \
       gpuci-tools \
-      libgcc-ng=${BUILD_STACK_VER} \
-      libstdcxx-ng=${BUILD_STACK_VER} \
-      python=${PYTHON_VER} \
-      'python_abi=*=*cp*' \
+      libgcc-ng="${BUILD_STACK_VER}" \
+      libstdcxx-ng="${BUILD_STACK_VER}" \
+      mamba \
+      python="${PYTHON_VER}" \
+      "python_abi=*=*cp*" \
       "setuptools>50" \
     && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
 
