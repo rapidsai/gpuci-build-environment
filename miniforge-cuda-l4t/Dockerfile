@@ -98,5 +98,5 @@ RUN wget "https://github.com/krallin/tini/releases/download/${TINI_VER}/tini-arm
 
 RUN chmod -R ugo+w /opt/conda
 
-ENTRYPOINT [ "/tini", "--" ]
+ENTRYPOINT ["/tini", "--", "/bin/bash", "--login", "-c"]
 CMD [ "/bin/bash" ]

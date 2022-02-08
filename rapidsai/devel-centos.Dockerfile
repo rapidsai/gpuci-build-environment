@@ -133,5 +133,5 @@ RUN chmod -R ugo+w /opt/conda \
     && conda clean -tipy \
     && chmod -R ugo+w /opt/conda
 
-ENTRYPOINT [ "/tini", "--" ]
+ENTRYPOINT ["/tini", "--", "/bin/bash", "--login", "-c"]
 CMD [ "/bin/bash" ]
