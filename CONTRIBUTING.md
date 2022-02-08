@@ -75,11 +75,9 @@ ARG LIB_NG_VERSION=7.5.0
 
 # Set environment
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
-ENV PATH=${PATH}:/conda/bin
 
 # Create a dev conda env
-RUN conda activate base \
-    && conda create --no-default-packages --override-channels -n dev \
+RUN conda create --no-default-packages --override-channels -n dev \
       -c nvidia \
       -c conda-forge \
       cudatoolkit=${CUDA_VER} \
@@ -89,13 +87,10 @@ RUN conda activate base \
       python=${PYTHON_VERSION} \
       #TODO: Add additional conda packages here
     && conda clean -afy \
-    && sed -i 's/conda activate base/conda activate dev/g' ~/.bashrc \
+    && sed -i 's/conda activate base/conda activate dev/g' /etc/profile.d/conda.sh \
     && chmod -R ugo+w /opt/conda
 
-## Enables "conda activate"
-SHELL ["/bin/bash", "--login", "-c"]
-
-ENTRYPOINT [ "/tini", "--" ]
+ENTRYPOINT [ "/tini", "--", "/bin/bash", "--login", "-c" ]
 CMD [ "/bin/bash" ]
 ```
 
