@@ -102,13 +102,6 @@ else
   echo "ARCH_TYPE is set to '$ARCH_TYPE', adding to build args..."
   BUILD_ARGS="${BUILD_ARGS} --build-arg ARCH_TYPE=${ARCH_TYPE}"
 fi
-# Check if BUILD_STACK_VER is set
-if [ -z "$BUILD_STACK_VER" ] ; then
-  echo "BUILD_STACK_VER is not set, skipping..."
-else
-  echo "BUILD_STACK_VER is set to '$BUILD_STACK_VER', adding to build args..."
-  BUILD_ARGS="${BUILD_ARGS} --build-arg BUILD_STACK_VER=${BUILD_STACK_VER}"
-fi
 
 # Ouput build config
 gpuci_logger "Build config info..."

@@ -135,8 +135,6 @@ release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-d
   - `RAPIDS_CHANNEL` - `conda` channel to use for install of integration pkgs
     - `rapidsai` for stable; `rapidsai-nightly` for nightly
   - `RAPIDS_VER` - Major and minor version to use for packages (e.g. `21.06`)
-  - `BUILD_STACK_VER` - Specifies the `conda-forge` version of build stack to install
-    - Default - `9.4.0` for packages `libgcc-ng` & `libstdcxx-ng`
 - Base image
   - `FROM gpuci/miniconda-cuda:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}`
 - Purpose

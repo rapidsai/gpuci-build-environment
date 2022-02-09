@@ -9,9 +9,6 @@ ARG RAPIDS_CHANNEL=rapidsai-nightly
 ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
 
-# Optional arguments
-ARG BUILD_STACK_VER=9.4.0
-
 # Capture argument used for FROM
 ARG CUDA_VER
 
@@ -54,8 +51,6 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       cudatoolkit=${CUDA_VER} \
       git \
       gpuci-tools \
-      libgcc-ng=${BUILD_STACK_VER} \
-      libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
       'python_abi=*=*cp*' \
       "setuptools>50" \

@@ -9,7 +9,6 @@ ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
 
 # Optional arguments
-ARG BUILD_STACK_VER=9.4.0
 ARG GCC9_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc9.tgz
 ARG BINUTILS_DIR=/usr/local/binutils
 
@@ -120,8 +119,6 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       git \
       git-lfs \
       gpuci-tools \
-      libgcc-ng=${BUILD_STACK_VER} \
-      libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
       'python_abi=*=*cp*' \
       "setuptools>50" \
