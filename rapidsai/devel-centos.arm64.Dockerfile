@@ -93,8 +93,7 @@ RUN gpuci_conda_retry install -y \
       anaconda-client \
       codecov \
       jq \
-      mamba \
-      rapids-scout-local
+      mamba
 
 # Create `rapids` conda env and make default
 RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
