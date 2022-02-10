@@ -34,6 +34,7 @@ ssl_verify: False \n\
 channels: \n\
   - gpuci \n\
   - rapidsai-nightly \n\
+  - dask/label/dev \n\
   - rapidsai \n\
   - nvidia \n\
   - pytorch \n\
