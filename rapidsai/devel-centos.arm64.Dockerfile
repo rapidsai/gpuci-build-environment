@@ -24,7 +24,7 @@ ENV LD_LIBRARY_PATH=${GCC9_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/us
 ENV PATH=${GCC9_DIR}/bin:/usr/lib64/openmpi/bin:$PATH
 ENV NVCC=/usr/local/cuda/bin/nvcc
 ENV CUDAToolkit_ROOT=/usr/local/cuda
-ENV CUDACXX=/usr/local/cuda/bin/nvcc 
+ENV CUDACXX=/usr/local/cuda/bin/nvcc
 
 # Add sccache variables
 ENV CMAKE_CUDA_COMPILER_LAUNCHER=sccache
@@ -40,7 +40,7 @@ SHELL ["/bin/bash", "-c"]
 
 # Fix CentOS8 EOL
 RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* \
-    && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-* 
+    && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*
 
 # Add a condarc for channels and override settings
 RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
@@ -61,6 +61,7 @@ ssl_verify: False \n\
 channels: \n\
   - gpuci \n\
   - rapidsai-nightly \n\
+  - dask/label/dev \n\
   - rapidsai \n\
   - nvidia \n\
   - pytorch \n\
