@@ -19,7 +19,7 @@ ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV NVCC=/usr/local/cuda/bin/nvcc
 ENV CUDAToolkit_ROOT=/usr/local/cuda
-ENV CUDACXX=/usr/local/cuda/bin/nvcc 
+ENV CUDACXX=/usr/local/cuda/bin/nvcc
 
 # Add sccache variables
 ENV CMAKE_CUDA_COMPILER_LAUNCHER=sccache
@@ -51,6 +51,7 @@ ssl_verify: False \n\
 channels: \n\
   - gpuci \n\
   - rapidsai-nightly \n\
+  - dask/label/dev \n\
   - rapidsai \n\
   - nvidia \n\
   - pytorch \n\
