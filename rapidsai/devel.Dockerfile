@@ -84,6 +84,9 @@ RUN apt-get update -y --fix-missing \
       tzdata \
       vim \
       zlib1g-dev \
+      cpp-9 \
+      gcc-9 \
+      gfortran-9 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
