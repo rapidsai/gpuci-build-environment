@@ -107,17 +107,14 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       gpuci-tools \
       python=${PYTHON_VER} \
       'python_abi=*=*cp*' \
-      "setuptools>50" \
+      setuptools=59.8.0 \
     && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
 
 # Install build/doc/notebook env meta-pkgs
 #
-# Once installed remove the meta-pkg so dependencies can be freely updated &
-# the meta-pkg can be installed again with updates
-RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
-      rapids-build-env=${RAPIDS_VER} \
-      rapids-notebook-env=${RAPIDS_VER} \
-    && gpuci_conda_retry remove -y -n rapids --force-remove \
+# Don't actually install the meta-pkgs so dependencies can be 
+# freely updated & the meta-pkg can be installed again with updates
+RUN gpuci_mamba_retry install -y -n rapids --freeze-installed --only-deps \
       rapids-build-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER}
 
