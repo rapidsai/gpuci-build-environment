@@ -61,7 +61,7 @@ See [Public Images](README.md#public-images) for list of options for `FROM`-ing
 Here is an example on extending the image:
 
 ```Dockerfile
-ARG FROM_IMAGE=gpuci/miniconda-cuda
+ARG FROM_IMAGE=gpuci/miniforge-cuda
 ARG CUDA_VERSION=10.1
 ARG CUDA_VER=${CUDA_VERSION}
 ARG CUDA_TYPE=devel

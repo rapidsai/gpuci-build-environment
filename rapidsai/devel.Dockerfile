@@ -1,4 +1,4 @@
-ARG FROM_IMAGE=gpuci/miniconda-cuda
+ARG FROM_IMAGE=gpuci/miniforge-cuda
 ARG CUDA_VER=11.0
 ARG LINUX_VER=ubuntu18.04
 FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
