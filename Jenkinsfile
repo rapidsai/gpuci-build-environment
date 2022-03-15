@@ -5,24 +5,8 @@ pipeline {
     }
   }
   stages {
-    stage('gpuCI/parallel/miniconda-miniforge') {
+    stage('gpuCI/parallel/miniforge') {
       parallel {
-        stage('gpuCI/build/miniconda-cuda') {
-          steps {
-            retry(1) {
-              build(
-                job: 'gpuci/gpuci-build-environment-jobs/miniconda-cuda',
-                wait: true,
-                propagate: true,
-                parameters: [
-                  string(name: 'GIT_URL', value: env.GIT_URL),
-                  string(name: 'PR_ID', value: (env.CHANGE_ID == null) ? 'BRANCH' : env.CHANGE_ID),
-                  string(name: 'COMMIT_HASH', value: (env.CHANGE_ID == null) ? env.GIT_BRANCH : 'origin/pr/'+env.CHANGE_ID+'/merge')
-                ]
-              )
-            }
-          }
-        }
         stage('gpuCI/build/miniforge-cuda') {
           steps {
             retry(1) {
@@ -41,19 +25,17 @@ pipeline {
         }
         stage('gpuCI/build/miniforge-cuda-arm64') {
           steps {
-            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-              retry(1) {
-                build(
-                  job: 'gpuci/gpuci-build-environment-jobs/miniforge-cuda-arm64',
-                  wait: true,
-                  propagate: true,
-                  parameters: [
-                    string(name: 'GIT_URL', value: env.GIT_URL),
-                    string(name: 'PR_ID', value: (env.CHANGE_ID == null) ? 'BRANCH' : env.CHANGE_ID),
-                    string(name: 'COMMIT_HASH', value: (env.CHANGE_ID == null) ? env.GIT_BRANCH : 'origin/pr/'+env.CHANGE_ID+'/merge')
-                  ]
-                )
-              }
+            retry(1) {
+              build(
+                job: 'gpuci/gpuci-build-environment-jobs/miniforge-cuda-arm64',
+                wait: true,
+                propagate: true,
+                parameters: [
+                  string(name: 'GIT_URL', value: env.GIT_URL),
+                  string(name: 'PR_ID', value: (env.CHANGE_ID == null) ? 'BRANCH' : env.CHANGE_ID),
+                  string(name: 'COMMIT_HASH', value: (env.CHANGE_ID == null) ? env.GIT_BRANCH : 'origin/pr/'+env.CHANGE_ID+'/merge')
+                ]
+              )
             }
           }
         }
@@ -75,13 +57,13 @@ pipeline {
         }
       }
     }
-    stage('gpuCI/parallel/miniconda-miniforge-driver'){
+    stage('gpuCI/parallel/miniforge-driver'){
       parallel {
-        stage('gpuCI/build/miniconda-cuda-driver') {
+        stage('gpuCI/build/miniforge-cuda-driver') {
           steps {
             retry(1) {
               build(
-                job: 'gpuci/gpuci-build-environment-jobs/miniconda-cuda-driver',
+                job: 'gpuci/gpuci-build-environment-jobs/miniforge-cuda-driver',
                 wait: true,
                 propagate: true,
                 parameters: [
@@ -95,20 +77,18 @@ pipeline {
         }
         stage('gpuCI/build/miniforge-cuda-driver-arm64') {
           steps {
-            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-              retry(1) {
-                build(
-                  job:
-                  'gpuci/gpuci-build-environment-jobs/miniforge-cuda-driver-arm64',
-                  wait: true,
-                  propagate: true,
-                  parameters: [
-                    string(name: 'GIT_URL', value: env.GIT_URL),
-                    string(name: 'PR_ID', value: (env.CHANGE_ID == null) ? 'BRANCH' : env.CHANGE_ID),
-                    string(name: 'COMMIT_HASH', value: (env.CHANGE_ID == null) ? env.GIT_BRANCH : 'origin/pr/'+env.CHANGE_ID+'/merge')
-                  ]
-                )
-              }
+            retry(1) {
+              build(
+                job:
+                'gpuci/gpuci-build-environment-jobs/miniforge-cuda-driver-arm64',
+                wait: true,
+                propagate: true,
+                parameters: [
+                  string(name: 'GIT_URL', value: env.GIT_URL),
+                  string(name: 'PR_ID', value: (env.CHANGE_ID == null) ? 'BRANCH' : env.CHANGE_ID),
+                  string(name: 'COMMIT_HASH', value: (env.CHANGE_ID == null) ? env.GIT_BRANCH : 'origin/pr/'+env.CHANGE_ID+'/merge')
+                ]
+              )
             }
           }
         }
@@ -134,19 +114,17 @@ pipeline {
         }
         stage('gpuCI/build/rapidsai-arm64') {
           steps {
-            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-              retry(1) {
-                build(
-                  job: 'gpuci/gpuci-build-environment-jobs/rapidsai-arm64',
-                  wait: true,
-                  propagate: true,
-                  parameters: [
-                    string(name: 'GIT_URL', value: env.GIT_URL),
-                    string(name: 'PR_ID', value: (env.CHANGE_ID == null) ? 'BRANCH' : env.CHANGE_ID),
-                    string(name: 'COMMIT_HASH', value: (env.CHANGE_ID == null) ? env.GIT_BRANCH : 'origin/pr/'+env.CHANGE_ID+'/merge')
-                  ]
-                )
-              }
+            retry(1) {
+              build(
+                job: 'gpuci/gpuci-build-environment-jobs/rapidsai-arm64',
+                wait: true,
+                propagate: true,
+                parameters: [
+                  string(name: 'GIT_URL', value: env.GIT_URL),
+                  string(name: 'PR_ID', value: (env.CHANGE_ID == null) ? 'BRANCH' : env.CHANGE_ID),
+                  string(name: 'COMMIT_HASH', value: (env.CHANGE_ID == null) ? env.GIT_BRANCH : 'origin/pr/'+env.CHANGE_ID+'/merge')
+                ]
+              )
             }
           }
         }
