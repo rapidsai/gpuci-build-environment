@@ -1,4 +1,4 @@
-ARG FROM_IMAGE=gpuci/miniconda-cuda
+ARG FROM_IMAGE=gpuci/miniforge-cuda
 ARG CUDA_VER=11.0
 ARG LINUX_VER=centos7
 FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
@@ -9,7 +9,6 @@ ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
 
 # Optional arguments
-ARG BUILD_STACK_VER=9.4.0
 ARG GCC9_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc9.tgz
 ARG BINUTILS_DIR=/usr/local/binutils
 
@@ -24,6 +23,14 @@ ENV CUDAHOSTCXX=${GCC9_DIR}/bin/g++
 ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=${GCC9_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV PATH=${GCC9_DIR}/bin:${BINUTILS_DIR}/bin:/usr/lib64/openmpi/bin:$PATH
+ENV NVCC=/usr/local/cuda/bin/nvcc
+ENV CUDAToolkit_ROOT=/usr/local/cuda
+ENV CUDACXX=/usr/local/cuda/bin/nvcc
+
+# Add sccache variables
+ENV CMAKE_CUDA_COMPILER_LAUNCHER=sccache
+ENV CMAKE_CXX_COMPILER_LAUNCHER=sccache
+ENV CMAKE_C_COMPILER_LAUNCHER=sccache
 
 # Set variable for mambarc
 ENV CONDARC=/opt/conda/.condarc
@@ -66,6 +73,7 @@ ssl_verify: False \n\
 channels: \n\
   - gpuci \n\
   - rapidsai-nightly \n\
+  - dask/label/dev \n\
   - rapidsai \n\
   - nvidia \n\
   - pytorch \n\
@@ -100,20 +108,18 @@ RUN conda install -y gpuci-tools \
 RUN gpuci_conda_retry install -y \
       anaconda-client \
       codecov \
-      mamba \
-      rapids-scout-local
+      mamba
 
 # Create `rapids` conda env and make default
 RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c gpuci \
+      sccache \
       cudatoolkit=${CUDA_VER} \
       git \
       git-lfs \
       gpuci-tools \
-      libgcc-ng=${BUILD_STACK_VER} \
-      libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
       'python_abi=*=*cp*' \
       "setuptools>50" \
@@ -136,9 +142,6 @@ RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
 RUN chmod -R ugo+w /opt/conda \
     && conda clean -tipy \
     && chmod -R ugo+w /opt/conda
-
-# Add GDS header cufile.h to image
-COPY cufile.h /usr/local/cuda/targets/x86_64-linux/lib/cufile.h
 
 ENTRYPOINT [ "/opt/conda/bin/tini", "--" ]
 CMD [ "/bin/bash" ]

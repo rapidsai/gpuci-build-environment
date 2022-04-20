@@ -10,7 +10,7 @@ ARG LINUX_VER
 
 # Define versions and download locations
 ARG ARCH_TYPE=x86_64
-ARG CONDA_VER=4.8.3-5
+ARG CONDA_VER=4.10.3-10
 ARG MINIFORGE_URL=https://github.com/conda-forge/miniforge/releases/download/${CONDA_VER}/Miniforge3-${CONDA_VER}-Linux-${ARCH_TYPE}.sh
 
 # Set environment
@@ -27,6 +27,7 @@ SHELL ["/bin/bash", "-c"]
 # Update and add pkgs for Ubuntu, also generate locales for 'en_US.UTF-8'
 RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
       apt-get update \
+      && apt-get upgrade -y \
       && apt-get install -y --no-install-recommends \
         autoconf \
         automake \
@@ -35,6 +36,8 @@ RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
         curl \
         git \
         locales \
+        libnuma1 \
+        libnuma-dev \
         patch \
         tzdata \
         unzip \
@@ -53,6 +56,8 @@ RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
       yum-config-manager --disable cuda ; \
     elif [ "${LINUX_VER}" == "centos8" ] ; then \
+      sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* \
+      && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-* ; \
       dnf install -y \
         'dnf-command(config-manager)' \
         glibc-langpack-en \
@@ -71,6 +76,8 @@ RUN if [ "${LINUX_VER:0:6}" == "centos" ] ; then \
         curl \
         git \
         make \
+        numactl-devel \
+        numactl-libs \
         patch \
         unzip \
         wget \

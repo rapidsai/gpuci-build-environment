@@ -15,19 +15,19 @@ destination image.
 
 ## Public Images
 
-The `gpuci/miniconda-cuda` image is the base layer that all gpuCI testing and
+The `gpuci/miniforge-cuda` image is the base layer that all gpuCI testing and
 RAPIDS release containers are built off of. This image also serves as a public
 image for those who want a one-to-one compatible `nvidia/cuda` image with
-`miniconda` installed. In addition `gpuci/miniconda-cuda-driver` is provided for
+`miniforge` installed. In addition `gpuci/miniforge-cuda-driver` is provided for
 `ubuntu18.04` and `centos7` *only* with a minimum set of conda build utilities and the NVIDIA
 driver installed to allow for CPU-only conda builds of most CUDA code.
 
-### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fminiconda-cuda)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/miniconda-cuda/) `gpuci/miniconda-cuda`
+### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fminiforge-cuda)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/miniforge-cuda/) `gpuci/miniforge-cuda`
 
 - Repo location
-  - [`gpuci/miniconda-cuda`](https://hub.docker.com/r/gpuci/miniconda-cuda/tags) 
+  - [`gpuci/miniforge-cuda`](https://hub.docker.com/r/gpuci/miniforge-cuda/tags)
 - Dockerfile
-  - [`Dockerfile`](miniconda-cuda/Dockerfile)
+  - [`Dockerfile`](miniforge-cuda/Dockerfile)
 - Build arguments
   - Depends on upstream `nvidia/cuda` combinations
     - `CUDA_VER` - `9.0`, `9.2`, `10.0`, `10.1`, `10.2`, `11.0`, `11.1`, `11.2`
@@ -39,38 +39,38 @@ driver installed to allow for CPU-only conda builds of most CUDA code.
   - `FROM ${FROM_IMAGE}:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}`
     - Default - `nvidia/cuda:10.2-devel-ubuntu18.04`
 - Purpose
-  - Contains CUDA + miniconda installed
+  - Contains CUDA + miniforge installed
   - Replaces `nvidia/cuda` and enables conda environment
   - Activates the `base` conda environment on launch
   - Serves as a base image for community using `conda` and gpuCI users to
   build their own custom image
 - Tag format - `${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}`
   - Supports the same options as defined in **Build arguments**
-  - Current [tags](https://hub.docker.com/r/gpuci/miniconda-cuda/tags)
+  - Current [tags](https://hub.docker.com/r/gpuci/miniforge-cuda/tags)
 
-### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fminiconda-cuda-driver)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/miniconda-cuda-drvier/) `gpuci/miniconda-cuda-driver`
+### [![Build Status](https://gpuci.gpuopenanalytics.com/buildStatus/icon?job=gpuci%2Fdocker%2Fminiforge-cuda-driver)](https://gpuci.gpuopenanalytics.com/job/gpuci/job/docker/job/miniforge-cuda-drvier/) `gpuci/miniforge-cuda-driver`
 
 - Repo location
-  - [`gpuci/miniconda-cuda-driver`](https://hub.docker.com/r/gpuci/miniconda-cuda-driver/tags) 
+  - [`gpuci/miniforge-cuda-driver`](https://hub.docker.com/r/gpuci/miniforge-cuda-driver/tags)
 - Dockerfile
-  - [`Dockerfile`](miniconda-cuda-driver/Dockerfile)
+  - [`Dockerfile`](miniforge-cuda-driver/Dockerfile)
 - Build arguments
   - Depends on upstream `nvidia/cuda` combinations
     - `CUDA_VER` - `11.0`, `11.1`, `11.2`
     - `IMAGE_TYPE` - `devel`
     - `LINUX_VER` - `ubuntu18.04`, `centos7`
   - Other arguments
-    - `FROM_IMAGE` - `gpuci/miniconda-cuda`
+    - `FROM_IMAGE` - `gpuci/miniforge-cuda`
 - Base image
   - `FROM ${FROM_IMAGE}:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}`
-    - Default - `gpuci/miniconda-cuda:11.0-devel-ubuntu18.04`
+    - Default - `gpuci/miniforge-cuda:11.0-devel-ubuntu18.04`
 - Purpose
   - Adds tools needed for conda builds and uploads
   - Installs the NVIDIA driver for CPU-only builds of most CUDA code
   - Activates the `base` conda environment on launch
 - Tag format - `${CUDA_VER}-devel-${LINUX_VER}`
   - Supports the same options as defined in **Build arguments**
-  - Current [tags](https://hub.docker.com/r/gpuci/miniconda-cuda-driver/tags)
+  - Current [tags](https://hub.docker.com/r/gpuci/miniforge-cuda-driver/tags)
 
 ## gpuCI Images
 
@@ -100,7 +100,7 @@ wget --quiet https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz -O /gcc7.t
   - `FROM nvidia/cuda:${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}`
 - Purpose
   - Builds gcc7 from source on CentOS 7
-  - Used by CentOS 7 images during `gpuci/miniconda-cuda` build to install gcc7 without building
+  - Used by CentOS 7 images during `gpuci/miniforge-cuda` build to install gcc7 without building
 - Tags - `${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}`
   - Supports these options
     - `${CUDA_VER}` - `10.2`
@@ -119,7 +119,7 @@ and their `RAPIDS_VER` version:
 installed for running tests with GPUs. They are also used by the RAPIDS `devel`
 release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-driver-nightly`.
   - `runtime` - image types are used by RAPIDS `base` and `runtime` release.
-  RAPIDS `base` images do not use the `base` type from `gpuci/miniconda-cuda` or
+  RAPIDS `base` images do not use the `base` type from `gpuci/miniforge-cuda` or
   `nvidia/cuda` as they do not have all the required files to run RAPIDS.
 - Versioning - `RAPIDS_VER`
   - [`gpuci/rapidsai`](https://hub.docker.com/r/gpuci/rapidsai/tags) uses the same versioning as the RAPIDS project
@@ -135,10 +135,8 @@ release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-d
   - `RAPIDS_CHANNEL` - `conda` channel to use for install of integration pkgs
     - `rapidsai` for stable; `rapidsai-nightly` for nightly
   - `RAPIDS_VER` - Major and minor version to use for packages (e.g. `21.06`)
-  - `BUILD_STACK_VER` - Specifies the `conda-forge` version of build stack to install
-    - Default - `9.4.0` for packages `libgcc-ng` & `libstdcxx-ng`
 - Base image
-  - `FROM gpuci/miniconda-cuda:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}`
+  - `FROM gpuci/miniforge-cuda:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}`
 - Purpose
   - Provide a common testing base that can be reused by the RAPIDS release images
   - Use the [integration](https://github.com/rapidsai/integration/tree/branch-21.06/conda/recipes) `env` packages to pull consistent versioning information for all of RAPIDS
@@ -154,7 +152,7 @@ release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-d
     - `${CUDA_VER}` - `11.0`, `11.2`
     - `${IMAGE_TYPE}` - `base`, `runtime`, `devel`
     - `${LINUX_VER}` - `ubuntu18.04`, `ubuntu20.04`, `centos7`, `centos8`
-    - `${PYTHON_VER}` - `3.7`, `3.8`
+    - `${PYTHON_VER}` - `3.7`, `3.8`, `3.9`
 
 #### `conda` Build Images
 

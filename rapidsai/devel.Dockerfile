@@ -1,4 +1,4 @@
-ARG FROM_IMAGE=gpuci/miniconda-cuda
+ARG FROM_IMAGE=gpuci/miniforge-cuda
 ARG CUDA_VER=11.0
 ARG LINUX_VER=ubuntu18.04
 FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
@@ -7,9 +7,6 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
 ARG RAPIDS_CHANNEL=rapidsai-nightly
 ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
-
-# Optional arguments
-ARG BUILD_STACK_VER=9.4.0
 
 # Capture argument used for FROM
 ARG CUDA_VER
@@ -20,6 +17,14 @@ ENV CXX=/usr/bin/g++
 ENV CUDAHOSTCXX=/usr/bin/g++
 ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
+ENV NVCC=/usr/local/cuda/bin/nvcc
+ENV CUDAToolkit_ROOT=/usr/local/cuda
+ENV CUDACXX=/usr/local/cuda/bin/nvcc
+
+# Add sccache variables
+ENV CMAKE_CUDA_COMPILER_LAUNCHER=sccache
+ENV CMAKE_CXX_COMPILER_LAUNCHER=sccache
+ENV CMAKE_C_COMPILER_LAUNCHER=sccache
 
 # Set variable for mambarc
 ENV CONDARC=/opt/conda/.condarc
@@ -46,6 +51,7 @@ ssl_verify: False \n\
 channels: \n\
   - gpuci \n\
   - rapidsai-nightly \n\
+  - dask/label/dev \n\
   - rapidsai \n\
   - nvidia \n\
   - pytorch \n\
@@ -78,6 +84,9 @@ RUN apt-get update -y --fix-missing \
       tzdata \
       vim \
       zlib1g-dev \
+      cpp-9 \
+      gcc-9 \
+      gfortran-9 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -98,20 +107,18 @@ RUN conda install -y gpuci-tools \
 RUN gpuci_conda_retry install -y \
       anaconda-client \
       codecov \
-      mamba \
-      rapids-scout-local
+      mamba
 
 # Create `rapids` conda env and make default
 RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c gpuci \
+      sccache \
       cudatoolkit=${CUDA_VER} \
       git \
       git-lfs \
       gpuci-tools \
-      libgcc-ng=${BUILD_STACK_VER} \
-      libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
       'python_abi=*=*cp*' \
       "setuptools>50" \
@@ -134,9 +141,6 @@ RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
 RUN chmod -R ugo+w /opt/conda \
     && conda clean -tipy \
     && chmod -R ugo+w /opt/conda
-
-# Add GDS header cufile.h to image
-COPY cufile.h /usr/local/cuda/targets/x86_64-linux/lib/cufile.h
 
 ENTRYPOINT [ "/opt/conda/bin/tini", "--" ]
 CMD [ "/bin/bash" ]

@@ -8,9 +8,6 @@ ARG RAPIDS_CHANNEL=rapidsai-nightly
 ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
 
-# Optional arguments
-ARG BUILD_STACK_VER=9.4.0
-
 # Capture argument used for FROM
 ARG CUDA_VER
 
@@ -20,6 +17,14 @@ ENV CXX=/usr/bin/g++
 ENV CUDAHOSTCXX=/usr/bin/g++
 ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
+ENV NVCC=/usr/local/cuda/bin/nvcc
+ENV CUDAToolkit_ROOT=/usr/local/cuda
+ENV CUDACXX=/usr/local/cuda/bin/nvcc
+
+# Add sccache variables
+ENV CMAKE_CUDA_COMPILER_LAUNCHER=sccache
+ENV CMAKE_CXX_COMPILER_LAUNCHER=sccache
+ENV CMAKE_C_COMPILER_LAUNCHER=sccache
 
 # Set variable for mambarc
 ENV CONDARC=/opt/conda/.condarc
@@ -46,6 +51,7 @@ ssl_verify: False \n\
 channels: \n\
   - gpuci \n\
   - rapidsai-nightly \n\
+  - dask/label/dev \n\
   - rapidsai \n\
   - nvidia \n\
   - pytorch \n\
@@ -80,6 +86,9 @@ RUN apt-get update -y --fix-missing \
       tzdata \
       vim \
       zlib1g-dev \
+      cpp-9 \
+      gcc-9 \
+      gfortran-9 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -96,8 +105,7 @@ RUN gpuci_conda_retry install -y \
       anaconda-client \
       codecov \
       jq \
-      mamba \
-      rapids-scout-local
+      mamba
 
 # Create `rapids` conda env and make default
 # TODO: Remove -c rapidsai-nightly
@@ -106,12 +114,11 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       -c conda-forge \
       -c gpuci \
       -c rapidsai-nightly \
+      sccache \
       cudatoolkit=${CUDA_VER} \
       git \
       git-lfs \
       gpuci-tools \
-      libgcc-ng=${BUILD_STACK_VER} \
-      libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
       'python_abi=*=*cp*' \
       "setuptools>50" \

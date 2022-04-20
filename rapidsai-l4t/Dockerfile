@@ -9,9 +9,6 @@ ARG RAPIDS_CHANNEL=rapidsai-nightly
 ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
 
-# Optional arguments
-ARG BUILD_STACK_VER=9.4.0
-
 # Capture argument used for FROM
 ARG CUDA_VER
 
@@ -21,6 +18,14 @@ ENV CXX=/usr/bin/g++
 ENV CUDAHOSTCXX=/usr/bin/g++
 ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
+ENV NVCC=/usr/local/cuda/bin/nvcc
+ENV CUDAToolkit_ROOT=/usr/local/cuda
+ENV CUDACXX=/usr/local/cuda/bin/nvcc 
+
+# Add sccache variables
+ENV CMAKE_CUDA_COMPILER_LAUNCHER=sccache
+ENV CMAKE_CXX_COMPILER_LAUNCHER=sccache
+ENV CMAKE_C_COMPILER_LAUNCHER=sccache
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
@@ -106,8 +111,6 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       -c gpuci \
       git \
       gpuci-tools \
-      libgcc-ng=${BUILD_STACK_VER} \
-      libstdcxx-ng=${BUILD_STACK_VER} \
       python=${PYTHON_VER} \
       'python_abi=*=*cp*' \
       "setuptools>50" \
