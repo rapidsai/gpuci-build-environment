@@ -18,7 +18,6 @@ CUDA_VER:
   - 11.4
   - 11.3
   - 11.2
-  - 11.1
 
 IMAGE_TYPE:
   - devel
@@ -38,14 +37,6 @@ DRIVER_VER:
   - 495
 
 exclude:
-  - CUDA_VER: 11.1
-    DRIVER_VER: 460
-  - CUDA_VER: 11.1
-    DRIVER_VER: 465
-  - CUDA_VER: 11.1
-    DRIVER_VER: 470
-  - CUDA_VER: 11.1
-    DRIVER_VER: 495
   - CUDA_VER: 11.2
     DRIVER_VER: 455
   - CUDA_VER: 11.2
