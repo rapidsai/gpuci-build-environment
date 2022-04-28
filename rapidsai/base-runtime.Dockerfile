@@ -5,7 +5,6 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-runtime-${LINUX_VER} AS base
 
 # Required arguments
 ARG IMAGE_TYPE=base
-ARG RAPIDS_CHANNEL=rapidsai-nightly
 ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
 

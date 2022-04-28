@@ -5,7 +5,6 @@ ARG IMAGE_TYPE=devel
 FROM ${FROM_IMAGE}:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}
 
 # Required arguments
-ARG RAPIDS_CHANNEL=rapidsai-nightly
 ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
 
@@ -20,7 +19,7 @@ ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV NVCC=/usr/local/cuda/bin/nvcc
 ENV CUDAToolkit_ROOT=/usr/local/cuda
-ENV CUDACXX=/usr/local/cuda/bin/nvcc 
+ENV CUDACXX=/usr/local/cuda/bin/nvcc
 
 # Add sccache variables
 ENV CMAKE_CUDA_COMPILER_LAUNCHER=sccache
