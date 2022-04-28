@@ -28,17 +28,13 @@ if [ `tr -dc '.' <<<"$CUDA_VER" | awk '{ print length }'` -eq 2 ] ; then
 fi
 BUILD_TAG="${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}"
 # Check if CUDA 11+, if so include patch version in CUDA_VER for nvidia/cuda & gpuci/cuda FROM images
-if [[ "${CUDA_VER:0:2}" == "10" || "${CUDA_VER:0:1}" == "9" ]] ; then
-  echo "Detected CUDA 9/10, no need to update CUDA_VER..."
+echo "Detected CUDA 11+, checking FROM_IMAGE..."
+if [[ "$FROM_IMAGE" == "gpuci/cuda" || "$FROM_IMAGE" == "nvidia/cuda" ]] ; then
+  echo ">> FROM_IMAGE is an external image, need to update CUDA_VER to pull correct external image..."
+  CUDA_VER=$FULL_CUDA_VER
+  echo ">> CUDA_VER is now set to '$CUDA_VER'..."
 else
-  echo "Detected CUDA 11+, checking FROM_IMAGE..."
-  if [[ "$FROM_IMAGE" == "gpuci/cuda" || "$FROM_IMAGE" == "nvidia/cuda" ]] ; then
-    echo ">> FROM_IMAGE is an external image, need to update CUDA_VER to pull correct external image..."
-    CUDA_VER=$FULL_CUDA_VER
-    echo ">> CUDA_VER is now set to '$CUDA_VER'..."
-  else
-    echo ">> FROM_IMAGE not an external image, no need to update CUDA_VER..."
-  fi
+  echo ">> FROM_IMAGE not an external image, no need to update CUDA_VER..."
 fi
 # Check if PR build and modify BUILD_IMAGE and BUILD_TAG
 if [ "$PR_ID" == "BRANCH" ] ; then
