@@ -30,30 +30,7 @@ ENV CMAKE_C_COMPILER_LAUNCHER=sccache
 SHELL ["/bin/bash", "-c"]
 
 # Add a condarc for channels and override settings
-RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
-      echo -e "\
-auto_update_conda: False \n\
-ssl_verify: False \n\
-channels: \n\
-  - gpuci \n\
-  - rapidsai \n\
-  - nvidia \n\
-  - pytorch \n\
-  - conda-forge \n" > /opt/conda/.condarc \
-      && cat /opt/conda/.condarc ; \
-    else \
-      echo -e "\
-auto_update_conda: False \n\
-ssl_verify: False \n\
-channels: \n\
-  - gpuci \n\
-  - rapidsai-nightly \n\
-  - rapidsai \n\
-  - nvidia \n\
-  - pytorch \n\
-  - conda-forge \n" > /opt/conda/.condarc \
-      && cat /opt/conda/.condarc ; \
-    fi
+COPY .condarc /opt/conda/.condarc
 
 # Install gcc7 - 7.5.0 to bring build stack in line with conda-forge
 RUN apt-get update \

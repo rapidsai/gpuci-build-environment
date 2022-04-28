@@ -54,31 +54,7 @@ RUN mkdir -p /usr/local/src/binutils/build ${BINUTILS_DIR} \
  && cd / && rm -rf /usr/local/src/binutils
 
 # Add a condarc for channels and override settings
-RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
-      echo -e "\
-auto_update_conda: False \n\
-ssl_verify: False \n\
-channels: \n\
-  - gpuci \n\
-  - rapidsai \n\
-  - nvidia \n\
-  - pytorch \n\
-  - conda-forge \n" > /opt/conda/.condarc \
-      && cat ${CONDARC} ; \
-    else \
-      echo -e "\
-auto_update_conda: False \n\
-ssl_verify: False \n\
-channels: \n\
-  - gpuci \n\
-  - rapidsai-nightly \n\
-  - dask/label/dev \n\
-  - rapidsai \n\
-  - nvidia \n\
-  - pytorch \n\
-  - conda-forge \n" > /opt/conda/.condarc \
-      && cat ${CONDARC} ; \
-    fi
+COPY .condarc /opt/conda/.condarc
 
 # Update and add pkgs for gpuci builds
 RUN yum install -y epel-release \
