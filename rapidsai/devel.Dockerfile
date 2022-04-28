@@ -114,7 +114,6 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       -c nvidia \
       -c conda-forge \
       -c gpuci \
-      sccache \
       cudatoolkit=${CUDA_VER} \
       git \
       git-lfs \
@@ -123,6 +122,12 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       'python_abi=*=*cp*' \
       "setuptools>50" \
     && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
+
+# Install SCCACHE
+ARG SCCACHE_VERSION=0.2.15
+ARG SCCACHE_ARCH=x86_64
+ARG SCCACHE_URL="https://github.com/mozilla/sccache/releases/download/v${SCCACHE_VERSION}/sccache-v${SCCACHE_VERSION}-${SCCACHE_ARCH}-unknown-linux-musl.tar.gz"
+RUN curl -L ${SCCACHE_URL} | tar -C /usr/bin -zf - --wildcards --strip-components=1 -x */sccache && chmod +x /usr/bin/sccache
 
 # Install build/doc/notebook env meta-pkgs
 #
