@@ -21,9 +21,7 @@ RAPIDS_CHANNEL:
 CUDA_VER:
   - 11.5
   - 11.4
-  - 11.3
   - 11.2
-  - 11.1
   - 11.0
 
 IMAGE_TYPE:
