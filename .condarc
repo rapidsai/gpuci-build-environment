@@ -1,8 +1,0 @@
-ssl_verify: False
-channels:
-  - gpuci
-  - rapidsai
-  - rapidsai-nightly
-  - nvidia
-  - conda-forge
-  - defaults

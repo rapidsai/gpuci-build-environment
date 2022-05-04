@@ -1,0 +1,13 @@
+auto_update_conda: False
+ssl_verify: False
+channels:
+  - gpuci
+  - rapidsai-nightly
+  - rapidsai
+  - nvidia
+  - pytorch
+  - conda-forge
+conda-build:
+  root-dir: /tmp/conda-bld-workspace
+  output_folder: /tmp/conda-bld-output
+  set_build_id: false
