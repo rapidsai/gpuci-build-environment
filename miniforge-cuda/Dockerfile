@@ -26,7 +26,8 @@ SHELL ["/bin/bash", "-c"]
 
 # Update and add pkgs for Ubuntu, also generate locales for 'en_US.UTF-8'
 RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
-      apt-get update \
+      apt-key adv --fetch-keys "https://developer.download.nvidia.com/compute/cuda/repos/${LINUX_VER/./}/${ARCH_TYPE}/3bf863cc.pub" \
+      && apt-get update \
       && apt-get upgrade -y \
       && apt-get install -y --no-install-recommends \
         autoconf \
