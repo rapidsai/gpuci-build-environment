@@ -30,13 +30,10 @@ PYTHON_VER:
 
 DRIVER_VER:
   - 460
-  - 465
   - 470
   - 495
 
 exclude:
-  - CUDA_VER: 11.2
-    DRIVER_VER: 465
   - CUDA_VER: 11.2
     DRIVER_VER: 470
   - CUDA_VER: 11.2
@@ -44,12 +41,8 @@ exclude:
   - CUDA_VER: 11.4
     DRIVER_VER: 460
   - CUDA_VER: 11.4
-    DRIVER_VER: 465
-  - CUDA_VER: 11.4
     DRIVER_VER: 495
   - CUDA_VER: 11.5
     DRIVER_VER: 460
-  - CUDA_VER: 11.5
-    DRIVER_VER: 465
   - CUDA_VER: 11.5
     DRIVER_VER: 470
