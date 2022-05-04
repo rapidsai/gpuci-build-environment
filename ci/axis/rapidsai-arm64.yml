@@ -15,9 +15,6 @@ DOCKER_FILE:
 RAPIDS_VER:
   - '22.06'
 
-RAPIDS_CHANNEL:
-  - rapidsai-nightly
-
 CUDA_VER:
   - 11.2
   - 11.3

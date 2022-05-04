@@ -88,13 +88,6 @@ else
   BUILD_ARGS="${BUILD_ARGS} --build-arg RAPIDS_VER=${RAPIDS_VER}"
   BUILD_TAG="${RAPIDS_VER}-cuda${BUILD_TAG}" #pre-prend version number
 fi
-# Check if RAPIDS_CHANNEL is set
-if [ -z "$RAPIDS_CHANNEL" ] ; then
-  echo "RAPIDS_CHANNEL is not set, skipping..."
-else
-  echo "RAPIDS_CHANNEL is set to '$RAPIDS_CHANNEL', adding to build args..."
-  BUILD_ARGS="${BUILD_ARGS} --build-arg RAPIDS_CHANNEL=${RAPIDS_CHANNEL}"
-fi
 # Check if ARCH_TYPE is set
 if [ -z "$ARCH_TYPE" ] ; then
   echo "ARCH_TYPE is not set, skipping..."
@@ -103,18 +96,13 @@ else
   BUILD_ARGS="${BUILD_ARGS} --build-arg ARCH_TYPE=${ARCH_TYPE}"
 fi
 
-# Ouput build config
-gpuci_logger "Build config info..."
-echo "Build image and tag: ${BUILD_IMAGE}:${BUILD_TAG}"
-echo "Build args: ${BUILD_ARGS}"
-gpuci_logger "Docker build command..."
-echo "docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${IMAGE_NAME}/${DOCKER_FILE} ${IMAGE_NAME}/"
-
 # Build image
 gpuci_logger "Starting build..."
 GPUCI_RETRY_MAX=1
 GPUCI_RETRY_SLEEP=120
-gpuci_retry docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${IMAGE_NAME}/${DOCKER_FILE} ${IMAGE_NAME}/
+set -x
+gpuci_retry docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${IMAGE_NAME}/${DOCKER_FILE} context/
+set +x
 
 # List image info
 gpuci_logger "Displaying image info..."

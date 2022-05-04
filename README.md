@@ -132,8 +132,6 @@ release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-d
     - Ubuntu 18.04 & 20.04 - [`devel.Dockerfile`](rapidsai/devel.Dockerfile)
     - CentOS 7 & 8 - [`devel-centos7.Dockerfile`](rapidsai/devel-centos.Dockerfile)
 - Build arguments
-  - `RAPIDS_CHANNEL` - `conda` channel to use for install of integration pkgs
-    - `rapidsai` for stable; `rapidsai-nightly` for nightly
   - `RAPIDS_VER` - Major and minor version to use for packages (e.g. `21.06`)
 - Base image
   - `FROM gpuci/miniforge-cuda:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}`
