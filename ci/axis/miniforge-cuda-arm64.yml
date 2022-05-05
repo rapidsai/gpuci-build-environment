@@ -20,7 +20,6 @@ ARCH_TYPE:
 CUDA_VER:
   - 11.5.1
   - 11.4.1
-  - 11.3.1
   - 11.2.2
 
 IMAGE_TYPE:
@@ -36,8 +35,6 @@ LINUX_VER:
 exclude:
   # - FROM_IMAGE: gpuci/cuda
   #   CUDA_VER: 11.2.2
-  # - FROM_IMAGE: gpuci/cuda
-  #   CUDA_VER: 11.3.1
   # - FROM_IMAGE: gpuci/cuda
   #   CUDA_VER: 11.4.1
   # - FROM_IMAGE: nvidia/cuda
