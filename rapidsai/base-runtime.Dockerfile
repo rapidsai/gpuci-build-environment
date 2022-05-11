@@ -18,15 +18,16 @@ SHELL ["/bin/bash", "-c"]
 COPY .condarc /opt/conda/.condarc
 
 # Create rapids conda env and make default
-RUN conda install -y gpuci-tools mamba \
-    || conda install -y gpuci-tools mamba
+RUN conda install -y mamba \
+    || conda install -y mamba
+RUN wget https://github.com/rapidsai/gpuci-tools/releases/latest/download/tools.tar.gz -O - \
+    | tar -xz -C /usr/local/bin
 RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c gpuci \
       cudatoolkit=${CUDA_VER} \
       git \
-      gpuci-tools \
       python=${PYTHON_VER} \
       'python_abi=*=*cp*' \
       "setuptools>50" \

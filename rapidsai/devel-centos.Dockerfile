@@ -78,8 +78,8 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && rm -rf ./aws ./awscliv2.zip
 
 # Add core tools to base env
-RUN conda install -y gpuci-tools \
-    || conda install -y gpuci-tools
+RUN wget https://github.com/rapidsai/gpuci-tools/releases/latest/download/tools.tar.gz -O - \
+    | tar -xz -C /usr/local/bin
 RUN gpuci_conda_retry install -y \
       anaconda-client \
       codecov \
@@ -93,7 +93,6 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       cudatoolkit=${CUDA_VER} \
       git \
       git-lfs \
-      gpuci-tools \
       python=${PYTHON_VER} \
       'python_abi=*=*cp*' \
       "setuptools>50" \
