@@ -10,8 +10,9 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}
 ARG DRIVER_VER="440"
 
 # Add core tools to base env
+RUN wget https://github.com/rapidsai/gpuci-tools/releases/latest/download/tools.tar.gz -O - \
+    | tar -xz -C /usr/local/bin
 RUN source activate base \
-    && conda install -k -y --override-channels -c gpuci gpuci-tools \
     && gpuci_conda_retry install -k -y -c conda-forge \
       anaconda-client \
       codecov \
