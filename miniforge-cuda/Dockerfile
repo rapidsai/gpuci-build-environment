@@ -10,7 +10,7 @@ ARG LINUX_VER
 
 # Define versions and download locations
 ARG ARCH_TYPE=x86_64
-ARG CONDA_VER=4.10.3-10
+ARG CONDA_VER=4.12.0-0
 ARG MINIFORGE_URL=https://github.com/conda-forge/miniforge/releases/download/${CONDA_VER}/Miniforge3-${CONDA_VER}-Linux-${ARCH_TYPE}.sh
 
 # Set environment
