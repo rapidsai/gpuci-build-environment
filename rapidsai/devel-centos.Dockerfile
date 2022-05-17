@@ -82,6 +82,7 @@ RUN wget https://github.com/rapidsai/gpuci-tools/releases/latest/download/tools.
     | tar -xz -C /usr/local/bin
 RUN gpuci_conda_retry install -y \
       anaconda-client \
+      boa \
       codecov \
       mamba
 
@@ -90,6 +91,7 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       -c nvidia \
       -c conda-forge \
       -c gpuci \
+      boa \
       cudatoolkit=${CUDA_VER} \
       git \
       git-lfs \
