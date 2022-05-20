@@ -18,6 +18,8 @@ RUN yum upgrade -y \
       which \
       clang \
       make \
+      gcc \
+      gcc-c++ \
       gmp-devel mpfr-devel libmpc-devel file
 
 # Build gcc 9
