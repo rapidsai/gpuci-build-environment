@@ -1,18 +1,11 @@
-ARG FROM_IMAGE=nvidia/cuda
-ARG CUDA_VER=11.0
-ARG CUDA_TYPE=devel
-ARG LINUX_VER=centos7
-FROM ${FROM_IMAGE}:${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}
+FROM centos:7
 
 # Define arguments
-ARG GCC9_DIR=/usr/local/gcc9
-ARG GCC9_VER=9.4.0
-ARG GCC10_DIR=/usr/local/gcc10
-ARG GCC10_VER=10.3.0
-ARG NUM_BUILD_CPUS=16
-
-# Add /usr/local/cuda/* temporarily to LD_LIBRARY_PATH to support various build steps
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH_POSTBUILD:/usr/local/cuda/lib64:/usr/local/cuda/lib64/stubs
+ENV GCC9_DIR=/usr/local/gcc9
+ENV GCC9_VER=9.4.0
+ENV GCC10_DIR=/usr/local/gcc10
+ENV GCC10_VER=10.3.0
+ENV NUM_BUILD_CPUS=16
 
 RUN yum upgrade -y \
     && yum install -y --setopt=install_weak_deps=False \
