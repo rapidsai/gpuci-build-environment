@@ -3,6 +3,7 @@ ssl_verify: False
 channels:
   - gpuci
   - rapidsai-nightly
+  - dask/label/dev
   - rapidsai
   - nvidia
   - pytorch
