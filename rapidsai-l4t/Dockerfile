@@ -5,7 +5,6 @@ ARG IMAGE_TYPE=devel
 FROM ${FROM_IMAGE}:${CUDA_VER}-${IMAGE_TYPE}-${LINUX_VER}
 
 # Required arguments
-ARG RAPIDS_CHANNEL=rapidsai-nightly
 ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
 
@@ -20,7 +19,7 @@ ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV NVCC=/usr/local/cuda/bin/nvcc
 ENV CUDAToolkit_ROOT=/usr/local/cuda
-ENV CUDACXX=/usr/local/cuda/bin/nvcc 
+ENV CUDACXX=/usr/local/cuda/bin/nvcc
 
 # Add sccache variables
 ENV CMAKE_CUDA_COMPILER_LAUNCHER=sccache
@@ -31,30 +30,7 @@ ENV CMAKE_C_COMPILER_LAUNCHER=sccache
 SHELL ["/bin/bash", "-c"]
 
 # Add a condarc for channels and override settings
-RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
-      echo -e "\
-auto_update_conda: False \n\
-ssl_verify: False \n\
-channels: \n\
-  - gpuci \n\
-  - rapidsai \n\
-  - nvidia \n\
-  - pytorch \n\
-  - conda-forge \n" > /opt/conda/.condarc \
-      && cat /opt/conda/.condarc ; \
-    else \
-      echo -e "\
-auto_update_conda: False \n\
-ssl_verify: False \n\
-channels: \n\
-  - gpuci \n\
-  - rapidsai-nightly \n\
-  - rapidsai \n\
-  - nvidia \n\
-  - pytorch \n\
-  - conda-forge \n" > /opt/conda/.condarc \
-      && cat /opt/conda/.condarc ; \
-    fi
+COPY .condarc /opt/conda/.condarc
 
 # Install gcc7 - 7.5.0 to bring build stack in line with conda-forge
 RUN apt-get update \
@@ -95,8 +71,8 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv
     && rm -rf ./aws ./awscliv2.zip
 
 # Add core tools to base env
-RUN conda install -y gpuci-tools \
-    || conda install -y gpuci-tools
+RUN wget https://github.com/rapidsai/gpuci-tools/releases/latest/download/tools.tar.gz -O - \
+    | tar -xz -C /usr/local/bin
 
 RUN gpuci_conda_retry install -y \
       anaconda-client \
@@ -110,7 +86,6 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       -c conda-forge \
       -c gpuci \
       git \
-      gpuci-tools \
       python=${PYTHON_VER} \
       'python_abi=*=*cp*' \
       "setuptools>50" \

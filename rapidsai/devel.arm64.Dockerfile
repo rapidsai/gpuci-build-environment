@@ -4,7 +4,6 @@ ARG LINUX_VER=ubuntu18.04
 FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
 
 # Required arguments
-ARG RAPIDS_CHANNEL=rapidsai-nightly
 ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
 
@@ -33,31 +32,7 @@ ENV CONDARC=/opt/conda/.condarc
 SHELL ["/bin/bash", "-c"]
 
 # Add a condarc for channels and override settings
-RUN if [ "${RAPIDS_CHANNEL}" == "rapidsai" ] ; then \
-      echo -e "\
-auto_update_conda: False \n\
-ssl_verify: False \n\
-channels: \n\
-  - gpuci \n\
-  - rapidsai \n\
-  - nvidia \n\
-  - pytorch \n\
-  - conda-forge \n" > /opt/conda/.condarc \
-      && cat ${CONDARC} ; \
-    else \
-      echo -e "\
-auto_update_conda: False \n\
-ssl_verify: False \n\
-channels: \n\
-  - gpuci \n\
-  - rapidsai-nightly \n\
-  - dask/label/dev \n\
-  - rapidsai \n\
-  - nvidia \n\
-  - pytorch \n\
-  - conda-forge \n" > /opt/conda/.condarc \
-      && cat ${CONDARC} ; \
-    fi
+COPY .condarc /opt/conda/.condarc
 
 # Install gcc9
 RUN apt-get update \
@@ -99,8 +74,8 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv
     && rm -rf ./aws ./awscliv2.zip
 
 # Add core tools to base env
-RUN conda install -y gpuci-tools \
-    || conda install -y gpuci-tools
+RUN wget https://github.com/rapidsai/gpuci-tools/releases/latest/download/tools.tar.gz -O - \
+    | tar -xz -C /usr/local/bin
 RUN gpuci_conda_retry install -y \
       anaconda-client \
       codecov \
@@ -114,15 +89,19 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       -c conda-forge \
       -c gpuci \
       -c rapidsai-nightly \
-      sccache \
       cudatoolkit=${CUDA_VER} \
       git \
       git-lfs \
-      gpuci-tools \
       python=${PYTHON_VER} \
       'python_abi=*=*cp*' \
       "setuptools>50" \
     && sed -i 's/conda activate base/conda activate rapids/g' ~/.bashrc
+
+# Install SCCACHE
+ARG SCCACHE_VERSION=0.2.15
+ARG SCCACHE_ARCH=aarch64
+ARG SCCACHE_URL="https://github.com/mozilla/sccache/releases/download/v${SCCACHE_VERSION}/sccache-v${SCCACHE_VERSION}-${SCCACHE_ARCH}-unknown-linux-musl.tar.gz"
+RUN curl -L ${SCCACHE_URL} | tar -C /usr/bin -zf - --wildcards --strip-components=1 -x */sccache && chmod +x /usr/bin/sccache
 
 # Install build/doc/notebook env meta-pkgs
 #

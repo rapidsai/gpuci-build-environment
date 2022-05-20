@@ -13,11 +13,8 @@ DOCKER_FILE:
   - devel-centos.Dockerfile
 
 RAPIDS_VER:
-  - '22.04'
   - '22.06'
-
-RAPIDS_CHANNEL:
-  - rapidsai-nightly
+  - '22.08'
 
 CUDA_VER:
   - 11.5

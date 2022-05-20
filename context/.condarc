@@ -1,8 +1,11 @@
+auto_update_conda: False
 ssl_verify: False
 channels:
   - gpuci
-  - rapidsai
   - rapidsai-nightly
+  - rapidsai
   - nvidia
+  - pytorch
   - conda-forge
-  - defaults
+conda-build:
+  set_build_id: false

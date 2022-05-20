@@ -11,11 +11,8 @@ DOCKER_FILE:
   - Dockerfile
 
 RAPIDS_VER:
-  - '22.04'
   - '22.06'
-
-RAPIDS_CHANNEL:
-  - rapidsai-nightly
+  - '22.08'
 
 CUDA_VER:
   - 10.2
