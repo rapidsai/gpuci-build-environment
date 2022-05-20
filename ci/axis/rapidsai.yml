@@ -2,7 +2,7 @@ BUILD_IMAGE:
   - gpuci/rapidsai
 
 FROM_IMAGE:
-  - gpuci/miniconda-cuda
+  - gpuci/miniforge-cuda
 
 IMAGE_NAME:
   - rapidsai
@@ -14,6 +14,7 @@ DOCKER_FILE:
 
 RAPIDS_VER:
   - '22.04'
+  - '22.06'
 
 RAPIDS_CHANNEL:
   - rapidsai-nightly
