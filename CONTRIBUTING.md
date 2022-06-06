@@ -84,8 +84,6 @@ RUN source activate base \
       -c conda-forge \
       cudatoolkit=${CUDA_VER} \
       conda-forge::blas \
-      libgcc-ng=${LIB_NG_VERSION} \
-      libstdcxx-ng=${LIB_NG_VERSION} \
       python=${PYTHON_VERSION} \
       #TODO: Add additional conda packages here
     && conda clean -afy \
@@ -107,28 +105,6 @@ If you can include all of the conda dependencies in the image, building the actu
 `gpuci/<project>:${PROJECT_VERSION}-cuda${CUDA_VERSION}-devel-${LINUX_VERSION}-py${PYTHON_VERSION}`
 
 Example: `gpuci/rapidsai:0.15-cuda10.1-devel-ubuntu18.04-py3.6`
-
-
-### How can I use gcc7 in centos7 images?
-
-Simply include this snippet in a Dockerfile.centos7 file. You can use the same template above, replacing the 'Set environment section'
-
-```
-ARG CENTOS7_GCC7_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz
-
-# Update environment for gcc/g++ builds
-ENV GCC7_DIR=/usr/local/gcc7
-ENV CC=${GCC7_DIR}/bin/gcc
-ENV CXX=${GCC7_DIR}/bin/g++
-ENV CUDAHOSTCXX=${GCC7_DIR}/bin/g++
-ENV LD_LIBRARY_PATH=${GCC7_DIR}/lib64:$CONDA_PREFIX:$LD_LIBRARY_PATH
-ENV PATH=${GCC7_DIR}/bin:$PATH
-
-# Install gcc7 from prebuilt tarball
-RUN wget --quiet ${CENTOS7_GCC7_URL} -O /gcc7.tgz \
-    && tar xzvf /gcc7.tgz \
-    && rm -f /gcc7.tgz
-```
 
 
 ### How do create the driver image?

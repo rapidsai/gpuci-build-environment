@@ -48,8 +48,6 @@ conda activate rapids
 
 logger "Check versions..."
 python --version
-gcc --version
-g++ --version
 conda list
 
 # FIX Added to deal with Anancoda SSL verification issues during conda builds
