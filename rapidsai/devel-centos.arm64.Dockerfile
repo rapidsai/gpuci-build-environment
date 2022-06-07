@@ -7,20 +7,13 @@ FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
 ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
 
-# Optional arguments
-ARG GCC9_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc9-arm64.tgz
-
 # Capture argument used for FROM
 ARG CUDA_VER
 
-# Update environment for gcc/g++ builds
-ENV GCC9_DIR=/usr/local/gcc9
-ENV CC=${GCC9_DIR}/bin/gcc
-ENV CXX=${GCC9_DIR}/bin/g++
-ENV CUDAHOSTCXX=${GCC9_DIR}/bin/g++
+# Update environment
 ENV CUDA_HOME=/usr/local/cuda
-ENV LD_LIBRARY_PATH=${GCC9_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
-ENV PATH=${GCC9_DIR}/bin:/usr/lib64/openmpi/bin:$PATH
+ENV LD_LIBRARY_PATH=:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
+ENV PATH=/usr/lib64/openmpi/bin:$PATH
 ENV NVCC=/usr/local/cuda/bin/nvcc
 ENV CUDAToolkit_ROOT=/usr/local/cuda
 ENV CUDACXX=/usr/local/cuda/bin/nvcc
@@ -101,11 +94,6 @@ RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
     && gpuci_conda_retry remove -y -n rapids --force-remove \
       rapids-build-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER}
-
-# Install gcc9 from prebuilt tarball
-RUN gpuci_retry wget --quiet ${GCC9_URL} -O /gcc9.tgz \
-    && tar xzvf /gcc9.tgz \
-    && rm -f /gcc9.tgz
 
 # Clean up pkgs to reduce image size and chmod for all users
 RUN chmod -R ugo+w /opt/conda \

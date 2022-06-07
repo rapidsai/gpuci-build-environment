@@ -11,10 +11,7 @@ ARG PYTHON_VER=3.7
 # Capture argument used for FROM
 ARG CUDA_VER
 
-# Update environment for gcc/g++ builds
-ENV CC=/usr/bin/gcc
-ENV CXX=/usr/bin/g++
-ENV CUDAHOSTCXX=/usr/bin/g++
+# Update environment
 ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV NVCC=/usr/local/cuda/bin/nvcc
@@ -31,19 +28,6 @@ SHELL ["/bin/bash", "-c"]
 
 # Add a condarc for channels and override settings
 COPY .condarc /opt/conda/.condarc
-
-# Install gcc7 - 7.5.0 to bring build stack in line with conda-forge
-RUN apt-get update \
-    && apt-get install -y software-properties-common \
-    && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
-    && apt-get update \
-    && apt-get install -y gcc-7 g++-7 \
-    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 7 \
-    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 7 \
-    && update-alternatives --set gcc /usr/bin/gcc-7 \
-    && update-alternatives --set g++ /usr/bin/g++-7 \
-    && gcc --version \
-    && g++ --version
 
 # Update and add pkgs for gpuci builds
 RUN apt-get update -y --fix-missing \

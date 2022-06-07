@@ -8,20 +8,15 @@ ARG RAPIDS_VER=0.15
 ARG PYTHON_VER=3.7
 
 # Optional arguments
-ARG GCC9_URL=https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc9.tgz
 ARG BINUTILS_DIR=/usr/local/binutils
 
 # Capture argument used for FROM
 ARG CUDA_VER
 
-# Update environment for gcc/g++ builds
-ENV GCC9_DIR=/usr/local/gcc9
-ENV CC=${GCC9_DIR}/bin/gcc
-ENV CXX=${GCC9_DIR}/bin/g++
-ENV CUDAHOSTCXX=${GCC9_DIR}/bin/g++
+# Update environment
 ENV CUDA_HOME=/usr/local/cuda
-ENV LD_LIBRARY_PATH=${GCC9_DIR}/lib64:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
-ENV PATH=${GCC9_DIR}/bin:${BINUTILS_DIR}/bin:/usr/lib64/openmpi/bin:$PATH
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
+ENV PATH=${BINUTILS_DIR}/bin:/usr/lib64/openmpi/bin:$PATH
 ENV NVCC=/usr/local/cuda/bin/nvcc
 ENV CUDAToolkit_ROOT=/usr/local/cuda
 ENV CUDACXX=/usr/local/cuda/bin/nvcc
@@ -36,11 +31,6 @@ ENV CONDARC=/opt/conda/.condarc
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
-
-# Install gcc9 from prebuilt tarball
-RUN wget --quiet ${GCC9_URL} -O /gcc9.tgz \
-    && tar xzvf /gcc9.tgz \
-    && rm -f /gcc9.tgz
 
 ARG BINUTILS_VER=2.37
 # Build binutils
