@@ -52,8 +52,6 @@ conda install |<build_dep>| |<runtime_dep>| |<test_dep>|
 ##*
 logger "Check versions..."
 python --version
-$CC --version
-$CXX --version
 conda list
 
 ##*
@@ -66,7 +64,7 @@ conda list
 logger "Build libcudf..."
 ##*
 ## EDIT: Build and install all packages available in the rootbuild.sh
-$WORKSPACE/build.sh clean |<package>| |<package>| |<package>| 
+$WORKSPACE/build.sh clean |<package>| |<package>| |<package>|
 ##*
 
 ##*
@@ -84,4 +82,3 @@ else
     |<call_unit_tests>|
 fi
 ##*
-

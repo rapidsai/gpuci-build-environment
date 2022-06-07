@@ -10,10 +10,7 @@ ARG PYTHON_VER=3.7
 # Capture argument used for FROM
 ARG CUDA_VER
 
-# Update environment for gcc/g++ builds
-ENV CC=/usr/bin/gcc
-ENV CXX=/usr/bin/g++
-ENV CUDAHOSTCXX=/usr/bin/g++
+# Update environment
 ENV CUDA_HOME=/usr/local/cuda
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/lib
 ENV NVCC=/usr/local/cuda/bin/nvcc
@@ -34,19 +31,6 @@ SHELL ["/bin/bash", "-c"]
 # Add a condarc for channels and override settings
 COPY .condarc /opt/conda/.condarc
 
-# Install gcc9
-RUN apt-get update \
-    && apt-get install -y software-properties-common \
-    && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
-    && apt-get update \
-    && apt-get install -y gcc-9 g++-9 libstdc++6 \
-    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9 \
-    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9 \
-    && update-alternatives --set gcc /usr/bin/gcc-9 \
-    && update-alternatives --set g++ /usr/bin/g++-9 \
-    && gcc --version \
-    && g++ --version
-
 # Update and add pkgs for gpuci builds
 RUN apt-get update -y --fix-missing \
     && apt-get -qq install apt-utils -y --no-install-recommends \
@@ -61,9 +45,6 @@ RUN apt-get update -y --fix-missing \
       tzdata \
       vim \
       zlib1g-dev \
-      cpp-9 \
-      gcc-9 \
-      gfortran-9 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

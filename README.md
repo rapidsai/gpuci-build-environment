@@ -78,35 +78,6 @@ The images below are used for `conda` builds and GPU tests in gpuCI, see the
 [diagram](#image-flow-diagram) above for more context. They are ordered by their
 dependencies.
 
-### Supporting Image - `gcc7` From-Source Build for CentOS 7
-
-A supplemental image that is sourced for CentOS 7 images is `gpuci/builds-gcc7`.
-This is due to `gcc4` being the standard `gcc` in CentOS 7. With this image we
-pre-build `gcc7.3` and then use the following to pull the pre-built files into
-an image:
-
-```
-# Install gcc7 from prebuilt tarball
-wget --quiet https://gpuci.s3.us-east-2.amazonaws.com/builds/gcc7.tgz -O /gcc7.tgz \
-    && tar xzvf /gcc7.tgz \
-    && rm -f /gcc7.tgz
-```
-
-- Repo location
-  - [`gpuci/builds-gcc7`](https://hub.docker.com/r/gpuci/builds-gcc7/tags)
-- Dockerfile
-  - [`Dockerfile.centos7`](builds-gcc7/Dockerfile.centos7)
-- Base Image
-  - `FROM nvidia/cuda:${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}`
-- Purpose
-  - Builds gcc7 from source on CentOS 7
-  - Used by CentOS 7 images during `gpuci/miniforge-cuda` build to install gcc7 without building
-- Tags - `${CUDA_VER}-${CUDA_TYPE}-${LINUX_VER}`
-  - Supports these options
-    - `${CUDA_VER}` - `10.2`
-    - `${CUDA_TYPE}` - `devel`
-    - `${LINUX_VER}` - `centos7`
-
 ### GPU Test Images
 
 The `gpuci/rapidsai` images serve different purposes based on their `IMAGE_TYPE`
