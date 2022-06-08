@@ -72,6 +72,7 @@ RUN gpuci_mamba_retry create --no-default-packages --override-channels -n rapids
       -c gpuci \
       cudatoolkit=${CUDA_VER} \
       nvcc_linux-64=${CUDA_VER} \
+      openssl=1.1.1 \
       git \
       git-lfs \
       python=${PYTHON_VER} \
