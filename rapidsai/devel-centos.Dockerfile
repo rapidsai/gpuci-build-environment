@@ -81,6 +81,7 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
       -c conda-forge \
       -c gpuci \
       cudatoolkit=${CUDA_VER} \
+      nvcc_linux-64=${CUDA_VER} \
       git \
       git-lfs \
       python=${PYTHON_VER} \
