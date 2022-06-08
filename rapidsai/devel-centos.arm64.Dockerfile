@@ -64,7 +64,7 @@ RUN gpuci_conda_retry install -y \
       mamba
 
 # Create `rapids` conda env and make default
-RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
+RUN gpuci_mamba_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c gpuci \
@@ -87,7 +87,7 @@ RUN curl -L ${SCCACHE_URL} | tar -C /usr/bin -zf - --wildcards --strip-component
 #
 # Once installed remove the meta-pkg so dependencies can be freely updated &
 # the meta-pkg can be installed again with updates
-RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
+RUN gpuci_mamba_retry install -y -n rapids \
       rapids-build-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER} \
     && gpuci_conda_retry remove -y -n rapids --force-remove \

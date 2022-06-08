@@ -65,7 +65,7 @@ RUN gpuci_conda_retry install -y \
 #      rapids-scout-local
 
 # Create `rapids` conda env and make default
-RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
+RUN gpuci_mamba_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c gpuci \
