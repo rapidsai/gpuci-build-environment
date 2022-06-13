@@ -61,8 +61,6 @@ RUN wget https://github.com/rapidsai/gpuci-tools/releases/latest/download/tools.
 RUN gpuci_conda_retry install -y \
       anaconda-client \
       codecov
-# FIXME: Install rapids-scout-local
-#      rapids-scout-local
 
 # Create `rapids` conda env and make default
 RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \

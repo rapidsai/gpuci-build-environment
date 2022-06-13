@@ -77,12 +77,20 @@ RUN gpuci_conda_retry install -y \
       mamba
 
 # Create `rapids` conda env and make default
-RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
+RUN gpuci_mamba_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c gpuci \
       boa \
       cudatoolkit=${CUDA_VER} \
+      nvcc_linux-64=${CUDA_VER} \
+      # Conda-forge is currently migrating from OpenSSL 1.1.1 to OpenSSL 3. As part of
+      # this migration packages are being built for both versions. However not all packages
+      # have made it to OpenSSL 3. To avoid major solve changes later in the image build,
+      # we pin to OpenSSL 1.1.1 to ensure minimal changes later in the environment
+      # and no lengthy solves or conflicts.
+      # https://github.com/conda-forge/conda-forge-pinning-feedstock/pull/1896
+      openssl=1.1.1 \
       git \
       git-lfs \
       python=${PYTHON_VER} \
@@ -100,7 +108,7 @@ RUN curl -L ${SCCACHE_URL} | tar -C /usr/bin -zf - --wildcards --strip-component
 #
 # Once installed remove the meta-pkg so dependencies can be freely updated &
 # the meta-pkg can be installed again with updates
-RUN gpuci_conda_retry install -y -n rapids --freeze-installed \
+RUN gpuci_mamba_retry install -y -n rapids \
       rapids-build-env=${RAPIDS_VER} \
       rapids-doc-env=${RAPIDS_VER} \
       rapids-notebook-env=${RAPIDS_VER} \

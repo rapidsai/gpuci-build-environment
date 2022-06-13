@@ -22,7 +22,7 @@ RUN conda install -y mamba \
     || conda install -y mamba
 RUN wget https://github.com/rapidsai/gpuci-tools/releases/latest/download/tools.tar.gz -O - \
     | tar -xz -C /usr/local/bin
-RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
+RUN gpuci_mamba_retry create --no-default-packages --override-channels -n rapids \
       -c nvidia \
       -c conda-forge \
       -c gpuci \
@@ -38,7 +38,7 @@ RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids
 # Once installed remove the meta-pkg so dependencies can be freely updated &
 # the meta-pkg can be installed again with updates
 RUN if [ "${IMAGE_TYPE}" == "runtime" ] ; then \
-      gpuci_conda_retry install -y -n rapids --freeze-installed \
+      gpuci_mamba_retry install -y -n rapids \
         rapids-notebook-env=${RAPIDS_VER} \
       && gpuci_conda_retry remove -y -n rapids --force-remove \
         rapids-notebook-env=${RAPIDS_VER} ; \
