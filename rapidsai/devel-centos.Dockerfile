@@ -80,6 +80,8 @@ RUN gpuci_mamba_retry create --no-default-packages --override-channels -n rapids
       -c nvidia \
       -c conda-forge \
       -c gpuci \
+      c-compiler \
+      cxx-compiler \
       cudatoolkit=${CUDA_VER} \
       nvcc_linux-64=${CUDA_VER} \
       # Conda-forge is currently migrating from OpenSSL 1.1.1 to OpenSSL 3. As part of
