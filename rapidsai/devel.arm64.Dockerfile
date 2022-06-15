@@ -72,6 +72,8 @@ RUN gpuci_mamba_retry create --no-default-packages --override-channels -n rapids
       -c rapidsai-nightly \
       c-compiler \
       cxx-compiler \
+      gcc_impl_linux-aarch64=9 \
+      sysroot_linux-aarch64=2.17 \
       cudatoolkit=${CUDA_VER} \
       nvcc_linux-aarch64=${CUDA_VER} \
       # Conda-forge is currently migrating from OpenSSL 1.1.1 to OpenSSL 3. As part of
