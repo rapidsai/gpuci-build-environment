@@ -64,7 +64,7 @@ RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
     fi
 
 # Update and add pkgs for CentOS
-RUN if [[ "${LINUX_VER:0:6}" == "centos" || "${LINUX_VER:0:5}" == "rocky"]]; then \
+RUN if [[ "${LINUX_VER:0:6}" == "centos" || "${LINUX_VER:0:5}" == "rocky" ]]; then \
       yum -y update \
       && yum remove -y bind-license \
       && yum -y install --setopt=install_weak_deps=False \
