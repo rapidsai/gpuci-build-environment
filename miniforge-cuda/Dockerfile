@@ -56,9 +56,7 @@ RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
 # CentOS 8 - install glibc langpack
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
       yum-config-manager --disable cuda ; \
-    elif [ "${LINUX_VER}" == "centos8" ] ; then \
-      sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* \
-      && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-* ; \
+    elif [ "${LINUX_VER}" == "rockylinux8" ] ; then \
       dnf install -y \
         'dnf-command(config-manager)' \
         glibc-langpack-en \
@@ -85,7 +83,7 @@ RUN if [ "${LINUX_VER:0:6}" == "centos" ] ; then \
         which \
       && yum clean all ; \
     else \
-      echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'centos7' or 'centos8'\n\n"; \
+      echo -e "\n\n>>>> SKIPPING: LINUX_VER is not 'centos7' or 'rockylinux8'\n\n"; \
     fi
 
 # Install miniforge and configure

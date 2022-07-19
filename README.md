@@ -32,7 +32,7 @@ driver installed to allow for CPU-only conda builds of most CUDA code.
   - Depends on upstream `nvidia/cuda` combinations
     - `CUDA_VER` - `9.0`, `9.2`, `10.0`, `10.1`, `10.2`, `11.0`, `11.1`, `11.2`
     - `IMAGE_TYPE` - `base`, `runtime`, `devel`
-    - `LINUX_VER` - `ubuntu18.04`, `ubuntu20.04`, `centos7`, `centos8`
+    - `LINUX_VER` - `ubuntu18.04`, `ubuntu20.04`, `centos7`, `rockylinux8`
   - Other arguments
     - `FROM_IMAGE` - `nvidia/cuda`
 - Base image
@@ -120,7 +120,7 @@ release images and as the base for `gpuci/rapidsai-driver` and `gpuci/rapidsai-d
     - `${RAPIDS_VER}` - Major and minor version of RAPIDS (e.g. `21.06`)
     - `${CUDA_VER}` - `11.0`, `11.2`
     - `${IMAGE_TYPE}` - `base`, `runtime`, `devel`
-    - `${LINUX_VER}` - `ubuntu18.04`, `ubuntu20.04`, `centos7`, `centos8`
+    - `${LINUX_VER}` - `ubuntu18.04`, `ubuntu20.04`, `centos7`, `rockylinux8`
     - `${PYTHON_VER}` - `3.7`, `3.8`, `3.9`
 
 #### `conda` Build Images

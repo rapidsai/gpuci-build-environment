@@ -30,7 +30,7 @@ LINUX_VER:
   - ubuntu18.04
   - ubuntu20.04
   - centos7
-  - centos8
+  - rockylinux8
 
 PYTHON_VER:
   - 3.8
@@ -52,7 +52,7 @@ exclude:
     LINUX_VER: centos7
   - IMAGE_TYPE: devel
     DOCKER_FILE: devel.Dockerfile
-    LINUX_VER: centos8
+    LINUX_VER: rockylinux8
   - DOCKER_FILE: devel-centos.Dockerfile
     LINUX_VER: ubuntu18.04
   - DOCKER_FILE: devel-centos.Dockerfile
