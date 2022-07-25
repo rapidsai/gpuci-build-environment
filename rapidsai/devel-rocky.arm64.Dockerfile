@@ -1,4 +1,4 @@
-ARG FROM_IMAGE=gpuci/miniforge-cuda
+ARG FROM_IMAGE=gpuci/miniforge-cuda-arm64
 ARG CUDA_VER=11.5.0
 ARG LINUX_VER=rockylinux8
 FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
