@@ -12,6 +12,7 @@ DOCKER_FILE:
 
 RAPIDS_VER:
   - '22.08'
+  - '22.10'
 
 CUDA_VER:
   - 11.5
