@@ -30,7 +30,7 @@ IMAGE_TYPE:
 LINUX_VER:
   - ubuntu18.04
   - ubuntu20.04
-  - centos8
+  - rockylinux8
 
 exclude:
   # - FROM_IMAGE: gpuci/cuda

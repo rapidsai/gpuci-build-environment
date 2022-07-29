@@ -1,6 +1,6 @@
 ARG FROM_IMAGE=gpuci/miniforge-cuda-arm64
-ARG CUDA_VER=11.2
-ARG LINUX_VER=centos8
+ARG CUDA_VER=11.5.0
+ARG LINUX_VER=rockylinux8
 FROM ${FROM_IMAGE}:${CUDA_VER}-devel-${LINUX_VER}
 
 # Required arguments
@@ -29,10 +29,6 @@ ENV CONDARC=/opt/conda/.condarc
 
 # Enables "source activate conda"
 SHELL ["/bin/bash", "-c"]
-
-# Fix CentOS8 EOL
-RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-* \
-    && sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*
 
 # Add a condarc for channels and override settings
 COPY .condarc /opt/conda/.condarc
