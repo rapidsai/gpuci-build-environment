@@ -13,7 +13,6 @@ DOCKER_FILE:
   - devel-centos.Dockerfile
 
 RAPIDS_VER:
-  - '22.10'
   - '22.12'
 
 CUDA_VER:
