@@ -64,8 +64,8 @@ RUN gpuci_conda_retry install -y \
 
 # Create `rapids` conda env and make default
 RUN gpuci_conda_retry create --no-default-packages --override-channels -n rapids \
-      -c nvidia \
       -c conda-forge \
+      -c nvidia \
       -c gpuci \
       git \
       python=${PYTHON_VER} \
