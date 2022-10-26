@@ -66,8 +66,8 @@ RUN gpuci_conda_retry install -y \
 # Create `rapids` conda env and make default
 # TODO: Remove -c rapidsai-nightly
 RUN gpuci_mamba_retry create --no-default-packages --override-channels -n rapids \
-      -c nvidia \
       -c conda-forge \
+      -c nvidia \
       -c gpuci \
       -c rapidsai-nightly \
       cudatoolkit=${CUDA_VER} \

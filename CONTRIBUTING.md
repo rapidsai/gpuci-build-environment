@@ -80,8 +80,8 @@ ENV PATH=${PATH}:/conda/bin
 # Create a dev conda env
 RUN source activate base \
     && conda create --no-default-packages --override-channels -n dev \
-      -c nvidia \
       -c conda-forge \
+      -c nvidia \
       cudatoolkit=${CUDA_VER} \
       conda-forge::blas \
       python=${PYTHON_VERSION} \
