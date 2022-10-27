@@ -23,8 +23,8 @@ RUN conda install -y mamba \
 RUN wget https://github.com/rapidsai/gpuci-tools/releases/latest/download/tools.tar.gz -O - \
     | tar -xz -C /usr/local/bin
 RUN gpuci_mamba_retry create --no-default-packages --override-channels -n rapids \
-      -c nvidia \
       -c conda-forge \
+      -c nvidia \
       -c gpuci \
       cudatoolkit=${CUDA_VER} \
       git \
