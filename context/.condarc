@@ -1,12 +1,12 @@
 auto_update_conda: False
 ssl_verify: False
 channels:
-  - conda-forge
-  - dask/label/dev
-  - nvidia
-  - pytorch
   - rapidsai
   - rapidsai-nightly
+  - dask/label/dev
+  - pytorch
+  - conda-forge
+  - nvidia
   - gpuci
 conda-build:
   set_build_id: false
