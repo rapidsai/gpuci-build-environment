@@ -18,7 +18,6 @@ ARCH_TYPE:
 # so it can be used in all images within gpuCI; to make parsing easier we add
 # it to the existing CUDA_VER var and remove the patch version in run script
 CUDA_VER:
-  
   - 11.7.1
   - 11.5.1
   - 11.4.1
