@@ -57,3 +57,10 @@ exclude:
     LINUX_VER: ubuntu20.04
   - DOCKER_FILE: devel-centos.Dockerfile
     LINUX_VER: ubuntu22.04
+
+  - CUDA_VER: 11.5
+    LINUX_VER: ubuntu22.04
+  - CUDA_VER: 11.4
+    LINUX_VER: ubuntu22.04
+  - CUDA_VER: 11.2
+    LINUX_VER: ubuntu22.04
