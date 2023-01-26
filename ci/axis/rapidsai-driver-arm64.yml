@@ -23,6 +23,7 @@ IMAGE_TYPE:
   - devel
 
 LINUX_VER:
+  - ubuntu20.04
   - ubuntu22.04
 
 PYTHON_VER:
@@ -63,3 +64,10 @@ exclude:
     DRIVER_VER: 470
   - CUDA_VER: 11.8
     DRIVER_VER: 495
+
+  - CUDA_VER: 11.5
+    LINUX_VER: ubuntu22.04
+  - CUDA_VER: 11.4
+    LINUX_VER: ubuntu22.04
+  - CUDA_VER: 11.2
+    LINUX_VER: ubuntu22.04
