@@ -18,6 +18,7 @@ ARCH_TYPE:
 # so it can be used in all images within gpuCI; to make parsing easier we add
 # it to the existing CUDA_VER var and remove the patch version in run script
 CUDA_VER:
+  - 11.8.0
   - 11.5.1
   - 11.4.1
   - 11.2.2
@@ -28,8 +29,8 @@ IMAGE_TYPE:
   - devel
 
 LINUX_VER:
-  - ubuntu18.04
   - ubuntu20.04
+  - ubuntu22.04
   - rockylinux8
 
 exclude:
@@ -39,3 +40,9 @@ exclude:
   #   CUDA_VER: 11.4.1
   # - FROM_IMAGE: nvidia/cuda
   #   CUDA_VER: 11.5.1
+  - CUDA_VER: 11.5.1
+    LINUX_VER: ubuntu22.04
+  - CUDA_VER: 11.4.1
+    LINUX_VER: ubuntu22.04
+  - CUDA_VER: 11.2.2
+    LINUX_VER: ubuntu22.04
