@@ -20,6 +20,7 @@ CUDA_VER:
   - 11.2
   - 11.4
   - 11.5
+  - 11.8
 
 IMAGE_TYPE:
   - base
@@ -27,8 +28,8 @@ IMAGE_TYPE:
   - devel
 
 LINUX_VER:
-  - ubuntu18.04
   - ubuntu20.04
+  - ubuntu22.04
   - rockylinux8
 
 PYTHON_VER:
@@ -49,7 +50,13 @@ exclude:
   - IMAGE_TYPE: devel
     LINUX_VER: rockylinux8
     DOCKER_FILE: devel.arm64.Dockerfile
-  - LINUX_VER: ubuntu18.04
-    DOCKER_FILE: devel-rocky.arm64.Dockerfile
   - LINUX_VER: ubuntu20.04
     DOCKER_FILE: devel-rocky.arm64.Dockerfile
+  - LINUX_VER: ubuntu22.04
+    DOCKER_FILE: devel-rocky.arm64.Dockerfile
+  - CUDA_VER: 11.5
+    LINUX_VER: ubuntu22.04
+  - CUDA_VER: 11.4
+    LINUX_VER: ubuntu22.04
+  - CUDA_VER: 11.2
+    LINUX_VER: ubuntu22.04

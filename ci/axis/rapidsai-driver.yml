@@ -15,6 +15,7 @@ RAPIDS_VER:
   - '23.04'
 
 CUDA_VER:
+  - 11.8
   - 11.5
   - 11.4
   - 11.2
@@ -33,17 +34,33 @@ DRIVER_VER:
   - 460
   - 470
   - 495
+  - 520
 
 exclude:
   - CUDA_VER: 11.2
     DRIVER_VER: 470
   - CUDA_VER: 11.2
     DRIVER_VER: 495
+  - CUDA_VER: 11.2
+    DRIVER_VER: 520
+
   - CUDA_VER: 11.4
     DRIVER_VER: 460
   - CUDA_VER: 11.4
     DRIVER_VER: 495
+  - CUDA_VER: 11.4
+    DRIVER_VER: 520
+
   - CUDA_VER: 11.5
     DRIVER_VER: 460
   - CUDA_VER: 11.5
     DRIVER_VER: 470
+  - CUDA_VER: 11.5
+    DRIVER_VER: 520
+
+  - CUDA_VER: 11.8
+    DRIVER_VER: 460
+  - CUDA_VER: 11.8
+    DRIVER_VER: 470
+  - CUDA_VER: 11.8
+    DRIVER_VER: 495

@@ -17,6 +17,7 @@ RAPIDS_VER:
   - '23.04'
 
 CUDA_VER:
+  - 11.8
   - 11.5
   - 11.4
   - 11.2
@@ -27,8 +28,8 @@ IMAGE_TYPE:
   - devel
 
 LINUX_VER:
-  - ubuntu18.04
   - ubuntu20.04
+  - ubuntu22.04
   - centos7
   - rockylinux8
 
@@ -54,6 +55,13 @@ exclude:
     DOCKER_FILE: devel.Dockerfile
     LINUX_VER: rockylinux8
   - DOCKER_FILE: devel-centos.Dockerfile
-    LINUX_VER: ubuntu18.04
-  - DOCKER_FILE: devel-centos.Dockerfile
     LINUX_VER: ubuntu20.04
+  - DOCKER_FILE: devel-centos.Dockerfile
+    LINUX_VER: ubuntu22.04
+
+  - CUDA_VER: 11.5
+    LINUX_VER: ubuntu22.04
+  - CUDA_VER: 11.4
+    LINUX_VER: ubuntu22.04
+  - CUDA_VER: 11.2
+    LINUX_VER: ubuntu22.04
