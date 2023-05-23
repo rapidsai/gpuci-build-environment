@@ -27,7 +27,7 @@ LINUX_VER:
   - ubuntu22.04
 
 PYTHON_VER:
-  - 3.8
+  - '3.9'
   - '3.10'
 
 DRIVER_VER:
