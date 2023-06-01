@@ -91,7 +91,7 @@ RUN wget --quiet ${MINIFORGE_URL} -O /miniforge.sh \
     && /bin/bash /miniforge.sh -b -p /opt/conda \
     && conda update --all --yes \
     && conda clean -tipy \
-    && rm -f /miniforge.sh \
+    && rm -rf /miniforge.sh /root/micromamba/ \
     && ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh \
     && echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc \
     && echo "conda activate base" >> ~/.bashrc \
