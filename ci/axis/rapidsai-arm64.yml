@@ -13,7 +13,7 @@ DOCKER_FILE:
   - base-runtime.Dockerfile
 
 RAPIDS_VER:
-  - '23.06'
+  - '23.08'
 
 CUDA_VER:
   - 11.2
