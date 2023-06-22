@@ -61,7 +61,7 @@ RUN gpuci_conda_retry install -y \
       anaconda-client \
       codecov \
       jq \
-      mamba
+      'mamba<1.4.4'
 
 # Create `rapids` conda env and make default
 # TODO: Remove -c rapidsai-nightly
