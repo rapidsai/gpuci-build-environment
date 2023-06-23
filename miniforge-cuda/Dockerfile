@@ -53,13 +53,16 @@ RUN if [ "${LINUX_VER:0:6}" == "ubuntu" ] ; then \
 
 # Disable CUDA repo using the appropriate manager to prevent cross CUDA version
 # updates seen on 10.1 with 10.2 libraries
-# CentOS 8 - install glibc langpack
+# CentOS 8 - install glibc langpack, texinfo
 RUN if [ "${LINUX_VER}" == "centos7" ] ; then \
       yum-config-manager --disable cuda ; \
     elif [ "${LINUX_VER}" == "rockylinux8" ] ; then \
-      dnf install -y \
+       dnf install -y \
         'dnf-command(config-manager)' \
+      && dnf config-manager --set-enabled powertools \
+      && dnf install -y \
         glibc-langpack-en \
+        texinfo \
       && dnf config-manager --set-disabled cuda ; \
     fi
 

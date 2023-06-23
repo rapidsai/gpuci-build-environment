@@ -18,8 +18,8 @@ SHELL ["/bin/bash", "-c"]
 COPY .condarc /opt/conda/.condarc
 
 # Create rapids conda env and make default
-RUN conda install -y mamba \
-    || conda install -y mamba
+RUN conda install -y 'mamba<1.4.4' \
+    || conda install -y 'mamba<1.4.4'
 RUN wget https://github.com/rapidsai/gpuci-tools/releases/latest/download/tools.tar.gz -O - \
     | tar -xz -C /usr/local/bin
 RUN gpuci_mamba_retry create --no-default-packages --override-channels -n rapids \
