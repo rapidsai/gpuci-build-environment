@@ -19,8 +19,8 @@ ARCH_TYPE:
 # it to the existing CUDA_VER var and remove the patch version in run script
 CUDA_VER:
   - 11.8.0
-  - 11.5.1
-  - 11.4.1
+  - 11.5.2
+  - 11.4.3
   - 11.2.2
 
 IMAGE_TYPE:
@@ -42,12 +42,12 @@ exclude:
   # - FROM_IMAGE: gpuci/cuda
   #   CUDA_VER: 11.2.2
   # - FROM_IMAGE: gpuci/cuda
-  #   CUDA_VER: 11.4.1
+  #   CUDA_VER: 11.4.3
   # - FROM_IMAGE: nvidia/cuda
-  #   CUDA_VER: 11.5.1
-  - CUDA_VER: 11.5.1
+  #   CUDA_VER: 11.5.2
+  - CUDA_VER: 11.5.2
     LINUX_VER: ubuntu22.04
-  - CUDA_VER: 11.4.1
+  - CUDA_VER: 11.4.3
     LINUX_VER: ubuntu22.04
   - CUDA_VER: 11.2.2
     LINUX_VER: ubuntu22.04
