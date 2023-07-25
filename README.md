@@ -1,5 +1,7 @@
 # gpuci-build-environment
 
+# This repo is replaced by https://github.com/rapidsai/ci-imgs and is now archived
+
 ## Overview
 
 This repo contains Docker images used by gpuCI and release images for RAPIDS.
